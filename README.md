@@ -14,10 +14,10 @@
 - [ ] Extract PDF version
 - [ ] Extract page count
 - [ ] Extract page information
-   -  [ ] Get page text
-   -  [ ] Get characters
-   -  [ ] Get character boundaries
-   -  [ ] Cluster characters into words
-   -  [ ] Render page to image
+   - [ ] Get page text
+   - [ ] Get characters
+   - [ ] Get character boundaries
+   - [ ] Cluster characters into words
+   - [ ] Render page to image
 - [ ] Split PDF document
 - [ ] Merge PDF document
