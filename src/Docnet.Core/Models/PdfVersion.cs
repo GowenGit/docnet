@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Linq;
 
 namespace Docnet.Core.Models
 {
-    public struct Version
+    public struct PdfVersion
     {
+        private static readonly int[] SupportedVersions =
+        {
+            10, 11, 12, 13, 14, 15, 16, 17, 20
+        };
+
         public int Number { get; }
 
-        public Version(int number)
+        public PdfVersion(int number)
         {
-            if (number < 0)
+            if (!SupportedVersions.Contains(number))
             {
-                throw new ArgumentException("version can't be less than 0", nameof(number));
-            }
-
-            if (number > 99)
-            {
-                throw new ArgumentException("version can't be greater than 99", nameof(number));
+                throw new ArgumentException($"version is not supported. should be one of {string.Join(", ", SupportedVersions)}");
             }
 
             Number = number;
@@ -31,12 +32,12 @@ namespace Docnet.Core.Models
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Version))
+            if (!(obj is PdfVersion))
             {
                 return false;
             }
 
-            var version = (Version)obj;
+            var version = (PdfVersion)obj;
             return Number == version.Number;
         }
 
