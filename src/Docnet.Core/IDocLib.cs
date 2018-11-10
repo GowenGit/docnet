@@ -35,5 +35,13 @@ namespace Docnet.Core
         /// <param name="pageToIndex">Zero based page index</param>
         /// <returns>New file bytes</returns>
         byte[] Split(string filePath, int pageFromIndex, int pageToIndex);
+
+        /// <summary>
+        /// Unlock a given document.
+        /// </summary>
+        /// <param name="filePath">Full file path</param>
+        /// <param name="password">File password</param>
+        /// <returns>New file bytes</returns>
+        byte[] Unlock(string filePath, string password);
     }
 }

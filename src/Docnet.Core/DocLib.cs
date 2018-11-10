@@ -28,10 +28,15 @@ namespace Docnet.Core
             throw new NotImplementedException();
         }
 
-        public void Dispose()
+        /// <inheritdoc />
+        public byte[] Unlock(string filePath, string password)
         {
             throw new NotImplementedException();
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
