@@ -67,6 +67,8 @@ namespace Docnet.Core
         public void Dispose()
         {
             fpdf_view.FPDF_DestroyLibrary();
+
+            _instance = null;
         }
     }
 }
