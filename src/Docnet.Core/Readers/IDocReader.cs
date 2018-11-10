@@ -1,4 +1,7 @@
-public interface IDocReader
+namespace Docnet.Core.Readers
 {
+    public interface IDocReader
+    {
 
+    }
 }

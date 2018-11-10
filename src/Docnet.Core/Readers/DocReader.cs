@@ -1,4 +1,7 @@
-public class DocReader : IDocReader
+namespace Docnet.Core.Readers
 {
+    public class DocReader : IDocReader
+    {
 
+    }
 }

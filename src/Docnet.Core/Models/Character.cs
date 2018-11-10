@@ -1,6 +1,9 @@
-public struct Character
+namespace Docnet.Core.Models
 {
-    public char Char { get; set; }
+    public struct Character
+    {
+        public char Char { get; set; }
 
-    public BoundBox Box { get; set; }
+        public BoundBox Box { get; set; }
+    }
 }

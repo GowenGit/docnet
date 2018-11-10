@@ -1,4 +1,5 @@
 ﻿using System;
+using Docnet.Core.Readers;
 
 namespace Docnet.Core
 {

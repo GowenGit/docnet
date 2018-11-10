@@ -1,4 +1,7 @@
-public interface IPageReader
+namespace Docnet.Core.Readers
 {
+    public interface IPageReader
+    {
 
+    }
 }

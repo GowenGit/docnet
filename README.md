@@ -2,7 +2,7 @@
 
 ## Description
 
-**docnet** aims to be a fast PDF editing and data extraction library. It is a `.NET Standard 2.0` wrapper for `PDFium c++` library that is used by `chromium`.
+**docnet** aims to be a fast PDF editing and data extraction library. It is a `.NET Standard 2.0` wrapper for `PDFium C++` library that is used by `chromium`.
 
 ## Notes
 
