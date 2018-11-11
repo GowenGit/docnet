@@ -1,0 +1,9 @@
+language: csharp
+solution: docnet.sln
+mono: none
+dotnet: 2.1.0
+script:
+ - cd src
+ - dotnet restore
+ - dotnet test Docnet.Tests.Unit/
+ - dotnet test Docnet.Tests.Integration/
