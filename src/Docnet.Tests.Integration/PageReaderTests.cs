@@ -83,6 +83,8 @@ namespace Docnet.Tests.Integration
         [Theory]
         [InlineData("Docs/simple_2.pdf", 1, "2")]
         [InlineData("Docs/simple_2.pdf", 3, "4 CONTENTS")]
+        [InlineData("Docs/simple_4.pdf", 0, "")]
+        [InlineData("Docs/simple_5.pdf", 0, "test.md 11/11/2018\r\n1 / 1\r\nTest document")]
         public void GetText_WhenCalled_ShouldReturnValidText(string filePath, int pageIndex, string expectedText)
         {
             ExecuteForDocument(filePath, null, 10, 10, pageIndex, pageReader =>

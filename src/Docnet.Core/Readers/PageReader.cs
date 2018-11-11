@@ -22,11 +22,16 @@ namespace Docnet.Core.Readers
 
             _page = fpdf_view.FPDF_LoadPage(docWrapper.Instance, pageIndex);
 
-            _text = fpdf_text.FPDFTextLoadPage(_page);
-
             if (_page == null)
             {
                 throw new DocnetException($"failed to open page for page index {pageIndex}");
+            }
+
+            _text = fpdf_text.FPDFTextLoadPage(_page);
+
+            if (_text == null)
+            {
+                throw new DocnetException($"failed to open page text for page index {pageIndex}");
             }
 
             _scaling = GetScalingFactor(_page, dimOne, dimTwo);
@@ -51,7 +56,12 @@ namespace Docnet.Core.Readers
 
             var buffer = new ushort[charCount + 1];
 
-            fpdf_text.FPDFTextGetText(_text, 0, charCount, ref buffer[0]);
+            var charactersWritten = fpdf_text.FPDFTextGetText(_text, 0, charCount, ref buffer[0]);
+
+            if (charactersWritten == 0)
+            {
+                return "";
+            }
 
             string result;
 
@@ -59,7 +69,7 @@ namespace Docnet.Core.Readers
             {
                 fixed (ushort* dataPtr = &buffer[0])
                 {
-                    result = new string((char*)dataPtr, 0, buffer.Length - 1);
+                    result = new string((char*)dataPtr, 0, charactersWritten - 1);
                 }
             }
 
