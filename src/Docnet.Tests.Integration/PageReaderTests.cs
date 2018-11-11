@@ -66,5 +66,18 @@ namespace Docnet.Tests.Integration
                 Assert.Equal(1.414, (double)height / width, 3);
             });
         }
+
+        [Fact]
+        public void PageIndex_WhenCalled_ShouldReturnCorrectIndex()
+        {
+            var random = new Random();
+
+            var index = random.Next(19);
+
+            ExecuteForDocument("Docs/simple_0.pdf", null, 10, 10, index, pageReader =>
+            {
+                Assert.Equal(index, pageReader.PageIndex);
+            });
+        }
     }
 }

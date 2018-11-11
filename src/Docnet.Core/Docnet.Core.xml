@@ -27,6 +27,14 @@
         <member name="M:Docnet.Core.DocLib.Unlock(System.String,System.String)">
             <inheritdoc />
         </member>
+        <member name="T:Docnet.Core.IDocLib">
+            <inheritdoc />
+            <summary>
+            DocNet library object.
+            Should be long lived and only
+            disposed once.
+            </summary>
+        </member>
         <member name="M:Docnet.Core.IDocLib.GetDocReader(System.String,System.Int32,System.Int32)">
             <summary>
             Get document reader for this particular document.
@@ -105,6 +113,41 @@
             <param name="pageIndex">Page index</param>
             <returns>Page reader</returns>
         </member>
+        <member name="P:Docnet.Core.Readers.IPageReader.PageIndex">
+            <summary>
+            Page index.
+            </summary>
+        </member>
+        <member name="M:Docnet.Core.Readers.IPageReader.GetPageWidth">
+            <summary>
+            Get scaled page width.
+            </summary>
+        </member>
+        <member name="M:Docnet.Core.Readers.IPageReader.GetPageHeight">
+            <summary>
+            Get scaled page high.
+            </summary>
+        </member>
+        <member name="M:Docnet.Core.Readers.IPageReader.GetText">
+            <summary>
+            Get page text.
+            </summary>
+        </member>
+        <member name="M:Docnet.Core.Readers.IPageReader.GetCharacters">
+            <summary>
+            Get all page characters with
+            their bounding boxes.
+            </summary>
+        </member>
+        <member name="M:Docnet.Core.Readers.IPageReader.GetImage">
+            <summary>
+            Return a byte representation
+            of the page image.
+            Byte array is formatted as
+            B-G-R-A ordered list.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Docnet.Core.Readers.PageReader.PageIndex">
             <inheritdoc />
         </member>
@@ -112,6 +155,15 @@
             <inheritdoc />
         </member>
         <member name="M:Docnet.Core.Readers.PageReader.GetPageHeight">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.PageReader.GetText">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.PageReader.GetCharacters">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.PageReader.GetImage">
             <inheritdoc />
         </member>
         <member name="M:Docnet.Core.Readers.PageReader.GetScalingFactor(Docnet.Core.Bindings.FpdfPageT,System.Int32,System.Int32)">

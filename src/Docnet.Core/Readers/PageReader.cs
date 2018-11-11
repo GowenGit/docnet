@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 using Docnet.Core.Bindings;
 using Docnet.Core.Exceptions;
+using Docnet.Core.Models;
 
 namespace Docnet.Core.Readers
 {
     internal sealed class PageReader : IPageReader
     {
-        private readonly DocumentWrapper _docWrapper;
-
         private readonly FpdfPageT _page;
+        private readonly FpdfTextpageT _text;
 
         private readonly double _scaling;
 
@@ -17,10 +18,11 @@ namespace Docnet.Core.Readers
 
         public PageReader(DocumentWrapper docWrapper, int pageIndex, int dimOne, int dimTwo)
         {
-            _docWrapper = docWrapper;
             PageIndex = pageIndex;
 
             _page = fpdf_view.FPDF_LoadPage(docWrapper.Instance, pageIndex);
+
+            _text = fpdf_text.FPDFTextLoadPage(_page);
 
             if (_page == null)
             {
@@ -40,6 +42,24 @@ namespace Docnet.Core.Readers
         public int GetPageHeight()
         {
             return (int)(fpdf_view.FPDF_GetPageHeight(_page) * _scaling);
+        }
+
+        /// <inheritdoc />
+        public string GetText()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Character> GetCharacters()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public byte[] GetImage()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -63,6 +83,11 @@ namespace Docnet.Core.Readers
 
         public void Dispose()
         {
+            if (_text != null)
+            {
+                fpdf_text.FPDFTextClosePage(_text);
+            }
+
             if (_page == null)
             {
                 return;

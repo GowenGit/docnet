@@ -3,6 +3,12 @@ using Docnet.Core.Readers;
 
 namespace Docnet.Core
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// DocNet library object.
+    /// Should be long lived and only
+    /// disposed once.
+    /// </summary>
     public interface IDocLib : IDisposable
     {
         /// <summary>

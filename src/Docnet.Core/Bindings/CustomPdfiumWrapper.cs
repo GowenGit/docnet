@@ -13,7 +13,7 @@ namespace Docnet.Core.Bindings
     /// 2 - NoIncremental
     /// 3 - RemoveSecurity
     /// </summary>
-    public class fpdf_save
+    internal class fpdf_save
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport("Lib/pdfium", CallingConvention = CallingConvention.Cdecl, EntryPoint = "FPDF_SaveAsCopy")]
