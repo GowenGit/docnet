@@ -1,5 +1,4 @@
-﻿using System;
-using Docnet.Core.Bindings;
+﻿using Docnet.Core.Bindings;
 using Docnet.Core.Editors;
 using Docnet.Core.Readers;
 
@@ -42,13 +41,13 @@ namespace Docnet.Core
         /// <inheritdoc />
         public IDocReader GetDocReader(string filePath, int dimOne, int dimTwo)
         {
-            throw new NotImplementedException();
+            return GetDocReader(filePath, null, dimOne, dimTwo);
         }
 
         /// <inheritdoc />
         public IDocReader GetDocReader(string filePath, string password, int dimOne, int dimTwo)
         {
-            throw new NotImplementedException();
+            return new DocReader(filePath, password, dimOne, dimTwo);
         }
 
         /// <inheritdoc />
