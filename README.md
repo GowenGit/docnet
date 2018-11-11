@@ -21,4 +21,4 @@
    - [ ] Render page to image
 - [ ] Split PDF document
 - [ ] Merge PDF document
-- [ ] Unlock PDF document
+- [x] Unlock PDF document

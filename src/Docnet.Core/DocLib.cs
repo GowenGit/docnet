@@ -1,5 +1,6 @@
 ﻿using System;
 using Docnet.Core.Bindings;
+using Docnet.Core.Editors;
 using Docnet.Core.Readers;
 
 namespace Docnet.Core
@@ -10,9 +11,13 @@ namespace Docnet.Core
 
         private static DocLib _instance;
 
+        private readonly IDocEditor _editor;
+
         private DocLib()
         {
             fpdf_view.FPDF_InitLibrary();
+
+            _editor = new DocEditor();
         }
 
         public static DocLib Instance
@@ -49,19 +54,19 @@ namespace Docnet.Core
         /// <inheritdoc />
         public byte[] Merge(string fileOne, string fileTwo)
         {
-            throw new NotImplementedException();
+            return _editor.Merge(fileOne, fileTwo);
         }
 
         /// <inheritdoc />
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
-            throw new NotImplementedException();
+            return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
 
         /// <inheritdoc />
         public byte[] Unlock(string filePath, string password)
         {
-            throw new NotImplementedException();
+            return _editor.Unlock(filePath, password);
         }
 
         public void Dispose()

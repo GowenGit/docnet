@@ -7,6 +7,12 @@ using System.Security;
 
 namespace Docnet.Core.Bindings
 {
+    /// <summary>
+    /// Flags:
+    /// 1 - Incremental
+    /// 2 - NoIncremental
+    /// 3 - RemoveSecurity
+    /// </summary>
     public class fpdf_save
     {
         [SuppressUnmanagedCodeSecurity]
@@ -34,7 +40,7 @@ namespace Docnet.Core.Bindings
             }
         }
 
-        public static bool FPDF_SaveAsCopy(FpdfDocumentT document, Stream stream, int version)
+        public static bool FPDF_SaveAsCopy(FpdfDocumentT document, Stream stream)
         {
             byte[] buffer = null;
 
@@ -52,9 +58,7 @@ namespace Docnet.Core.Bindings
                 return true;
             });
 
-            var result = version >= 10 ?
-                FPDF_SaveWithVersion(document.__Instance, fileWrite, 0, version) :
-                FPDF_SaveAsCopy(document.__Instance, fileWrite, 0);
+            var result = FPDF_SaveAsCopy(document.__Instance, fileWrite, 3);
 
             GC.KeepAlive(fileWrite);
 
