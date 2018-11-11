@@ -20,6 +20,6 @@
    - [ ] Get character boundaries
    - [ ] Cluster characters into words
    - [ ] Render page to image
-- [ ] Split PDF document
-- [ ] Merge PDF document
+- [x] Split PDF document
+- [x] Merge PDF document
 - [x] Unlock PDF document

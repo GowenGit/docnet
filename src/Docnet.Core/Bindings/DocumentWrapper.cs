@@ -17,6 +17,16 @@ namespace Docnet.Core.Bindings
             }
         }
 
+        public DocumentWrapper(FpdfDocumentT instance)
+        {
+            Instance = instance;
+
+            if (Instance == null)
+            {
+                throw new DocnetException("unable to open the document");
+            }
+        }
+
         public void Dispose()
         {
             if (Instance == null)

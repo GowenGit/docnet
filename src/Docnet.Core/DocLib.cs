@@ -54,10 +54,7 @@ namespace Docnet.Core
             CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
             CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
 
-            if (dimOne > dimTwo)
-            {
-                throw new ArgumentException($"{nameof(dimOne)} can't be more than {nameof(dimTwo)}");
-            }
+            CheckNotGreaterThan(dimOne, dimTwo, nameof(dimOne), nameof(dimTwo));
 
             return new DocReader(filePath, password, dimOne, dimTwo);
         }
@@ -76,6 +73,11 @@ namespace Docnet.Core
         {
             CheckFilePathNotNull(filePath, nameof(filePath));
 
+            CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
+            CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
+
+            CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
 
@@ -87,6 +89,7 @@ namespace Docnet.Core
             return _editor.Unlock(filePath, password);
         }
 
+        #region Validation
         private static void CheckFilePathNotNull(string filePath, string name)
         {
             if (filePath == null)
@@ -102,6 +105,23 @@ namespace Docnet.Core
                 throw new ArgumentException("value can't be less or equal to zero", name);
             }
         }
+
+        private static void CheckNotLessThanZero(int value, string name)
+        {
+            if (value < 0)
+            {
+                throw new ArgumentException("value can't be less than zero", name);
+            }
+        }
+
+        private static void CheckNotGreaterThan(int valueOne, int valueTwo, string nameOne, string nameTwo)
+        {
+            if (valueOne > valueTwo)
+            {
+                throw new ArgumentException($"{nameOne} can't be more than {nameTwo}");
+            }
+        }
+        #endregion
 
         public void Dispose()
         {

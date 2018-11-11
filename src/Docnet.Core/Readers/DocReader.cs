@@ -20,6 +20,7 @@ namespace Docnet.Core.Readers
             _docWrapper = new DocumentWrapper(filePath, password);
         }
 
+        /// <inheritdoc />
         public PdfVersion GetPdfVersion()
         {
             var version = 0;
@@ -34,6 +35,7 @@ namespace Docnet.Core.Readers
             return new PdfVersion(version);
         }
 
+        /// <inheritdoc />
         public int GetPageCount()
         {
             return fpdf_view.FPDF_GetPageCount(_docWrapper.Instance);
