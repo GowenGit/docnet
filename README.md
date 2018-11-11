@@ -10,10 +10,11 @@
 
 ## Features
 
-- [ ] Extract file name
-- [ ] Extract PDF version
-- [ ] Extract page count
+- [x] Extract PDF version
+- [x] Extract page count
 - [ ] Extract page information
+   - [ ] Get page width
+   - [ ] Get page height
    - [ ] Get page text
    - [ ] Get characters
    - [ ] Get character boundaries

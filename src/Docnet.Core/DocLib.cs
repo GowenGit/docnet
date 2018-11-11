@@ -40,13 +40,13 @@ namespace Docnet.Core
         }
 
         /// <inheritdoc />
-        public IDocReader GetDocReader(string filePath)
+        public IDocReader GetDocReader(string filePath, int dimOne, int dimTwo)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
-        public IDocReader GetDocReader(string filePath, string password)
+        public IDocReader GetDocReader(string filePath, string password, int dimOne, int dimTwo)
         {
             throw new NotImplementedException();
         }
