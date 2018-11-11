@@ -16,5 +16,12 @@ namespace Docnet.Core.Readers
         /// </summary>
         /// <returns>Page count</returns>
         int GetPageCount();
+
+        /// <summary>
+        /// Get page reader
+        /// </summary>
+        /// <param name="pageIndex">Page index</param>
+        /// <returns>Page reader</returns>
+        IPageReader GetPageReader(int pageIndex);
     }
 }

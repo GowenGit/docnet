@@ -5,7 +5,7 @@ using Docnet.Core.Models;
 
 namespace Docnet.Core.Readers
 {
-    public class DocReader : IDocReader
+    internal class DocReader : IDocReader
     {
         private readonly DocumentWrapper _docWrapper;
 
@@ -39,6 +39,11 @@ namespace Docnet.Core.Readers
         public int GetPageCount()
         {
             return fpdf_view.FPDF_GetPageCount(_docWrapper.Instance);
+        }
+
+        public IPageReader GetPageReader(int pageIndex)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Dispose()
