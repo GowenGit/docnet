@@ -41,9 +41,10 @@ namespace Docnet.Core.Readers
             return fpdf_view.FPDF_GetPageCount(_docWrapper.Instance);
         }
 
+        /// <inheritdoc />
         public IPageReader GetPageReader(int pageIndex)
         {
-            throw new System.NotImplementedException();
+            return new PageReader(_docWrapper, pageIndex, _dimOne, _dimTwo);
         }
 
         public void Dispose()

@@ -12,6 +12,7 @@ namespace Docnet.Core.Readers
 
         private readonly double _scaling;
 
+        /// <inheritdoc />
         public int PageIndex { get; }
 
         public PageReader(DocumentWrapper docWrapper, int pageIndex, int dimOne, int dimTwo)
@@ -29,22 +30,32 @@ namespace Docnet.Core.Readers
             _scaling = GetScalingFactor(_page, dimOne, dimTwo);
         }
 
+        /// <inheritdoc />
         public int GetPageWidth()
         {
             return (int)(fpdf_view.FPDF_GetPageWidth(_page) * _scaling);
         }
 
+        /// <inheritdoc />
         public int GetPageHeight()
         {
             return (int)(fpdf_view.FPDF_GetPageHeight(_page) * _scaling);
         }
 
+        /// <summary>
+        /// Gets rescaling factor for native width x height of the page
+        /// so it maximizes the dimOne x dimTwo rectangle
+        /// </summary>
+        /// <param name="page">Page object</param>
+        /// <param name="dimOne">Smaller dimension</param>
+        /// <param name="dimTwo">Larger dimension</param>
+        /// <returns>Scaling factor</returns>
         private static double GetScalingFactor(FpdfPageT page, int dimOne, int dimTwo)
         {
             var width = fpdf_view.FPDF_GetPageWidth(page);
             var height = fpdf_view.FPDF_GetPageHeight(page);
 
-            var scaleOne = dimOne / Math.Max(width, height);
+            var scaleOne = dimOne / Math.Min(width, height);
             var scalingTwo = dimTwo / Math.Max(width, height);
 
             return Math.Min(scaleOne, scalingTwo);

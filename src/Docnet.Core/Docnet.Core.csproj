@@ -6,6 +6,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\git\docnet\src\Docnet.Core\Docnet.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="Lib\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

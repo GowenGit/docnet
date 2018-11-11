@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Docnet.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Docnet.Core.Bindings.fpdf_save">
+            <summary>
+            Flags:
+            1 - Incremental
+            2 - NoIncremental
+            3 - RemoveSecurity
+            </summary>
+        </member>
+        <member name="M:Docnet.Core.DocLib.GetDocReader(System.String,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.DocLib.GetDocReader(System.String,System.String,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.DocLib.Merge(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.DocLib.Split(System.String,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.DocLib.Unlock(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.IDocLib.GetDocReader(System.String,System.Int32,System.Int32)">
+            <summary>
+            Get document reader for this particular document.
+            dimOne x dimTwo represents a viewport to which
+            the document gets scaled to fit without modifying
+            it's aspect ratio.
+            </summary>
+            <param name="filePath">Full file path</param>
+            <param name="dimOne">smaller viewport dimension</param>
+            <param name="dimTwo">larger viewport dimension</param>
+            <returns>Document reader object</returns>
+        </member>
+        <member name="M:Docnet.Core.IDocLib.GetDocReader(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Get document reader for this particular document.
+            dimOne x dimTwo represents a viewport to which
+            the document gets scaled to fit without modifying
+            it's aspect ratio.
+            </summary>
+            <param name="filePath">Full file path</param>
+            <param name="password">File password</param>
+            <param name="dimOne">smaller viewport dimension</param>
+            <param name="dimTwo">larger viewport dimension</param>
+            <returns>Document reader object</returns>
+        </member>
+        <member name="M:Docnet.Core.IDocLib.Merge(System.String,System.String)">
+            <summary>
+            Merge two documents into one.
+            </summary>
+            <param name="fileOne">Full file path one</param>
+            <param name="fileTwo">Full file path two</param>
+            <returns>New file bytes</returns>
+        </member>
+        <member name="M:Docnet.Core.IDocLib.Split(System.String,System.Int32,System.Int32)">
+            <summary>
+            Split a range of pages into a separate document.
+            </summary>
+            <param name="filePath">Full file path</param>
+            <param name="pageFromIndex">Zero based page index</param>
+            <param name="pageToIndex">Zero based page index</param>
+            <returns>New file bytes</returns>
+        </member>
+        <member name="M:Docnet.Core.IDocLib.Unlock(System.String,System.String)">
+            <summary>
+            Unlock a given document.
+            </summary>
+            <param name="filePath">Full file path</param>
+            <param name="password">File password</param>
+            <returns>New file bytes</returns>
+        </member>
+        <member name="M:Docnet.Core.Readers.DocReader.GetPdfVersion">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.DocReader.GetPageCount">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.DocReader.GetPageReader(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.IDocReader.GetPdfVersion">
+            <summary>
+            PDF document version e.g. 1.7
+            </summary>
+            <returns>Version</returns>
+        </member>
+        <member name="M:Docnet.Core.Readers.IDocReader.GetPageCount">
+            <summary>
+            Reads page count
+            </summary>
+            <returns>Page count</returns>
+        </member>
+        <member name="M:Docnet.Core.Readers.IDocReader.GetPageReader(System.Int32)">
+            <summary>
+            Get page reader
+            </summary>
+            <param name="pageIndex">Page index</param>
+            <returns>Page reader</returns>
+        </member>
+        <member name="P:Docnet.Core.Readers.PageReader.PageIndex">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.PageReader.GetPageWidth">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.PageReader.GetPageHeight">
+            <inheritdoc />
+        </member>
+        <member name="M:Docnet.Core.Readers.PageReader.GetScalingFactor(Docnet.Core.Bindings.FpdfPageT,System.Int32,System.Int32)">
+            <summary>
+            Gets rescaling factor for native width x height of the page
+            so it maximizes the dimOne x dimTwo rectangle
+            </summary>
+            <param name="page">Page object</param>
+            <param name="dimOne">Smaller dimension</param>
+            <param name="dimTwo">Larger dimension</param>
+            <returns>Scaling factor</returns>
+        </member>
+    </members>
+</doc>
