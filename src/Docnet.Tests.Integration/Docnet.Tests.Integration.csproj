@@ -8,13 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Docs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,9 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Docs\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None CopyToOutputDirectory="PreserveNewest" Update="Docs\*"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\linux-x64\native\pdfium.so" Visible="false"/>
+    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\win-x64\native\pdfium.dll" Visible="false"/>
+  </ItemGroup>
 </Project>

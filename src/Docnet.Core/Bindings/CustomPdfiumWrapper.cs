@@ -16,11 +16,11 @@ namespace Docnet.Core.Bindings
     internal class fpdf_save
     {
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("Lib/pdfium", CallingConvention = CallingConvention.Cdecl, EntryPoint = "FPDF_SaveAsCopy")]
+        [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl, EntryPoint = "FPDF_SaveAsCopy")]
         internal static extern int FPDF_SaveAsCopy(IntPtr document, FpdfStreamWriter pFileWrite, uint flags);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("Lib/pdfium", CallingConvention = CallingConvention.Cdecl, EntryPoint = "FPDF_SaveWithVersion")]
+        [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl, EntryPoint = "FPDF_SaveWithVersion")]
         private static extern int FPDF_SaveWithVersion(IntPtr document, FpdfStreamWriter pFileWrite, uint flags, int fileVersion);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

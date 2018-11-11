@@ -4,16 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\git\docnet\src\Docnet.Core\Docnet.Core.xml</DocumentationFile>
+    <Authors>Modestas Petravicius</Authors>
+    <Product>DocNet</Product>
+    <Description>DocNET is as fast PDF editing and reading library for modern .NET applications.</Description>
+    <version>$(VersionSuffix)</version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591;0649</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Lib\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="runtimes/**" PackagePath="runtimes" Visible="true" />
   </ItemGroup>
 </Project>
