@@ -16,8 +16,8 @@
    - [x] Get page width
    - [x] Get page height
    - [x] Get page text
-   - [ ] Get characters
-   - [ ] Get character boundaries
+   - [x] Get characters
+   - [x] Get character boundaries
    - [ ] Cluster characters into words
    - [x] Render page to image
 - [x] Split PDF document

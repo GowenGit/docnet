@@ -80,7 +80,49 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public IEnumerable<Character> GetCharacters()
         {
-            throw new NotImplementedException();
+            var width = GetPageWidth();
+            var height = GetPageHeight();
+
+            var charCount = fpdf_text.FPDFTextCountChars(_text);
+
+            for (var i = 0; i < charCount; i++)
+            {
+                var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
+
+                double left = 0;
+                double top = 0;
+                double right = 0;
+                double bottom = 0;
+
+                var success = fpdf_text.FPDFTextGetCharBox(_text, i, ref left, ref right, ref bottom, ref top) == 1;
+
+                if (!success) continue;
+
+                var adjustedLeft = 0;
+                var adjustedTop = 0;
+                var adjustRight = 0;
+                var adjustBottom = 0;
+
+                success = fpdf_view.FPDF_PageToDevice(_page,
+                    0, 0, width, height, 0,
+                    left, top,
+                    ref adjustedLeft,
+                    ref adjustedTop) == 1;
+
+                if (!success) continue;
+
+                success = fpdf_view.FPDF_PageToDevice(_page,
+                              0, 0, width, height, 0,
+                              right, bottom,
+                              ref adjustRight,
+                              ref adjustBottom) == 1;
+
+                if (!success) continue;
+
+                var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
+
+                yield return new Character(charCode, box);
+            }
         }
 
         /// <inheritdoc />

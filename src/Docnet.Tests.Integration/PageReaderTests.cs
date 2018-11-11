@@ -118,6 +118,21 @@ namespace Docnet.Tests.Integration
         }
 
         [Theory]
+        [InlineData("Docs/simple_2.pdf", null, 1, 1)]
+        [InlineData("Docs/simple_2.pdf", null, 3, 10)]
+        [InlineData("Docs/simple_5.pdf", null, 0, 40)]
+        [InlineData("Docs/protected_0.pdf", "password", 0, 2009)]
+        public void GetCharacters_WhenCalled_ShouldReturnCharacters(string filePath, string password, int pageIndex, int charCount)
+        {
+            ExecuteForDocument(filePath, password, 10, 10, pageIndex, pageReader =>
+            {
+                var characters = pageReader.GetCharacters().ToArray();
+
+                Assert.Equal(charCount, characters.Length);
+            });
+        }
+
+        [Theory]
         [InlineData("Docs/simple_3.pdf", null, 1)]
         [InlineData("Docs/simple_0.pdf", null, 18)]
         [InlineData("Docs/protected_0.pdf", "password", 0)]
