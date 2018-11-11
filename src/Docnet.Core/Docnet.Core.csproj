@@ -10,6 +10,12 @@
     <version>$(VersionSuffix)</version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591;0649</NoWarn>
+    <Copyright>MIT</Copyright>
+    <PackageLicenseUrl>https://github.com/GowenGit/docnet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/GowenGit/docnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GowenGit/docnet</RepositoryUrl>
+    <PackageTags>PDF; Reader; netstandard; PDFium</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/GowenGit/docnet/master/assets/icon.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
