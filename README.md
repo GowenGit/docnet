@@ -13,9 +13,9 @@
 - [x] Extract PDF version
 - [x] Extract page count
 - [ ] Extract page information
-   - [ ] Get page width
-   - [ ] Get page height
-   - [ ] Get page text
+   - [x] Get page width
+   - [x] Get page height
+   - [x] Get page text
    - [ ] Get characters
    - [ ] Get character boundaries
    - [ ] Cluster characters into words

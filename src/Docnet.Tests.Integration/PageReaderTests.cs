@@ -79,5 +79,35 @@ namespace Docnet.Tests.Integration
                 Assert.Equal(index, pageReader.PageIndex);
             });
         }
+
+        [Theory]
+        [InlineData("Docs/simple_2.pdf", 1, "2")]
+        [InlineData("Docs/simple_2.pdf", 3, "4 CONTENTS")]
+        public void GetText_WhenCalled_ShouldReturnValidText(string filePath, int pageIndex, string expectedText)
+        {
+            ExecuteForDocument(filePath, null, 10, 10, pageIndex, pageReader =>
+            {
+                var text = pageReader.GetText();
+
+                Assert.Equal(expectedText, text);
+            });
+        }
+
+        [Theory]
+        [InlineData("Docs/simple_3.pdf", null, 1, "Simple PDF File 2")]
+        [InlineData("Docs/simple_3.pdf", null, 1, "Boring. More,")]
+        [InlineData("Docs/simple_3.pdf", null, 1, "The end, and just as well.")]
+        [InlineData("Docs/simple_0.pdf", null, 4, "ASCIIHexDecode")]
+        [InlineData("Docs/protected_0.pdf", "password", 0, "The Secret (2016 film)")]
+        public void GetText_WhenCalled_ShouldContainValidText(string filePath, string password, int pageIndex,
+            string expectedText)
+        {
+            ExecuteForDocument(filePath, password, 10, 10, pageIndex, pageReader =>
+            {
+                var text = pageReader.GetText();
+
+                Assert.Contains(expectedText, text);
+            });
+        }
     }
 }

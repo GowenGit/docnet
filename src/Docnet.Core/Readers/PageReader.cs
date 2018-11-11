@@ -47,7 +47,23 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public string GetText()
         {
-            throw new NotImplementedException();
+            var charCount = fpdf_text.FPDFTextCountChars(_text);
+
+            var buffer = new ushort[charCount + 1];
+
+            fpdf_text.FPDFTextGetText(_text, 0, charCount, ref buffer[0]);
+
+            string result;
+
+            unsafe
+            {
+                fixed (ushort* dataPtr = &buffer[0])
+                {
+                    result = new string((char*)dataPtr, 0, buffer.Length - 1);
+                }
+            }
+
+            return result;
         }
 
         /// <inheritdoc />
