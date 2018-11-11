@@ -1,6 +1,8 @@
-﻿using Docnet.Core.Bindings;
+﻿using System;
+using Docnet.Core.Bindings;
 using Docnet.Core.Editors;
 using Docnet.Core.Readers;
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 
 namespace Docnet.Core
 {
@@ -47,25 +49,58 @@ namespace Docnet.Core
         /// <inheritdoc />
         public IDocReader GetDocReader(string filePath, string password, int dimOne, int dimTwo)
         {
+            CheckFilePathNotNull(filePath, nameof(filePath));
+
+            CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
+            CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
+
+            if (dimOne > dimTwo)
+            {
+                throw new ArgumentException($"{nameof(dimOne)} can't be more than {nameof(dimTwo)}");
+            }
+
             return new DocReader(filePath, password, dimOne, dimTwo);
         }
 
         /// <inheritdoc />
         public byte[] Merge(string fileOne, string fileTwo)
         {
+            CheckFilePathNotNull(fileOne, nameof(fileOne));
+            CheckFilePathNotNull(fileTwo, nameof(fileTwo));
+
             return _editor.Merge(fileOne, fileTwo);
         }
 
         /// <inheritdoc />
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
+            CheckFilePathNotNull(filePath, nameof(filePath));
+
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
 
         /// <inheritdoc />
         public byte[] Unlock(string filePath, string password)
         {
+            CheckFilePathNotNull(filePath, nameof(filePath));
+
             return _editor.Unlock(filePath, password);
+        }
+
+        private static void CheckFilePathNotNull(string filePath, string name)
+        {
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(name, "file path can't be null");
+            }
+        }
+
+        private static void CheckNotLessOrEqualToZero(int value, string name)
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentException("value can't be less or equal to zero", name);
+            }
         }
 
         public void Dispose()

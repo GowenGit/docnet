@@ -1,6 +1,7 @@
 using Docnet.Core.Bindings;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Models;
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 
 namespace Docnet.Core.Readers
 {

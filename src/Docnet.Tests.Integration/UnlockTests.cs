@@ -1,15 +1,23 @@
+using System;
 using Docnet.Core.Exceptions;
 using Xunit;
 
 namespace Docnet.Tests.Integration
 {
-    public sealed class UnlockTests : IClassFixture<LibFixture>
+    [Collection("Lib collection")]
+    public sealed class UnlockTests
     {
         private readonly LibFixture _fixture;
 
         public UnlockTests(LibFixture fixture)
         {
             _fixture = fixture;
+        }
+
+        [Fact]
+        public void Unlock_WhenCalledWithNullFilePath_ShouldThrow()
+        {
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Unlock(null, null));
         }
 
         [Fact]
