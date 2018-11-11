@@ -171,7 +171,46 @@ namespace Docnet.Tests.Integration
 
                     bmp.Save(stream, ImageFormat.Png);
 
-                    File.WriteAllBytes("D:\\test.jpeg", stream.ToArray());
+                    File.WriteAllBytes("D:\\test_0.jpeg", stream.ToArray());
+                }
+            });
+        }
+
+        [Theory]
+        [InlineData("Docs/simple_0.pdf", null, 0)]
+        public void GetChars_WhenCalled_ShouldReturnValidRawByteArray(string filePath, string password, int pageIndex)
+        {
+            ExecuteForDocument(filePath, password, 1000, 1000, pageIndex, pageReader =>
+            {
+                var pen = new Pen(Color.Brown);
+
+                var rawBytes = pageReader.GetImage();
+
+                var width = pageReader.GetPageWidth();
+                var height = pageReader.GetPageHeight();
+
+                using (var stream = new MemoryStream())
+                using (var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+                {
+                    var rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+
+                    var bmpData = bmp.LockBits(rect, ImageLockMode.WriteOnly, bmp.PixelFormat);
+                    var pNative = bmpData.Scan0;
+
+                    Marshal.Copy(rawBytes, 0, pNative, rawBytes.Length);
+                    bmp.UnlockBits(bmpData);
+
+                    using (var graphics = Graphics.FromImage(bmp))
+                    {
+                        foreach (var c in pageReader.GetCharacters())
+                        {
+                            graphics.DrawRectangle(pen, new Rectangle(c.Box.Left, c.Box.Top, c.Box.Right - c.Box.Left, c.Box.Bottom - c.Box.Top));
+                        }
+                    }
+
+                    bmp.Save(stream, ImageFormat.Png);
+
+                    File.WriteAllBytes("D:\\test_1.jpeg", stream.ToArray());
                 }
             });
         }

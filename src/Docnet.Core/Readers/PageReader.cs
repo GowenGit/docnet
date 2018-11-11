@@ -98,31 +98,43 @@ namespace Docnet.Core.Readers
 
                 if (!success) continue;
 
-                var adjustedLeft = 0;
-                var adjustedTop = 0;
-                var adjustRight = 0;
-                var adjustBottom = 0;
-
-                success = fpdf_view.FPDF_PageToDevice(_page,
-                    0, 0, width, height, 0,
-                    left, top,
-                    ref adjustedLeft,
-                    ref adjustedTop) == 1;
-
-                if (!success) continue;
-
-                success = fpdf_view.FPDF_PageToDevice(_page,
-                              0, 0, width, height, 0,
-                              right, bottom,
-                              ref adjustRight,
-                              ref adjustBottom) == 1;
-
-                if (!success) continue;
+                var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
+                var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
 
                 var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
 
                 yield return new Character(charCode, box);
             }
+        }
+
+        private (int x, int y) GetAdjustedCoords(int width, int height, double pageX, double pageY)
+        {
+            var x = 0;
+            var y = 0;
+
+            fpdf_view.FPDF_PageToDevice(
+                _page, 0, 0, width, height, 0,
+                pageX, pageY, ref x, ref y);
+
+            x = AdjustToRange(x, width);
+            y = AdjustToRange(y, height);
+
+            return (x, y);
+        }
+
+        private static int AdjustToRange(int coord, int range)
+        {
+            if (coord < 0)
+            {
+                coord = 0;
+            }
+
+            if (coord >= range)
+            {
+                coord = range - 1;
+            }
+
+            return coord;
         }
 
         /// <inheritdoc />
