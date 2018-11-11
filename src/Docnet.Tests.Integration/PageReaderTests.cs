@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Readers;
 using Xunit;
@@ -109,6 +114,50 @@ namespace Docnet.Tests.Integration
                 var text = pageReader.GetText();
 
                 Assert.Contains(expectedText, text);
+            });
+        }
+
+        [Theory]
+        [InlineData("Docs/simple_3.pdf", null, 1)]
+        [InlineData("Docs/simple_0.pdf", null, 18)]
+        [InlineData("Docs/protected_0.pdf", "password", 0)]
+        public void GetImage_WhenCalled_ShouldReturnNonZeroRawByteArray(string filePath, string password, int pageIndex)
+        {
+            ExecuteForDocument(filePath, password, 10, 10, pageIndex, pageReader =>
+            {
+                var bytes = pageReader.GetImage().ToArray();
+
+                Assert.True(bytes.Length > 0);
+                Assert.True(bytes.Count(x => x != 0) > 0);
+            });
+        }
+
+        [Theory]
+        [InlineData("Docs/simple_0.pdf", null, 0)]
+        public void GetImage_WhenCalled_ShouldReturnValidRawByteArray(string filePath, string password, int pageIndex)
+        {
+            ExecuteForDocument(filePath, password, 1000, 1000, pageIndex, pageReader =>
+            {
+                var rawBytes = pageReader.GetImage();
+
+                var width = pageReader.GetPageWidth();
+                var height = pageReader.GetPageHeight();
+
+                using (var stream = new MemoryStream())
+                using (var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+                {
+                    var rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+
+                    var bmpData = bmp.LockBits(rect, ImageLockMode.WriteOnly, bmp.PixelFormat);
+                    var pNative = bmpData.Scan0;
+
+                    Marshal.Copy(rawBytes, 0, pNative, rawBytes.Length);
+                    bmp.UnlockBits(bmpData);
+
+                    bmp.Save(stream, ImageFormat.Png);
+
+                    File.WriteAllBytes("D:\\test.jpeg", stream.ToArray());
+                }
             });
         }
     }

@@ -8,7 +8,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>D:\git\docnet\src\Docnet.Core\Docnet.Core.xml</DocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn>1701;1702;1591;0649</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

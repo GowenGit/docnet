@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Docnet.Core.Bindings;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Models;
@@ -85,7 +86,57 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public byte[] GetImage()
         {
-            throw new NotImplementedException();
+            var width = GetPageWidth();
+            var height = GetPageHeight();
+
+            var bitmap = fpdf_view.FPDFBitmapCreate(width, height, 1);
+
+            if (bitmap == null)
+            {
+                throw new DocnetException("failed to create a bitmap object");
+            }
+
+            var stride = fpdf_view.FPDFBitmapGetStride(bitmap);
+
+            var result = new byte[stride * height];
+
+            try
+            {
+                //          | a b 0 |
+                // matrix = | c d 0 |
+                //          | e f 1 |
+                using (var matrix = new FS_MATRIX_())
+                using (var clipping = new FS_RECTF_())
+                {
+                    matrix.A = (float)_scaling;
+                    matrix.B = 0;
+                    matrix.C = 0;
+                    matrix.D = (float)_scaling;
+                    matrix.E = 0;
+                    matrix.F = 0;
+
+                    clipping.Left = 0;
+                    clipping.Right = width;
+                    clipping.Bottom = 0;
+                    clipping.Top = height;
+
+                    fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, 0);
+
+                    var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
+
+                    Marshal.Copy(buffer, result, 0, result.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DocnetException("error rendering page", ex);
+            }
+            finally
+            {
+                fpdf_view.FPDFBitmapDestroy(bitmap);
+            }
+
+            return result;
         }
 
         /// <summary>

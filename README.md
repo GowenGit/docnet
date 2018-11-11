@@ -19,7 +19,7 @@
    - [ ] Get characters
    - [ ] Get character boundaries
    - [ ] Cluster characters into words
-   - [ ] Render page to image
+   - [x] Render page to image
 - [x] Split PDF document
 - [x] Merge PDF document
 - [x] Unlock PDF document

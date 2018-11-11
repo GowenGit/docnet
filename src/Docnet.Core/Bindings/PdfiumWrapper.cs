@@ -32,7 +32,7 @@ namespace Docnet.Core.Bindings
         DuplexFlipLongEdge = 3
     }
 
-    public unsafe partial class FpdfActionT
+    internal unsafe partial class FpdfActionT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -87,7 +87,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfAnnotationT
+    internal unsafe partial class FpdfAnnotationT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -143,7 +143,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfAttachmentT
+    internal unsafe partial class FpdfAttachmentT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -199,7 +199,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfBitmapT
+    internal unsafe partial class FpdfBitmapT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -254,7 +254,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfBookmarkT
+    internal unsafe partial class FpdfBookmarkT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -309,7 +309,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfClippathT
+    internal unsafe partial class FpdfClippathT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -364,7 +364,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfDestT
+    internal unsafe partial class FpdfDestT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -419,7 +419,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfDocumentT
+    internal unsafe partial class FpdfDocumentT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -474,7 +474,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfFontT
+    internal unsafe partial class FpdfFontT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -529,7 +529,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfFormHandleT
+    internal unsafe partial class FpdfFormHandleT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -585,7 +585,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfLinkT
+    internal unsafe partial class FpdfLinkT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -640,7 +640,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfPageT
+    internal unsafe partial class FpdfPageT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -695,7 +695,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfPagelinkT
+    internal unsafe partial class FpdfPagelinkT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -750,7 +750,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfPageobjectT
+    internal unsafe partial class FpdfPageobjectT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -806,7 +806,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfPageobjectmarkT
+    internal unsafe partial class FpdfPageobjectmarkT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -862,7 +862,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfPagerangeT
+    internal unsafe partial class FpdfPagerangeT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -917,7 +917,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfPathsegmentT
+    internal unsafe partial class FpdfPathsegmentT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -973,7 +973,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfSchhandleT
+    internal unsafe partial class FpdfSchhandleT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -1028,7 +1028,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfStructelementT
+    internal unsafe partial class FpdfStructelementT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -1084,7 +1084,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfStructtreeT
+    internal unsafe partial class FpdfStructtreeT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -1140,7 +1140,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FpdfTextpageT
+    internal unsafe partial class FpdfTextpageT
     {
         [StructLayout(LayoutKind.Explicit, Size = 0)]
         public partial struct __Internal
@@ -1195,7 +1195,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FS_MATRIX_ : IDisposable
+    internal unsafe partial class FS_MATRIX_ : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 24)]
         public partial struct __Internal
@@ -1341,7 +1341,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FS_RECTF_ : IDisposable
+    internal unsafe partial class FS_RECTF_ : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 16)]
         public partial struct __Internal
@@ -1469,7 +1469,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FPDF_LIBRARY_CONFIG_ : IDisposable
+    internal unsafe partial class FPDF_LIBRARY_CONFIG_ : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 32)]
         public partial struct __Internal
@@ -1595,7 +1595,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FPDF_FILEACCESS : IDisposable
+    internal unsafe partial class FPDF_FILEACCESS : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 24)]
         public partial struct __Internal
@@ -1712,7 +1712,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class fpdf_view
+    internal unsafe partial class fpdf_view
     {
         public partial struct __Internal
         {
@@ -2344,7 +2344,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class fpdf_text
+    internal unsafe partial class fpdf_text
     {
         public partial struct __Internal
         {
@@ -2764,7 +2764,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class fpdf_ppo
+    internal unsafe partial class fpdf_ppo
     {
         public partial struct __Internal
         {
@@ -2822,7 +2822,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class FPDF_IMAGEOBJ_METADATA : IDisposable
+    internal unsafe partial class FPDF_IMAGEOBJ_METADATA : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 28)]
         public partial struct __Internal
@@ -2986,7 +2986,7 @@ namespace Docnet.Core.Bindings
         }
     }
 
-    public unsafe partial class fpdf_edit
+    internal unsafe partial class fpdf_edit
     {
         public partial struct __Internal
         {
