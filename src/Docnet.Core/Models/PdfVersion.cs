@@ -43,7 +43,7 @@ namespace Docnet.Core.Models
 
         public override int GetHashCode()
         {
-            return 91 + Number.GetHashCode();
+            return Number;
         }
     }
 }
