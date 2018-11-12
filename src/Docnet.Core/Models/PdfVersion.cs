@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Docnet.Core.Models
 {
     public struct PdfVersion
     {
-        private static readonly int[] SupportedVersions =
+        private static readonly HashSet<int> SupportedVersions = new HashSet<int>
         {
             10, 11, 12, 13, 14, 15, 16, 17, 20
         };
