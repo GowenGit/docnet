@@ -8,52 +8,61 @@ namespace Docnet.Core.Editors
     {
         public byte[] Merge(string fileOne, string fileTwo)
         {
-            using (var docOneWrapper = new DocumentWrapper(fileOne, null))
-            using (var docTwoWrapper = new DocumentWrapper(fileTwo, null))
-            using (var stream = new MemoryStream())
+            lock (DocLib.Lock)
             {
-                var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
-
-                var success = fpdf_ppo.FPDF_ImportPages(
-                    docOneWrapper.Instance,
-                    docTwoWrapper.Instance,
-                    null, pageCountOne) == 1;
-
-                if (!success)
+                using (var docOneWrapper = new DocumentWrapper(fileOne, null))
+                using (var docTwoWrapper = new DocumentWrapper(fileTwo, null))
+                using (var stream = new MemoryStream())
                 {
-                    throw new DocnetException("failed to merge files");
-                }
+                    var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
 
-                return GetBytes(stream, docOneWrapper);
+                    var success = fpdf_ppo.FPDF_ImportPages(
+                                      docOneWrapper.Instance,
+                                      docTwoWrapper.Instance,
+                                      null, pageCountOne) == 1;
+
+                    if (!success)
+                    {
+                        throw new DocnetException("failed to merge files");
+                    }
+
+                    return GetBytes(stream, docOneWrapper);
+                }
             }
         }
 
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
-            using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
-            using (var srcWrapper = new DocumentWrapper(filePath, null))
-            using (var stream = new MemoryStream())
+            lock (DocLib.Lock)
             {
-                var success = fpdf_ppo.FPDF_ImportPages(
-                    newWrapper.Instance,
-                    srcWrapper.Instance,
-                    $"{pageFromIndex + 1} - {pageToIndex + 1}", 0) == 1;
-
-                if (!success)
+                using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
+                using (var srcWrapper = new DocumentWrapper(filePath, null))
+                using (var stream = new MemoryStream())
                 {
-                    throw new DocnetException("failed to split file");
-                }
+                    var success = fpdf_ppo.FPDF_ImportPages(
+                                      newWrapper.Instance,
+                                      srcWrapper.Instance,
+                                      $"{pageFromIndex + 1} - {pageToIndex + 1}", 0) == 1;
 
-                return GetBytes(stream, newWrapper);
+                    if (!success)
+                    {
+                        throw new DocnetException("failed to split file");
+                    }
+
+                    return GetBytes(stream, newWrapper);
+                }
             }
         }
 
         public byte[] Unlock(string filePath, string password)
         {
-            using (var docWrapper = new DocumentWrapper(filePath, password))
-            using (var stream = new MemoryStream())
+            lock (DocLib.Lock)
             {
-                return GetBytes(stream, docWrapper);
+                using (var docWrapper = new DocumentWrapper(filePath, password))
+                using (var stream = new MemoryStream())
+                {
+                    return GetBytes(stream, docWrapper);
+                }
             }
         }
 

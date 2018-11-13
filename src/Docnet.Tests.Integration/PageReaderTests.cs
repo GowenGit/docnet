@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Readers;
 using Xunit;
@@ -141,6 +142,29 @@ namespace Docnet.Tests.Integration
                 Assert.True(bytes.Length > 0);
                 Assert.True(bytes.Count(x => x != 0) > 0);
             });
+        }
+
+        [Fact]
+        public void Reader_WhenCalledFromDifferentThreads_ShouldBeAbleToHandle()
+        {
+            var task1 = Task.Run(() => Assert.Equal(2262610, GetNonZeroByteCount("Docs/simple_0.pdf", _fixture)));
+            var task2 = Task.Run(() => Assert.Equal(194475, GetNonZeroByteCount("Docs/simple_1.pdf", _fixture)));
+            var task3 = Task.Run(() => Assert.Equal(4625, GetNonZeroByteCount("Docs/simple_2.pdf", _fixture)));
+            var task4 = Task.Run(() => Assert.Equal(20691, GetNonZeroByteCount("Docs/simple_3.pdf", _fixture)));
+            var task5 = Task.Run(() => Assert.Equal(0, GetNonZeroByteCount("Docs/simple_4.pdf", _fixture)));
+
+            Task.WaitAll(task1, task2, task3, task4, task5);
+        }
+
+        private static int GetNonZeroByteCount(string filePath, LibFixture fixture)
+        {
+            using (var reader = fixture.Lib.GetDocReader(filePath, null, 1000, 1000))
+            {
+                using (var pageReader = reader.GetPageReader(0))
+                {
+                    return pageReader.GetImage().Count(x => x != 0);
+                }
+            }
         }
     }
 }

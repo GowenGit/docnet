@@ -21,43 +21,59 @@ namespace Docnet.Core.Readers
         {
             PageIndex = pageIndex;
 
-            _page = fpdf_view.FPDF_LoadPage(docWrapper.Instance, pageIndex);
-
-            if (_page == null)
+            lock (DocLib.Lock)
             {
-                throw new DocnetException($"failed to open page for page index {pageIndex}");
+                _page = fpdf_view.FPDF_LoadPage(docWrapper.Instance, pageIndex);
+
+                if (_page == null)
+                {
+                    throw new DocnetException($"failed to open page for page index {pageIndex}");
+                }
+
+                _text = fpdf_text.FPDFTextLoadPage(_page);
+
+                if (_text == null)
+                {
+                    throw new DocnetException($"failed to open page text for page index {pageIndex}");
+                }
+
+                _scaling = GetScalingFactor(_page, dimOne, dimTwo);
             }
-
-            _text = fpdf_text.FPDFTextLoadPage(_page);
-
-            if (_text == null)
-            {
-                throw new DocnetException($"failed to open page text for page index {pageIndex}");
-            }
-
-            _scaling = GetScalingFactor(_page, dimOne, dimTwo);
         }
 
         /// <inheritdoc />
         public int GetPageWidth()
         {
-            return (int)(fpdf_view.FPDF_GetPageWidth(_page) * _scaling);
+            lock (DocLib.Lock)
+            {
+                return (int)(fpdf_view.FPDF_GetPageWidth(_page) * _scaling);
+            }
         }
 
         /// <inheritdoc />
         public int GetPageHeight()
         {
-            return (int)(fpdf_view.FPDF_GetPageHeight(_page) * _scaling);
+            lock (DocLib.Lock)
+            {
+                return (int)(fpdf_view.FPDF_GetPageHeight(_page) * _scaling);
+            }
         }
 
         /// <inheritdoc />
         public string GetText()
         {
-            var charCount = fpdf_text.FPDFTextCountChars(_text);
+            ushort[] buffer;
 
-            var buffer = new ushort[charCount + 1];
+            int charactersWritten;
 
-            var charactersWritten = fpdf_text.FPDFTextGetText(_text, 0, charCount, ref buffer[0]);
+            lock (DocLib.Lock)
+            {
+                var charCount = fpdf_text.FPDFTextCountChars(_text);
+
+                buffer = new ushort[charCount + 1];
+
+                charactersWritten = fpdf_text.FPDFTextGetText(_text, 0, charCount, ref buffer[0]);
+            }
 
             if (charactersWritten == 0)
             {
@@ -80,30 +96,33 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public IEnumerable<Character> GetCharacters()
         {
-            var width = GetPageWidth();
-            var height = GetPageHeight();
-
-            var charCount = fpdf_text.FPDFTextCountChars(_text);
-
-            for (var i = 0; i < charCount; i++)
+            lock (DocLib.Lock)
             {
-                var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
+                var width = GetPageWidth();
+                var height = GetPageHeight();
 
-                double left = 0;
-                double top = 0;
-                double right = 0;
-                double bottom = 0;
+                var charCount = fpdf_text.FPDFTextCountChars(_text);
 
-                var success = fpdf_text.FPDFTextGetCharBox(_text, i, ref left, ref right, ref bottom, ref top) == 1;
+                for (var i = 0; i < charCount; i++)
+                {
+                    var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
 
-                if (!success) continue;
+                    double left = 0;
+                    double top = 0;
+                    double right = 0;
+                    double bottom = 0;
 
-                var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
-                var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
+                    var success = fpdf_text.FPDFTextGetCharBox(_text, i, ref left, ref right, ref bottom, ref top) == 1;
 
-                var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
+                    if (!success) continue;
 
-                yield return new Character(charCode, box);
+                    var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
+                    var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
+
+                    var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
+
+                    yield return new Character(charCode, box);
+                }
             }
         }
 
@@ -140,57 +159,60 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public byte[] GetImage()
         {
-            var width = GetPageWidth();
-            var height = GetPageHeight();
-
-            var bitmap = fpdf_view.FPDFBitmapCreate(width, height, 1);
-
-            if (bitmap == null)
+            lock (DocLib.Lock)
             {
-                throw new DocnetException("failed to create a bitmap object");
-            }
+                var width = GetPageWidth();
+                var height = GetPageHeight();
 
-            var stride = fpdf_view.FPDFBitmapGetStride(bitmap);
+                var bitmap = fpdf_view.FPDFBitmapCreate(width, height, 1);
 
-            var result = new byte[stride * height];
-
-            try
-            {
-                //          | a b 0 |
-                // matrix = | c d 0 |
-                //          | e f 1 |
-                using (var matrix = new FS_MATRIX_())
-                using (var clipping = new FS_RECTF_())
+                if (bitmap == null)
                 {
-                    matrix.A = (float)_scaling;
-                    matrix.B = 0;
-                    matrix.C = 0;
-                    matrix.D = (float)_scaling;
-                    matrix.E = 0;
-                    matrix.F = 0;
-
-                    clipping.Left = 0;
-                    clipping.Right = width;
-                    clipping.Bottom = 0;
-                    clipping.Top = height;
-
-                    fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, 0);
-
-                    var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
-
-                    Marshal.Copy(buffer, result, 0, result.Length);
+                    throw new DocnetException("failed to create a bitmap object");
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new DocnetException("error rendering page", ex);
-            }
-            finally
-            {
-                fpdf_view.FPDFBitmapDestroy(bitmap);
-            }
 
-            return result;
+                var stride = fpdf_view.FPDFBitmapGetStride(bitmap);
+
+                var result = new byte[stride * height];
+
+                try
+                {
+                    //          | a b 0 |
+                    // matrix = | c d 0 |
+                    //          | e f 1 |
+                    using (var matrix = new FS_MATRIX_())
+                    using (var clipping = new FS_RECTF_())
+                    {
+                        matrix.A = (float)_scaling;
+                        matrix.B = 0;
+                        matrix.C = 0;
+                        matrix.D = (float)_scaling;
+                        matrix.E = 0;
+                        matrix.F = 0;
+
+                        clipping.Left = 0;
+                        clipping.Right = width;
+                        clipping.Bottom = 0;
+                        clipping.Top = height;
+
+                        fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, 0);
+
+                        var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
+
+                        Marshal.Copy(buffer, result, 0, result.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new DocnetException("error rendering page", ex);
+                }
+                finally
+                {
+                    fpdf_view.FPDFBitmapDestroy(bitmap);
+                }
+
+                return result;
+            }
         }
 
         /// <summary>
@@ -214,17 +236,20 @@ namespace Docnet.Core.Readers
 
         public void Dispose()
         {
-            if (_text != null)
+            lock (DocLib.Lock)
             {
-                fpdf_text.FPDFTextClosePage(_text);
-            }
+                if (_text != null)
+                {
+                    fpdf_text.FPDFTextClosePage(_text);
+                }
 
-            if (_page == null)
-            {
-                return;
-            }
+                if (_page == null)
+                {
+                    return;
+                }
 
-            fpdf_view.FPDF_ClosePage(_page);
+                fpdf_view.FPDF_ClosePage(_page);
+            }
         }
     }
 }

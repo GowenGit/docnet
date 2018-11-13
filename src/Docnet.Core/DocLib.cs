@@ -8,7 +8,14 @@ namespace Docnet.Core
 {
     public sealed class DocLib : IDocLib
     {
-        private static readonly object Lock = new object();
+        /// <summary>
+        /// PDFium is not thread-safe
+        /// so we need to lock every native
+        /// call. We might implement
+        /// Command patter or something similar
+        /// to get around this in the future.
+        /// </summary>
+        internal static readonly object Lock = new object();
 
         private static DocLib _instance;
 
@@ -125,7 +132,10 @@ namespace Docnet.Core
 
         public void Dispose()
         {
-            fpdf_view.FPDF_DestroyLibrary();
+            lock (Lock)
+            {
+                fpdf_view.FPDF_DestroyLibrary();
+            }
 
             _instance = null;
         }

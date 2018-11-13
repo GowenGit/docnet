@@ -17,7 +17,10 @@ namespace Docnet.Core.Readers
             _dimOne = dimOne;
             _dimTwo = dimTwo;
 
-            _docWrapper = new DocumentWrapper(filePath, password);
+            lock (DocLib.Lock)
+            {
+                _docWrapper = new DocumentWrapper(filePath, password);
+            }
         }
 
         /// <inheritdoc />
@@ -25,11 +28,14 @@ namespace Docnet.Core.Readers
         {
             var version = 0;
 
-            var success = fpdf_view.FPDF_GetFileVersion(_docWrapper.Instance, ref version) == 1;
-
-            if (!success)
+            lock (DocLib.Lock)
             {
-                throw new DocnetException("failed to get pdf version");
+                var success = fpdf_view.FPDF_GetFileVersion(_docWrapper.Instance, ref version) == 1;
+
+                if (!success)
+                {
+                    throw new DocnetException("failed to get pdf version");
+                }
             }
 
             return new PdfVersion(version);
@@ -38,7 +44,10 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public int GetPageCount()
         {
-            return fpdf_view.FPDF_GetPageCount(_docWrapper.Instance);
+            lock (DocLib.Lock)
+            {
+                return fpdf_view.FPDF_GetPageCount(_docWrapper.Instance);
+            }
         }
 
         /// <inheritdoc />
@@ -49,7 +58,10 @@ namespace Docnet.Core.Readers
 
         public void Dispose()
         {
-            _docWrapper?.Dispose();
+            lock (DocLib.Lock)
+            {
+                _docWrapper?.Dispose();
+            }
         }
     }
 }
