@@ -147,11 +147,11 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void Reader_WhenCalledFromDifferentThreads_ShouldBeAbleToHandle()
         {
-            var task1 = Task.Run(() => Assert.Equal(2262610, GetNonZeroByteCount("Docs/simple_0.pdf", _fixture)));
-            var task2 = Task.Run(() => Assert.Equal(194475, GetNonZeroByteCount("Docs/simple_1.pdf", _fixture)));
-            var task3 = Task.Run(() => Assert.Equal(4625, GetNonZeroByteCount("Docs/simple_2.pdf", _fixture)));
-            var task4 = Task.Run(() => Assert.Equal(20691, GetNonZeroByteCount("Docs/simple_3.pdf", _fixture)));
-            var task5 = Task.Run(() => Assert.Equal(0, GetNonZeroByteCount("Docs/simple_4.pdf", _fixture)));
+            var task1 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_0.pdf", _fixture), 2000000, 2400000));
+            var task2 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_1.pdf", _fixture), 190000, 200000));
+            var task3 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_2.pdf", _fixture), 4500, 4900));
+            var task4 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_3.pdf", _fixture), 20000, 21000));
+            var task5 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_4.pdf", _fixture), 0, 0));
 
             Task.WaitAll(task1, task2, task3, task4, task5);
         }
