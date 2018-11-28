@@ -145,7 +145,7 @@ namespace Docnet.Tests.Integration
         }
 
         [Fact]
-        public void Reader_WhenCalledFromDifferentThreads_ShouldBeAbleToHandle()
+        public void Reader_WhenCalledFromDifferentThreads_ShouldBeAbleToHandle() 
         {
             var task1 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_0.pdf", _fixture), 2000000, 2400000));
             var task2 = Task.Run(() => Assert.InRange(GetNonZeroByteCount("Docs/simple_1.pdf", _fixture), 190000, 200000));

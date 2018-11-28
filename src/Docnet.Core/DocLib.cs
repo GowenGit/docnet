@@ -1,7 +1,8 @@
-﻿using System;
-using Docnet.Core.Bindings;
+﻿using Docnet.Core.Bindings;
 using Docnet.Core.Editors;
 using Docnet.Core.Readers;
+using Docnet.Core.Validation;
+
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 
 namespace Docnet.Core
@@ -56,79 +57,70 @@ namespace Docnet.Core
         /// <inheritdoc />
         public IDocReader GetDocReader(string filePath, string password, int dimOne, int dimTwo)
         {
-            CheckFilePathNotNull(filePath, nameof(filePath));
+            Validator.CheckFilePathNotNull(filePath, nameof(filePath));
 
-            CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
-            CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
+            Validator.CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
+            Validator.CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
 
-            CheckNotGreaterThan(dimOne, dimTwo, nameof(dimOne), nameof(dimTwo));
+            Validator.CheckNotGreaterThan(dimOne, dimTwo, nameof(dimOne), nameof(dimTwo));
 
             return new DocReader(filePath, password, dimOne, dimTwo);
+        }
+
+        public IDocReader GetDocReader(byte[] bytes, int dimOne, int dimTwo)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IDocReader GetDocReader(byte[] bytes, string password, int dimOne, int dimTwo)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
         public byte[] Merge(string fileOne, string fileTwo)
         {
-            CheckFilePathNotNull(fileOne, nameof(fileOne));
-            CheckFilePathNotNull(fileTwo, nameof(fileTwo));
+            Validator.CheckFilePathNotNull(fileOne, nameof(fileOne));
+            Validator.CheckFilePathNotNull(fileTwo, nameof(fileTwo));
 
             return _editor.Merge(fileOne, fileTwo);
+        }
+
+        public byte[] Merge(byte[] fileOne, byte[] fileTwo)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
-            CheckFilePathNotNull(filePath, nameof(filePath));
+            Validator.CheckFilePathNotNull(filePath, nameof(filePath));
 
-            CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
-            CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
+            Validator.CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
+            Validator.CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
 
-            CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            Validator.CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
 
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
+        }
+
+        public byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
         public byte[] Unlock(string filePath, string password)
         {
-            CheckFilePathNotNull(filePath, nameof(filePath));
+            Validator.CheckFilePathNotNull(filePath, nameof(filePath));
 
             return _editor.Unlock(filePath, password);
         }
 
-        #region Validation
-        private static void CheckFilePathNotNull(string filePath, string name)
+        public byte[] Unlock(byte[] bytes, string password)
         {
-            if (filePath == null)
-            {
-                throw new ArgumentNullException(name, "file path can't be null");
-            }
+            throw new System.NotImplementedException();
         }
-
-        private static void CheckNotLessOrEqualToZero(int value, string name)
-        {
-            if (value <= 0)
-            {
-                throw new ArgumentException("value can't be less or equal to zero", name);
-            }
-        }
-
-        private static void CheckNotLessThanZero(int value, string name)
-        {
-            if (value < 0)
-            {
-                throw new ArgumentException("value can't be less than zero", name);
-            }
-        }
-
-        private static void CheckNotGreaterThan(int valueOne, int valueTwo, string nameOne, string nameTwo)
-        {
-            if (valueOne > valueTwo)
-            {
-                throw new ArgumentException($"{nameOne} can't be more than {nameTwo}");
-            }
-        }
-        #endregion
 
         public void Dispose()
         {

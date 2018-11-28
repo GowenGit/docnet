@@ -1,4 +1,5 @@
-using System;
+using Docnet.Core.Validation;
+
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 
 namespace Docnet.Core.Models
@@ -15,34 +16,18 @@ namespace Docnet.Core.Models
 
         public BoundBox(int left, int top, int right, int bottom)
         {
-            CheckNotLessThanZero(left, nameof(left));
-            CheckNotLessThanZero(top, nameof(top));
-            CheckNotLessThanZero(right, nameof(right));
-            CheckNotLessThanZero(bottom, nameof(bottom));
+            Validator.CheckNotLessThanZero(left, nameof(left));
+            Validator.CheckNotLessThanZero(top, nameof(top));
+            Validator.CheckNotLessThanZero(right, nameof(right));
+            Validator.CheckNotLessThanZero(bottom, nameof(bottom));
 
-            CheckOrder(left, right, nameof(left), nameof(right));
-            CheckOrder(top, bottom, nameof(top), nameof(bottom));
+            Validator.CheckOrder(left, right, nameof(left), nameof(right));
+            Validator.CheckOrder(top, bottom, nameof(top), nameof(bottom));
 
             Left = left;
             Top = top;
             Right = right;
             Bottom = bottom;
-        }
-
-        private static void CheckNotLessThanZero(int coordinate, string name)
-        {
-            if (coordinate < 0)
-            {
-                throw new ArgumentException("coordinate can't be less than 0", name);
-            }
-        }
-
-        private static void CheckOrder(int coordOne, int coordTwo, string nameOne, string nameTwo)
-        {
-            if (coordOne > coordTwo)
-            {
-                throw new ArgumentException($"{nameOne} coordinate can't be more than {nameTwo} coordinate");
-            }
         }
 
         public override bool Equals(object obj)
