@@ -6,6 +6,8 @@ namespace Docnet.Core.Bindings
 {
     internal sealed class DocumentWrapper : IDisposable
     {
+        private readonly IntPtr _ptr;
+
         public FpdfDocumentT Instance { get; private set; }
 
         public DocumentWrapper(string filePath, string password)
@@ -20,18 +22,11 @@ namespace Docnet.Core.Bindings
 
         public DocumentWrapper(byte[] bytes, string password)
         {
-            var ptr = Marshal.AllocHGlobal(bytes.Length);
+            _ptr = Marshal.AllocHGlobal(bytes.Length);
 
-            try
-            {
-                Marshal.Copy(bytes, 0, ptr, bytes.Length);
+            Marshal.Copy(bytes, 0, _ptr, bytes.Length);
 
-                Instance = fpdf_view.FPDF_LoadMemDocument(ptr, bytes.Length, password);
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(ptr);
-            }
+            Instance = fpdf_view.FPDF_LoadMemDocument(_ptr, bytes.Length, password);
 
             if (Instance == null)
             {
@@ -57,6 +52,8 @@ namespace Docnet.Core.Bindings
             }
 
             fpdf_view.FPDF_CloseDocument(Instance);
+
+            Marshal.FreeHGlobal(_ptr);
 
             Instance = null;
         }
