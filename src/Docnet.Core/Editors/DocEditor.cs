@@ -12,22 +12,41 @@ namespace Docnet.Core.Editors
             {
                 using (var docOneWrapper = new DocumentWrapper(fileOne, null))
                 using (var docTwoWrapper = new DocumentWrapper(fileTwo, null))
-                using (var stream = new MemoryStream())
                 {
-                    var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
-
-                    var success = fpdf_ppo.FPDF_ImportPages(
-                                      docOneWrapper.Instance,
-                                      docTwoWrapper.Instance,
-                                      null, pageCountOne) == 1;
-
-                    if (!success)
-                    {
-                        throw new DocnetException("failed to merge files");
-                    }
-
-                    return GetBytes(stream, docOneWrapper);
+                    return Merge(docOneWrapper, docTwoWrapper);
                 }
+            }
+        }
+
+        public byte[] Merge(byte[] fileOne, byte[] fileTwo)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var docOneWrapper = new DocumentWrapper(fileOne, null))
+                using (var docTwoWrapper = new DocumentWrapper(fileTwo, null))
+                {
+                    return Merge(docOneWrapper, docTwoWrapper);
+                }
+            }
+        }
+
+        private static byte[] Merge(DocumentWrapper docOneWrapper, DocumentWrapper docTwoWrapper)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
+
+                var success = fpdf_ppo.FPDF_ImportPages(
+                                  docOneWrapper.Instance,
+                                  docTwoWrapper.Instance,
+                                  null, pageCountOne) == 1;
+
+                if (!success)
+                {
+                    throw new DocnetException("failed to merge files");
+                }
+
+                return GetBytes(stream, docOneWrapper);
             }
         }
 
@@ -35,22 +54,40 @@ namespace Docnet.Core.Editors
         {
             lock (DocLib.Lock)
             {
-                using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
                 using (var srcWrapper = new DocumentWrapper(filePath, null))
-                using (var stream = new MemoryStream())
                 {
-                    var success = fpdf_ppo.FPDF_ImportPages(
-                                      newWrapper.Instance,
-                                      srcWrapper.Instance,
-                                      $"{pageFromIndex + 1} - {pageToIndex + 1}", 0) == 1;
-
-                    if (!success)
-                    {
-                        throw new DocnetException("failed to split file");
-                    }
-
-                    return GetBytes(stream, newWrapper);
+                    return Split(srcWrapper, pageFromIndex, pageToIndex);
                 }
+            }
+        }
+
+        public byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var srcWrapper = new DocumentWrapper(bytes, null))
+                {
+                    return Split(srcWrapper, pageFromIndex, pageToIndex);
+                }
+            }
+        }
+
+        private static byte[] Split(DocumentWrapper srcWrapper, int pageFromIndex, int pageToIndex)
+        {
+            using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
+            using (var stream = new MemoryStream())
+            {
+                var success = fpdf_ppo.FPDF_ImportPages(
+                                  newWrapper.Instance,
+                                  srcWrapper.Instance,
+                                  $"{pageFromIndex + 1} - {pageToIndex + 1}", 0) == 1;
+
+                if (!success)
+                {
+                    throw new DocnetException("failed to split file");
+                }
+
+                return GetBytes(stream, newWrapper);
             }
         }
 
@@ -59,10 +96,28 @@ namespace Docnet.Core.Editors
             lock (DocLib.Lock)
             {
                 using (var docWrapper = new DocumentWrapper(filePath, password))
-                using (var stream = new MemoryStream())
                 {
-                    return GetBytes(stream, docWrapper);
+                    return Unlock(docWrapper);
                 }
+            }
+        }
+
+        public byte[] Unlock(byte[] bytes, string password)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var docWrapper = new DocumentWrapper(bytes, password))
+                {
+                    return Unlock(docWrapper);
+                }
+            }
+        }
+
+        private static byte[] Unlock(DocumentWrapper docWrapper)
+        {
+            using (var stream = new MemoryStream())
+            {
+                return GetBytes(stream, docWrapper);
             }
         }
 

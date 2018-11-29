@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Docnet.Tests.Integration
+namespace Docnet.Tests.Integration.Utils
 {
     public class TempFile : IDisposable
     {

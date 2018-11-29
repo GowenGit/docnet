@@ -2,7 +2,7 @@ using System;
 using Docnet.Core;
 using Xunit;
 
-namespace Docnet.Tests.Integration
+namespace Docnet.Tests.Integration.Utils
 {
     public class LibFixture : IDisposable
     {
