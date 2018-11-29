@@ -17,11 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None CopyToOutputDirectory="PreserveNewest" Update="Docs\*"/>
+    <None CopyToOutputDirectory="PreserveNewest" Update="Docs\*" />
   </ItemGroup>
 
   <ItemGroup>
-    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\linux-x64\native\pdfium.so" Visible="false"/>
-    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\win-x64\native\pdfium.dll" Visible="false"/>
+    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\linux-x64\native\pdfium.so" Visible="false" />
+    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\win-x64\native\pdfium.dll" Visible="false" />
   </ItemGroup>
 </Project>
