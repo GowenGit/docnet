@@ -67,14 +67,23 @@ namespace Docnet.Core
             return new DocReader(filePath, password, dimOne, dimTwo);
         }
 
+        /// <inheritdoc />
         public IDocReader GetDocReader(byte[] bytes, int dimOne, int dimTwo)
         {
-            throw new System.NotImplementedException();
+            return GetDocReader(bytes, null, dimOne, dimTwo);
         }
 
+        /// <inheritdoc />
         public IDocReader GetDocReader(byte[] bytes, string password, int dimOne, int dimTwo)
         {
-            throw new System.NotImplementedException();
+            Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
+
+            Validator.CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
+            Validator.CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
+
+            Validator.CheckNotGreaterThan(dimOne, dimTwo, nameof(dimOne), nameof(dimTwo));
+
+            return new DocReader(bytes, password, dimOne, dimTwo);
         }
 
         /// <inheritdoc />
@@ -86,9 +95,13 @@ namespace Docnet.Core
             return _editor.Merge(fileOne, fileTwo);
         }
 
+        /// <inheritdoc />
         public byte[] Merge(byte[] fileOne, byte[] fileTwo)
         {
-            throw new System.NotImplementedException();
+            Validator.CheckBytesNullOrZero(fileOne, nameof(fileOne));
+            Validator.CheckBytesNullOrZero(fileTwo, nameof(fileTwo));
+
+            return _editor.Merge(fileOne, fileTwo);
         }
 
         /// <inheritdoc />
@@ -104,9 +117,17 @@ namespace Docnet.Core
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
 
+        /// <inheritdoc />
         public byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex)
         {
-            throw new System.NotImplementedException();
+            Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
+
+            Validator.CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
+            Validator.CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
+
+            Validator.CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+
+            return _editor.Split(bytes, pageFromIndex, pageToIndex);
         }
 
         /// <inheritdoc />
@@ -117,9 +138,12 @@ namespace Docnet.Core
             return _editor.Unlock(filePath, password);
         }
 
+        /// <inheritdoc />
         public byte[] Unlock(byte[] bytes, string password)
         {
-            throw new System.NotImplementedException();
+            Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
+
+            return _editor.Unlock(bytes, password);
         }
 
         public void Dispose()

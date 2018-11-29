@@ -12,6 +12,14 @@ namespace Docnet.Core.Validation
             }
         }
 
+        public static void CheckBytesNullOrZero(byte[] bytes, string name)
+        {
+            if (bytes == null || bytes.Length == 0)
+            {
+                throw new ArgumentNullException(name, "bytes can't be null or empty");
+            }
+        }
+
         public static void CheckNotLessOrEqualToZero(int value, string name)
         {
             if (value <= 0)

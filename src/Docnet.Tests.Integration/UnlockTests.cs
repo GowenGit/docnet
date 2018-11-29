@@ -17,7 +17,7 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void Unlock_WhenCalledWithNullFilePath_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Unlock(null, null));
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Unlock((string) null, null));
         }
 
         [Fact]

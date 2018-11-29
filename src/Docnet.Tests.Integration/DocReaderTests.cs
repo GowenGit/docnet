@@ -34,7 +34,7 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void GetDocReader_WhenCalledWithNullFilePath_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.GetDocReader(null, null, 10, 10));
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.GetDocReader((string) null, null, 10, 10));
         }
 
         [Theory]

@@ -23,6 +23,17 @@ namespace Docnet.Core.Readers
             }
         }
 
+        public DocReader(byte[] bytes, string password, int dimOne, int dimTwo)
+        {
+            _dimOne = dimOne;
+            _dimTwo = dimTwo;
+
+            lock (DocLib.Lock)
+            {
+                _docWrapper = new DocumentWrapper(bytes, password);
+            }
+        }
+
         /// <inheritdoc />
         public PdfVersion GetPdfVersion()
         {
