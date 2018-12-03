@@ -6,7 +6,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Authors>Modestas Petravicius</Authors>
     <Product>DocNet</Product>
-    <Description>DocNET is as fast PDF editing and reading library for modern .NET applications.</Description>
+    <Description>DocNET is a fast PDF editing and reading library for modern .NET applications.</Description>
     <version>$(VersionSuffix)</version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591;0649</NoWarn>
