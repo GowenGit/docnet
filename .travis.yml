@@ -5,7 +5,6 @@ dotnet: 2.1.300
 os:
   - linux
   - osx
-  - windows
 script:
  - cd src
  - dotnet restore
