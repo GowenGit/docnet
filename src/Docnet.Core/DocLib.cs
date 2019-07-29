@@ -1,4 +1,5 @@
-﻿using Docnet.Core.Bindings;
+﻿using System.Collections.Generic;
+using Docnet.Core.Bindings;
 using Docnet.Core.Editors;
 using Docnet.Core.Readers;
 using Docnet.Core.Validation;
@@ -144,6 +145,19 @@ namespace Docnet.Core
             Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
 
             return _editor.Unlock(bytes, password);
+        }
+
+        public byte[] JpegToPdf(IReadOnlyList<JpegImage> files)
+        {
+            foreach (var jpegImage in files)
+            {
+                Validator.CheckBytesNullOrZero(jpegImage.Bytes, nameof(jpegImage.Bytes));
+
+                Validator.CheckNotLessThanZero(jpegImage.Width, nameof(jpegImage.Width));
+                Validator.CheckNotLessThanZero(jpegImage.Height, nameof(jpegImage.Height));
+            }
+
+            return _editor.JpegToPdf(files);
         }
 
         public string GetLastError()

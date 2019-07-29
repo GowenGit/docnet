@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Docnet.Core.Editors
 {
     internal interface IDocEditor
@@ -13,5 +15,7 @@ namespace Docnet.Core.Editors
         byte[] Unlock(string filePath, string password);
 
         byte[] Unlock(byte[] bytes, string password);
+
+        byte[] JpegToPdf(IReadOnlyList<JpegImage> files);
     }
 }

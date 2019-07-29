@@ -14,8 +14,11 @@
     <PackageLicenseUrl>https://github.com/GowenGit/docnet/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/GowenGit/docnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/GowenGit/docnet</RepositoryUrl>
-    <PackageTags>PDF; Reader; netstandard; PDFium</PackageTags>
+    <PackageTags>PDF; Reader; netstandard; PDFium; JPEG; JPG</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/GowenGit/docnet/master/assets/icon.png</PackageIconUrl>
+    <PackageReleaseNotes>- New PDFium version
+- Added `GetLastError` for better error handling
+- Added support for JPEG to PDF conversion</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

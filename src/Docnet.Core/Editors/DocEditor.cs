@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Docnet.Core.Bindings;
 using Docnet.Core.Exceptions;
@@ -109,6 +110,37 @@ namespace Docnet.Core.Editors
                 using (var docWrapper = new DocumentWrapper(bytes, password))
                 {
                     return Unlock(docWrapper);
+                }
+            }
+        }
+
+        public byte[] JpegToPdf(IReadOnlyList<JpegImage> files)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
+                using (var outStream = new MemoryStream())
+                {
+                    var index = 0;
+
+                    foreach (var image in files)
+                    {
+                        using (var stream = new MemoryStream(image.Bytes))
+                        {
+                            var page = fpdf_edit.FPDFPageNew(newWrapper.Instance, index, image.Width, image.Height);
+                            var imageObj = fpdf_edit.FPDFPageObjNewImageObj(newWrapper.Instance);
+
+                            fpdf_custom_edit.FPDFImageObjLoadJpegFile(page, 1, imageObj, FileHandle.FromStream(stream, image.Bytes.Length));
+                            fpdf_edit.FPDFImageObjSetMatrix(imageObj, image.Width, 0 , 0, image.Height, 0, 0);
+                            fpdf_edit.FPDFPageInsertObject(page, imageObj);
+                            fpdf_edit.FPDFPageGenerateContent(page);
+                            fpdf_view.FPDF_ClosePage(page);
+
+                            index++;
+                        }
+                    }
+
+                    return GetBytes(outStream, newWrapper);
                 }
             }
         }

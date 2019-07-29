@@ -7,6 +7,8 @@
 
 **docnet** aims to be a fast PDF editing and data extraction library. It is a `.NET Standard 2.0` wrapper for `PDFium C++` library that is used by `chromium`.
 
+PDFium version: `3866`
+
 ## Notes
 
 * **docnet** currently supports `x64` configuration only.
@@ -26,6 +28,7 @@
 - [x] Split PDF document
 - [x] Merge PDF document
 - [x] Unlock PDF document
+- [x] Convert **JPEG** files to PDF
 
 ## Examples
 

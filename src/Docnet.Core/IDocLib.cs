@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Docnet.Core.Editors;
 using Docnet.Core.Readers;
 
 namespace Docnet.Core
@@ -110,6 +112,13 @@ namespace Docnet.Core
         /// <param name="password">File password</param>
         /// <returns>New file bytes</returns>
         byte[] Unlock(byte[] bytes, string password);
+
+        /// <summary>
+        /// Convert JPEG files to PDF
+        /// </summary>
+        /// <param name="files">JPEG byte arrays</param>
+        /// <returns>New PDF file bytes</returns>
+        byte[] JpegToPdf(IReadOnlyList<JpegImage> files);
 
         /// <summary>
         /// Get a description of the last error
