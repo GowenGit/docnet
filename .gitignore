@@ -4,3 +4,4 @@
 bin/
 obj/
 nuget/
+.DS_Store

@@ -23,5 +23,6 @@
   <ItemGroup>
     <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\linux-x64\native\pdfium.so" Visible="false" />
     <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\win-x64\native\pdfium.dll" Visible="false" />
+    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\osx-x64\native\pdfium.dylib" Visible="false" />
   </ItemGroup>
 </Project>
