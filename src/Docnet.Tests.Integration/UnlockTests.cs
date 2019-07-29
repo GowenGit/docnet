@@ -111,22 +111,5 @@ namespace Docnet.Tests.Integration
 
             Assert.True(unlockedBytes.Length > 0);
         }
-
-        [Theory]
-        [InlineData("fake_password")]
-        [InlineData("password")]
-        [InlineData(null)]
-        public void Unlock_WhenCalledForUnlockedFileBytesWithAnyPassword_ShouldReturnByteArrayAndNoError(string password)
-        {
-            var bytes = File.ReadAllBytes("Docs/simple_0.pdf");
-
-            var unlockedBytes = _fixture.Lib.Unlock(bytes, password);
-
-            Assert.True(unlockedBytes.Length > 0);
-
-            var message = _fixture.Lib.GetLastError();
-
-            Assert.Equal("no error", message);
-        }
     }
 }
