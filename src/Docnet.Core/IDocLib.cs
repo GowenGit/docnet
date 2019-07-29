@@ -110,5 +110,12 @@ namespace Docnet.Core
         /// <param name="password">File password</param>
         /// <returns>New file bytes</returns>
         byte[] Unlock(byte[] bytes, string password);
+
+        /// <summary>
+        /// Get a description of the last error
+        /// that has occured.
+        /// </summary>
+        /// <returns>Error message</returns>
+        string GetLastError();
     }
 }
