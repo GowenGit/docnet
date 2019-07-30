@@ -2,6 +2,9 @@ language: csharp
 solution: docnet.sln
 mono: none
 dotnet: 2.1.300
+os:
+  - linux
+  - osx
 script:
  - cd src
  - dotnet restore
