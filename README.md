@@ -13,6 +13,12 @@ PDFium version: `3866`
 
 * **docnet** currently supports `x64` configuration only.
 
+Supported platforms:
+
+- Win
+- linux
+- osx
+
 ## Features
 
 - [x] Extract PDF version
@@ -37,3 +43,5 @@ PDFium version: `3866`
    ![Render PDF page example](assets/demo_thumb_0.png)
 
     **Note:** If you have issues running on Linux make sure that `libgdiplus` is installed since this example uses `System.Drawing.Common`.
+
+* Convert JPEG file to PDF: [example](examples/image-to-pdf/ImageToPdf/Program.cs)
