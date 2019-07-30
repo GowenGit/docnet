@@ -15,7 +15,7 @@ PDFium version: `3866`
 
 Supported platforms:
 
-- Win
+- win
 - linux
 - osx
 
