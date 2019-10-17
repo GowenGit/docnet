@@ -111,7 +111,6 @@ namespace Docnet.Core
         /// <param name="pageRange">NOT 0-based! i.e. [1,3,5-7]. String [1,1,1] - will generate 3-page document.</param>
         byte[] Split(byte[] bytes, string pageRange);
 
-
         /// <summary>
         /// Unlock a given document.
         /// </summary>
