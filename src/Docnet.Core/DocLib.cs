@@ -132,6 +132,25 @@ namespace Docnet.Core
         }
 
         /// <inheritdoc />
+        public byte[] Split(string filePath, string pageRange)
+        {
+            Validator.CheckFilePathNotNull(filePath, nameof(filePath));
+            Validator.CheckPageRangeNotNullOrEmpty(pageRange, nameof(pageRange));
+
+            return _editor.Split(filePath, pageRange);
+        }
+
+        /// <inheritdoc />
+        public byte[] Split(byte[] bytes, string pageRange)
+        {
+            Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
+            Validator.CheckPageRangeNotNullOrEmpty(pageRange, nameof(pageRange));
+
+            return _editor.Split(bytes, pageRange);
+        }
+
+
+        /// <inheritdoc />
         public byte[] Unlock(string filePath, string password)
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));

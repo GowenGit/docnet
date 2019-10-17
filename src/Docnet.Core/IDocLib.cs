@@ -98,6 +98,21 @@ namespace Docnet.Core
         byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex);
 
         /// <summary>
+        /// Split a range(s) of pages into a separate document.
+        /// </summary>
+        /// <param name="filePath">Full file path</param>
+        /// <param name="pageRange">NOT 0-based! i.e. [1,3,5-7]. String [1,1,1] - will generate 3-page document.</param>
+        byte[] Split(string filePath, string pageRange);
+
+        /// <summary>
+        /// Split a range(s) of pages into a separate document.
+        /// </summary>
+        /// <param name="bytes">File bytes</param>
+        /// <param name="pageRange">NOT 0-based! i.e. [1,3,5-7]. String [1,1,1] - will generate 3-page document.</param>
+        byte[] Split(byte[] bytes, string pageRange);
+
+
+        /// <summary>
         /// Unlock a given document.
         /// </summary>
         /// <param name="filePath">Full file path</param>

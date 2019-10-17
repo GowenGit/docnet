@@ -28,6 +28,18 @@ namespace Docnet.Tests.Integration.Utils
 
             return fixture.Lib.Split(bytes, fromIndex, toIndex);
         }
+
+        public static byte[] Split(this LibFixture fixture, Input type, string filePath, string pageRange)
+        {
+            if (type == Input.FromFile)
+            {
+                return fixture.Lib.Split(filePath, pageRange);
+            }
+
+            var bytes = File.ReadAllBytes(filePath);
+
+            return fixture.Lib.Split(bytes, pageRange);
+        }
     }
 
     public enum Input
