@@ -12,14 +12,6 @@ namespace Docnet.Core.Validation
             }
         }
 
-        public static void CheckPageRangeNotNullOrEmpty(string pageRange, string name)
-        {
-            if (string.IsNullOrEmpty(pageRange))
-            {
-                throw new ArgumentException("page range can't be null or empty", name);
-            }
-        }
-
         public static void CheckBytesNullOrZero(byte[] bytes, string name)
         {
             if (bytes == null || bytes.Length == 0)

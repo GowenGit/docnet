@@ -22,12 +22,14 @@ namespace Docnet.Core
         private static DocLib _instance;
 
         private readonly IDocEditor _editor;
+        private readonly IPageRangeValidator _pageRangeValidator;
 
         private DocLib()
         {
             fpdf_view.FPDF_InitLibrary();
 
             _editor = new DocEditor();
+            _pageRangeValidator = new PageRangeValidator();
         }
 
         public static DocLib Instance
@@ -110,10 +112,7 @@ namespace Docnet.Core
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));
 
-            Validator.CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
-            Validator.CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
-
-            Validator.CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            _pageRangeValidator.ValidatePageIndices(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
 
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
@@ -123,10 +122,7 @@ namespace Docnet.Core
         {
             Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
 
-            Validator.CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
-            Validator.CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
-
-            Validator.CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            _pageRangeValidator.ValidatePageIndices(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
 
             return _editor.Split(bytes, pageFromIndex, pageToIndex);
         }
@@ -135,7 +131,8 @@ namespace Docnet.Core
         public byte[] Split(string filePath, string pageRange)
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));
-            Validator.CheckPageRangeNotNullOrEmpty(pageRange, nameof(pageRange));
+
+            _pageRangeValidator.ValidatePageNumbers(pageRange, nameof(pageRange));
 
             return _editor.Split(filePath, pageRange);
         }
@@ -144,7 +141,7 @@ namespace Docnet.Core
         public byte[] Split(byte[] bytes, string pageRange)
         {
             Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
-            Validator.CheckPageRangeNotNullOrEmpty(pageRange, nameof(pageRange));
+            _pageRangeValidator.ValidatePageNumbers(pageRange, nameof(pageRange));
 
             return _editor.Split(bytes, pageRange);
         }
