@@ -67,16 +67,16 @@ namespace Docnet.Core.Validation
                 throw new ArgumentException("Page range can't be null or empty", argName);
             }
 
-            string[] subRanges = pageRange.Split(new[] { ',' }, StringSplitOptions.None);
+            var subRanges = pageRange.Split(new[] { ',' }, StringSplitOptions.None);
 
-            foreach (string subRange in subRanges)
+            foreach (var subRange in subRanges)
             {
                 if (subRange.Length == 0)
                 {
                     throw new ArgumentException("Sub-range can't be empty", argName);
                 }
 
-                string[] bounds = subRange.Split(new[] { '-' }, StringSplitOptions.None);
+                var bounds = subRange.Split(new[] { '-' }, StringSplitOptions.None);
 
                 if (bounds.Length == 1)
                 {
@@ -96,7 +96,7 @@ namespace Docnet.Core.Validation
 
         private static void ValidateNumber(string numberStr, string argName, string subRange = null)
         {
-            if (!int.TryParse(numberStr, out int number))
+            if (!int.TryParse(numberStr, out var number))
             {
                 throw new ArgumentException($"[{numberStr}] is not a number {(subRange != null ? $"(sub-range [{subRange}])" : string.Empty)}", argName);
             }
