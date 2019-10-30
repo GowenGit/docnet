@@ -1,19 +1,11 @@
 ﻿using System;
 using Docnet.Core.Validation;
-using Docnet.Tests.Integration.Utils;
 using Xunit;
 
-namespace Docnet.Tests.Integration
+namespace Docnet.Tests.Unit
 {
-    public class PageRangeValidatorTests : IClassFixture<PageRangeValidatorFixture>
+    public class PageRangeValidatorTests
     {
-        private readonly IPageRangeValidator _validator;
-
-        public PageRangeValidatorTests(PageRangeValidatorFixture pageRangeValidatorFixture)
-        {
-            _validator = pageRangeValidatorFixture.PageRangeValidator;
-        }
-
         [Theory]
         [InlineData(-1, 0)]
         [InlineData(0, -1)]
@@ -23,7 +15,7 @@ namespace Docnet.Tests.Integration
         [InlineData(3, -20)]
         public void Split_WhenCalledWithInvalidIndex_ShouldThrow(int fromIndex, int toIndex)
         {
-            Assert.Throws<ArgumentException>(() => _validator.ValidatePageIndices(fromIndex, toIndex, nameof(fromIndex), nameof(toIndex)));
+            Assert.Throws<ArgumentException>(() => Validator.ValidatePageIndices(fromIndex, toIndex, nameof(fromIndex), nameof(toIndex)));
         }
 
         [Theory]
@@ -34,7 +26,7 @@ namespace Docnet.Tests.Integration
         [InlineData("0-0,0")]
         public void Split_WhenOneOfPagesZeroBased_ShouldThrow(string pageRange)
         {
-            Assert.Throws<ArgumentException>(() => _validator.ValidatePageNumbers(pageRange, nameof(pageRange)));
+            Assert.Throws<ArgumentException>(() => Validator.ValidatePageNumbers(pageRange, nameof(pageRange)));
         }
 
         [Theory]
@@ -65,7 +57,7 @@ namespace Docnet.Tests.Integration
         [InlineData("2-5 - 14- 18")]
         public void Split_WhenCalledWithInvalidRange_ShouldThrow(string pageRange)
         {
-            Assert.Throws<ArgumentException>(() => _validator.ValidatePageNumbers(pageRange, nameof(pageRange)));
+            Assert.Throws<ArgumentException>(() => Validator.ValidatePageNumbers(pageRange, nameof(pageRange)));
         }
     }
 }
