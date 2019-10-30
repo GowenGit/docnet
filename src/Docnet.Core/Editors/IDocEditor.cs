@@ -12,6 +12,10 @@ namespace Docnet.Core.Editors
 
         byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex);
 
+        byte[] Split(string filePath, string pageRange);
+
+        byte[] Split(byte[] bytes, string pageRange);
+
         byte[] Unlock(string filePath, string password);
 
         byte[] Unlock(byte[] bytes, string password);

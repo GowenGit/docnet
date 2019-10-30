@@ -73,7 +73,35 @@ namespace Docnet.Core.Editors
             }
         }
 
+        public byte[] Split(string filePath, string pageRange)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var srcWrapper = new DocumentWrapper(filePath, null))
+                {
+                    return Split(srcWrapper, pageRange);
+                }
+            }
+        }
+
+        public byte[] Split(byte[] bytes, string pageRange)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var srcWrapper = new DocumentWrapper(bytes, null))
+                {
+                    return Split(srcWrapper, pageRange);
+                }
+            }
+        }
+
         private static byte[] Split(DocumentWrapper srcWrapper, int pageFromIndex, int pageToIndex)
+        {
+            return Split(srcWrapper, $"{pageFromIndex + 1} - {pageToIndex + 1}");
+        }
+
+        private static byte[] Split(DocumentWrapper srcWrapper, string pageRange)
+
         {
             using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
             using (var stream = new MemoryStream())
@@ -81,7 +109,7 @@ namespace Docnet.Core.Editors
                 var success = fpdf_ppo.FPDF_ImportPages(
                                   newWrapper.Instance,
                                   srcWrapper.Instance,
-                                  $"{pageFromIndex + 1} - {pageToIndex + 1}", 0) == 1;
+                                  pageRange, 0) == 1;
 
                 if (!success)
                 {

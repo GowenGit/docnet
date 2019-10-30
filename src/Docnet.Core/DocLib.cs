@@ -109,11 +109,7 @@ namespace Docnet.Core
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));
-
-            Validator.CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
-            Validator.CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
-
-            Validator.CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            Validator.ValidatePageIndices(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
 
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
@@ -122,14 +118,29 @@ namespace Docnet.Core
         public byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex)
         {
             Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
-
-            Validator.CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
-            Validator.CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));
-
-            Validator.CheckNotGreaterThan(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            Validator.ValidatePageIndices(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
 
             return _editor.Split(bytes, pageFromIndex, pageToIndex);
         }
+
+        /// <inheritdoc />
+        public byte[] Split(string filePath, string pageRange)
+        {
+            Validator.CheckFilePathNotNull(filePath, nameof(filePath));
+            Validator.ValidatePageNumbers(pageRange, nameof(pageRange));
+
+            return _editor.Split(filePath, pageRange);
+        }
+
+        /// <inheritdoc />
+        public byte[] Split(byte[] bytes, string pageRange)
+        {
+            Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
+            Validator.ValidatePageNumbers(pageRange, nameof(pageRange));
+
+            return _editor.Split(bytes, pageRange);
+        }
+
 
         /// <inheritdoc />
         public byte[] Unlock(string filePath, string password)
