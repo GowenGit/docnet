@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Docnet.Core.Bindings;
 using Docnet.Core.Editors;
+using Docnet.Core.Models;
 using Docnet.Core.Readers;
 using Docnet.Core.Validation;
 
@@ -50,41 +51,31 @@ namespace Docnet.Core
         }
 
         /// <inheritdoc />
-        public IDocReader GetDocReader(string filePath, int dimOne, int dimTwo)
+        public IDocReader GetDocReader(string filePath, PageDimensions dimensionOptions)
         {
-            return GetDocReader(filePath, null, dimOne, dimTwo);
+            return GetDocReader(filePath, null, dimensionOptions);
         }
 
         /// <inheritdoc />
-        public IDocReader GetDocReader(string filePath, string password, int dimOne, int dimTwo)
+        public IDocReader GetDocReader(string filePath, string password, PageDimensions dimensionOptions)
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));
 
-            Validator.CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
-            Validator.CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
-
-            Validator.CheckNotGreaterThan(dimOne, dimTwo, nameof(dimOne), nameof(dimTwo));
-
-            return new DocReader(filePath, password, dimOne, dimTwo);
+            return new DocReader(filePath, password, dimensionOptions);
         }
 
         /// <inheritdoc />
-        public IDocReader GetDocReader(byte[] bytes, int dimOne, int dimTwo)
+        public IDocReader GetDocReader(byte[] bytes, PageDimensions dimensionOptions)
         {
-            return GetDocReader(bytes, null, dimOne, dimTwo);
+            return GetDocReader(bytes, null, dimensionOptions);
         }
 
         /// <inheritdoc />
-        public IDocReader GetDocReader(byte[] bytes, string password, int dimOne, int dimTwo)
+        public IDocReader GetDocReader(byte[] bytes, string password, PageDimensions dimensionOptions)
         {
             Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
 
-            Validator.CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
-            Validator.CheckNotLessOrEqualToZero(dimTwo, nameof(dimTwo));
-
-            Validator.CheckNotGreaterThan(dimOne, dimTwo, nameof(dimOne), nameof(dimTwo));
-
-            return new DocReader(bytes, password, dimOne, dimTwo);
+            return new DocReader(bytes, password, dimensionOptions);
         }
 
         /// <inheritdoc />

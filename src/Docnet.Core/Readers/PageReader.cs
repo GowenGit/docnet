@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Docnet.Core.Bindings;
+using Docnet.Core.Converters;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Models;
 
@@ -17,7 +18,7 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public int PageIndex { get; }
 
-        public PageReader(DocumentWrapper docWrapper, int pageIndex, int dimOne, int dimTwo)
+        public PageReader(DocumentWrapper docWrapper, int pageIndex, PageDimensions pageDimensions)
         {
             PageIndex = pageIndex;
 
@@ -37,7 +38,7 @@ namespace Docnet.Core.Readers
                     throw new DocnetException($"failed to open page text for page index {pageIndex}");
                 }
 
-                _scaling = GetScalingFactor(_page, dimOne, dimTwo);
+                _scaling = pageDimensions.GetScalingFactor(_page);
             }
         }
 
@@ -215,23 +216,12 @@ namespace Docnet.Core.Readers
             }
         }
 
-        /// <summary>
-        /// Gets rescaling factor for native width x height of the page
-        /// so it maximizes the dimOne x dimTwo rectangle
-        /// </summary>
-        /// <param name="page">Page object</param>
-        /// <param name="dimOne">Smaller dimension</param>
-        /// <param name="dimTwo">Larger dimension</param>
-        /// <returns>Scaling factor</returns>
-        private static double GetScalingFactor(FpdfPageT page, int dimOne, int dimTwo)
+        /// <inheritdoc />
+        public byte[] GetImage(IImageBytesConverter converter)
         {
-            var width = fpdf_view.FPDF_GetPageWidth(page);
-            var height = fpdf_view.FPDF_GetPageHeight(page);
+            var bytes = GetImage();
 
-            var scaleOne = dimOne / Math.Min(width, height);
-            var scalingTwo = dimTwo / Math.Max(width, height);
-
-            return Math.Min(scaleOne, scalingTwo);
+            return converter.Convert(bytes);
         }
 
         public void Dispose()

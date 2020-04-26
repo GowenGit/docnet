@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Docnet.Core.Exceptions;
+using Docnet.Core.Models;
 using Docnet.Tests.Integration.Utils;
 using Xunit;
 
@@ -61,7 +62,7 @@ namespace Docnet.Tests.Integration
 
             using (var file = new TempFile(splitBytes))
             {
-                using (var reader = _fixture.Lib.GetDocReader(file.FilePath, 10, 10))
+                using (var reader = _fixture.Lib.GetDocReader(file.FilePath, new PageDimensions(10, 10)))
                 {
                     Assert.Equal(expectedPageCount, reader.GetPageCount());
                 }
@@ -79,7 +80,7 @@ namespace Docnet.Tests.Integration
 
             var splitBytes = _fixture.Lib.Split(bytes, fromIndex, toIndex);
 
-            using (var reader = _fixture.Lib.GetDocReader(splitBytes, 10, 10))
+            using (var reader = _fixture.Lib.GetDocReader(splitBytes, new PageDimensions(10, 10)))
             {
                 Assert.Equal(expectedPageCount, reader.GetPageCount());
             }
@@ -108,7 +109,7 @@ namespace Docnet.Tests.Integration
         {
             var splitBytes = _fixture.Split(type, filePath, pageRange);
 
-            using (var reader = _fixture.Lib.GetDocReader(splitBytes, 10, 10))
+            using (var reader = _fixture.Lib.GetDocReader(splitBytes, new PageDimensions(10, 10)))
             {
                 Assert.Equal(expectedPageCount, reader.GetPageCount());
             }

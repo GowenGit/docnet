@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Docnet.Core.Converters;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Readers;
 using Docnet.Tests.Integration.Utils;
@@ -21,6 +22,15 @@ namespace Docnet.Tests.Integration
         private void ExecuteForDocument(Input type, string filePath, string password, int dimOne, int dimTwo, int pageIndex, Action<IPageReader> action)
         {
             using (var docReader = _fixture.GetDocReader(type, filePath, password, dimOne, dimTwo))
+            using (var pageReader = docReader.GetPageReader(pageIndex))
+            {
+                action(pageReader);
+            }
+        }
+
+        private void ExecuteForDocument(Input type, string filePath, string password, double scaling, int pageIndex, Action<IPageReader> action)
+        {
+            using (var docReader = _fixture.GetDocReader(type, filePath, password, scaling))
             using (var pageReader = docReader.GetPageReader(pageIndex))
             {
                 action(pageReader);
@@ -175,6 +185,24 @@ namespace Docnet.Tests.Integration
         }
 
         [Theory]
+        [InlineData(Input.FromFile, "Docs/simple_3.pdf", null, 1)]
+        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 18)]
+        [InlineData(Input.FromFile, "Docs/protected_0.pdf", "password", 0)]
+        [InlineData(Input.FromBytes, "Docs/simple_3.pdf", null, 1)]
+        [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 18)]
+        [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 0)]
+        public void GetImageWithTransparentConverter_WhenCalled_ShouldReturnNonZeroRawByteArray(Input type, string filePath, string password, int pageIndex)
+        {
+            ExecuteForDocument(type, filePath, password, 1, pageIndex, pageReader =>
+            {
+                var bytes = pageReader.GetImage(new NaiveTransparencyRemover()).ToArray();
+
+                Assert.True(bytes.Length > 0);
+                Assert.True(bytes.Count(x => x != 0) > 0);
+            });
+        }
+
+        [Theory]
         [InlineData(Input.FromFile)]
         [InlineData(Input.FromBytes)]
         public void Reader_WhenCalledFromDifferentThreads_ShouldBeAbleToHandle(Input type)
@@ -186,6 +214,22 @@ namespace Docnet.Tests.Integration
             var task5 = Task.Run(() => Assert.InRange(GetNonZeroByteCount(type, "Docs/simple_4.pdf", _fixture), 0, 0));
 
             Task.WaitAll(task1, task2, task3, task4, task5);
+        }
+
+        [Theory]
+        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 1, 595, 841)]
+        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 10, 5953, 8419)]
+        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 15, 8929, 12628)]
+        public void GetPageWidthOrHeight_WhenCalledWithScalingFactor_ShouldMach(Input type, string filePath, string password, double scaling, int expectedWidth, int expectedHeight)
+        {
+            ExecuteForDocument(type, filePath, password, scaling, 0, pageReader =>
+            {
+                var width = pageReader.GetPageWidth();
+                var height = pageReader.GetPageHeight();
+
+                Assert.Equal(expectedWidth, width);
+                Assert.Equal(expectedHeight, height);
+            });
         }
 
         private static int GetNonZeroByteCount(Input type, string filePath, LibFixture fixture)

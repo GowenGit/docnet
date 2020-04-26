@@ -1,8 +1,8 @@
 #!/bin/bash
 
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F3951/pdfium-linux.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F3951/pdfium-windows-x64.zip
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F3951/pdfium-darwin.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4120/pdfium-linux.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4120/pdfium-windows-x64.zip
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4120/pdfium-darwin.tgz
 
 mkdir linux
 mkdir windows

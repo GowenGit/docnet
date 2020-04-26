@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Docnet.Core.Editors;
+using Docnet.Core.Models;
 using Docnet.Core.Readers;
 
 namespace Docnet.Core
@@ -15,53 +16,37 @@ namespace Docnet.Core
     {
         /// <summary>
         /// Get document reader for this particular document.
-        /// dimOne x dimTwo represents a viewport to which
-        /// the document gets scaled to fit without modifying
-        /// it's aspect ratio.
         /// </summary>
         /// <param name="filePath">Full file path</param>
-        /// <param name="dimOne">smaller viewport dimension</param>
-        /// <param name="dimTwo">larger viewport dimension</param>
+        /// <param name="dimensionOptions">Page scaling options</param>
         /// <returns>Document reader object</returns>
-        IDocReader GetDocReader(string filePath, int dimOne, int dimTwo);
+        IDocReader GetDocReader(string filePath, PageDimensions dimensionOptions);
 
         /// <summary>
         /// Get document reader for this particular document.
-        /// dimOne x dimTwo represents a viewport to which
-        /// the document gets scaled to fit without modifying
-        /// it's aspect ratio.
         /// </summary>
         /// <param name="filePath">Full file path</param>
         /// <param name="password">File password</param>
-        /// <param name="dimOne">smaller viewport dimension</param>
-        /// <param name="dimTwo">larger viewport dimension</param>
+        /// <param name="dimensionOptions">Page scaling options</param>
         /// <returns>Document reader object</returns>
-        IDocReader GetDocReader(string filePath, string password, int dimOne, int dimTwo);
+        IDocReader GetDocReader(string filePath, string password, PageDimensions dimensionOptions);
 
         /// <summary>
         /// Get document reader for this particular document.
-        /// dimOne x dimTwo represents a viewport to which
-        /// the document gets scaled to fit without modifying
-        /// it's aspect ratio.
         /// </summary>
         /// <param name="bytes">File bytes</param>
-        /// <param name="dimOne">smaller viewport dimension</param>
-        /// <param name="dimTwo">larger viewport dimension</param>
+        /// <param name="dimensionOptions">Page scaling options</param>
         /// <returns>Document reader object</returns>
-        IDocReader GetDocReader(byte[] bytes, int dimOne, int dimTwo);
+        IDocReader GetDocReader(byte[] bytes, PageDimensions dimensionOptions);
 
         /// <summary>
         /// Get document reader for this particular document.
-        /// dimOne x dimTwo represents a viewport to which
-        /// the document gets scaled to fit without modifying
-        /// it's aspect ratio.
         /// </summary>
         /// <param name="bytes">File bytes</param>
         /// <param name="password">File password</param>
-        /// <param name="dimOne">smaller viewport dimension</param>
-        /// <param name="dimTwo">larger viewport dimension</param>
+        /// <param name="dimensionOptions">Page scaling options</param>
         /// <returns>Document reader object</returns>
-        IDocReader GetDocReader(byte[] bytes, string password, int dimOne, int dimTwo);
+        IDocReader GetDocReader(byte[] bytes, string password, PageDimensions dimensionOptions);
 
         /// <summary>
         /// Merge two documents into one.

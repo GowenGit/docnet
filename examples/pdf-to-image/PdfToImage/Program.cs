@@ -1,89 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using Docnet.Core;
+using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using Docnet.Core;
-using Docnet.Core.Models;
-using Docnet.Core.Readers;
 
 namespace PdfToImage
 {
     public static class Program
     {
-        /// <summary>
-        /// Given file path and a page index,
-        /// render a page as PNG and draw all
-        /// characters with bounding boxes.
-        /// </summary>
         public static void Main(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length != 3)
             {
                 throw new ArgumentException(nameof(args));
             }
 
             using (var library = DocLib.Instance)
             {
-                using (var docReader = library.GetDocReader(args[0], 1080, 1920))
+                var result = new byte[0];
+
+                switch (args[2]?.ToLower().Trim() ?? "")
                 {
-                    using (var pageReader = docReader.GetPageReader(int.Parse(args[1])))
-                    {
-                        var bytes = GetModifiedImage(pageReader);
-
-                        File.WriteAllBytes("page_image.png", bytes);
-                    }
+                    case "0":
+                        result = ExampleOne.ConvertPageToSimpleImageWithLetterOutlines(library, args[0], int.Parse(args[1]));
+                        break;
+                    case "1":
+                        result = ExampleTwo.ConvertPageToSimpleImageWithLetterOutlinesUsingScaling(library, args[0], int.Parse(args[1]));
+                        break;
+                    case "2":
+                        result = ExampleThree.ConvertPageToSimpleImageWithoutTransparency(library, args[0], int.Parse(args[1]));
+                        break;
                 }
-            }
-        }
 
-        private static byte[] GetModifiedImage(IPageReader pageReader)
-        {
-            var rawBytes = pageReader.GetImage();
-
-            var width = pageReader.GetPageWidth();
-            var height = pageReader.GetPageHeight();
-
-            var characters = pageReader.GetCharacters();
-
-            using (var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb))
-            {
-                bmp.AddBytes(rawBytes);
-
-                bmp.DrawRectangles(characters);
-
-                using (var stream = new MemoryStream())
-                {
-                    bmp.Save(stream, ImageFormat.Png);
-
-                    return stream.ToArray();
-                }
-            }
-        }
-
-        private static void AddBytes(this Bitmap bmp, byte[] rawBytes)
-        {
-            var rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-
-            var bmpData = bmp.LockBits(rect, ImageLockMode.WriteOnly, bmp.PixelFormat);
-            var pNative = bmpData.Scan0;
-
-            Marshal.Copy(rawBytes, 0, pNative, rawBytes.Length);
-            bmp.UnlockBits(bmpData);
-        }
-
-        private static void DrawRectangles(this Bitmap bmp, IEnumerable<Character> characters)
-        {
-            var pen = new Pen(Color.Red);
-
-            using (var graphics = Graphics.FromImage(bmp))
-            {
-                foreach (var c in characters)
-                {
-                    var rect = new Rectangle(c.Box.Left, c.Box.Top, c.Box.Right - c.Box.Left, c.Box.Bottom - c.Box.Top);
-                    graphics.DrawRectangle(pen, rect);
-                }
+                File.WriteAllBytes("output.png", result);
             }
         }
     }

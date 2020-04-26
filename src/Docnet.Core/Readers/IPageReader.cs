@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Docnet.Core.Converters;
 using Docnet.Core.Models;
 
 namespace Docnet.Core.Readers
@@ -38,7 +39,16 @@ namespace Docnet.Core.Readers
         /// Byte array is formatted as
         /// B-G-R-A ordered list.
         /// </summary>
-        /// <returns></returns>
         byte[] GetImage();
+
+        /// <summary>
+        /// Return a byte representation
+        /// of the page image.
+        /// Byte array is formatted as
+        /// B-G-R-A ordered list. Then it
+        /// applies a predefined byte transformation
+        /// to modify the image.
+        /// </summary>
+        byte[] GetImage(IImageBytesConverter converter);
     }
 }

@@ -8,14 +8,11 @@ namespace Docnet.Core.Readers
     internal class DocReader : IDocReader
     {
         private readonly DocumentWrapper _docWrapper;
+        private readonly PageDimensions _dimensions;
 
-        private readonly int _dimOne;
-        private readonly int _dimTwo;
-
-        public DocReader(string filePath, string password, int dimOne, int dimTwo)
+        public DocReader(string filePath, string password, PageDimensions dimensions)
         {
-            _dimOne = dimOne;
-            _dimTwo = dimTwo;
+            _dimensions = dimensions;
 
             lock (DocLib.Lock)
             {
@@ -23,10 +20,9 @@ namespace Docnet.Core.Readers
             }
         }
 
-        public DocReader(byte[] bytes, string password, int dimOne, int dimTwo)
+        public DocReader(byte[] bytes, string password, PageDimensions dimensions)
         {
-            _dimOne = dimOne;
-            _dimTwo = dimTwo;
+            _dimensions = dimensions;
 
             lock (DocLib.Lock)
             {
@@ -64,7 +60,7 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public IPageReader GetPageReader(int pageIndex)
         {
-            return new PageReader(_docWrapper, pageIndex, _dimOne, _dimTwo);
+            return new PageReader(_docWrapper, pageIndex, _dimensions);
         }
 
         public void Dispose()

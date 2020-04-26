@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Docnet.Core.Models;
 using Docnet.Tests.Integration.Utils;
 using Xunit;
 
@@ -61,7 +62,7 @@ namespace Docnet.Tests.Integration
 
             using (var file = new TempFile(mergedBytes))
             {
-                using (var reader = _fixture.Lib.GetDocReader(file.FilePath, 10, 10))
+                using (var reader = _fixture.Lib.GetDocReader(file.FilePath, new PageDimensions(10, 10)))
                 {
                     Assert.Equal(expectedPageCount, reader.GetPageCount());
                 }
@@ -79,7 +80,7 @@ namespace Docnet.Tests.Integration
 
             var mergedBytes = _fixture.Lib.Merge(bytesOne, bytesTwo);
 
-            using (var reader = _fixture.Lib.GetDocReader(mergedBytes, 10, 10))
+            using (var reader = _fixture.Lib.GetDocReader(mergedBytes, new PageDimensions(10, 10)))
             {
                 Assert.Equal(expectedPageCount, reader.GetPageCount());
             }

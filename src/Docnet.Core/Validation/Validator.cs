@@ -28,6 +28,14 @@ namespace Docnet.Core.Validation
             }
         }
 
+        public static void CheckNotLessOrEqualToZero(double value, string name)
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentException("value can't be less or equal to zero", name);
+            }
+        }
+
         public static void CheckNotLessThanZero(int value, string name)
         {
             if (value < 0)
