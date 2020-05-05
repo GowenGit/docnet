@@ -22,10 +22,7 @@ jobs:
     - name: Run dotnet tests
       run: |
         cd src
-        dotnet restore
-        dotnet test Docnet.Tests.Unit/
-        dotnet test Docnet.Tests.Integration/
-        dotnet build -c Release
+        dotnet test
 
   test-linux:
     name: Test Linux
@@ -42,10 +39,7 @@ jobs:
     - name: Run dotnet tests
       run: |
         cd src
-        dotnet restore
-        dotnet test Docnet.Tests.Unit/
-        dotnet test Docnet.Tests.Integration/
-        dotnet build -c Release
+        dotnet test
 
   test-osx:
     name: Test MacOS
@@ -62,7 +56,4 @@ jobs:
     - name: Run dotnet tests
       run: |
         cd src
-        dotnet restore
-        dotnet test Docnet.Tests.Unit/
-        dotnet test Docnet.Tests.Integration/
-        dotnet build -c Release
+        dotnet test

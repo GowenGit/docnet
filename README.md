@@ -1,6 +1,6 @@
 # docnet
 
-![Master Health](https://github.com/GowenGit/docnet/workflows/Test%20Commit/badge.svg)
+![Master Build](https://github.com/GowenGit/docnet/workflows/Master%20Build/badge.svg?branch=master)
 [![NuGet](https://img.shields.io/nuget/v/Docnet.Core.svg)](https://www.nuget.org/packages/Docnet.Core)
 
 ## Description
