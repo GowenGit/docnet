@@ -1,4 +1,4 @@
-name: Test Commit
+name: Master Build
 
 on: 
   push:
@@ -20,7 +20,12 @@ jobs:
         dotnet-version: '3.1.101'
 
     - name: Run dotnet tests
-      run: dotnet test src/docnet.sln
+      run: |
+        cd src
+        dotnet restore
+        dotnet test Docnet.Tests.Unit/
+        dotnet test Docnet.Tests.Integration/
+        dotnet build -c Release
 
   test-linux:
     name: Test Linux
@@ -35,7 +40,12 @@ jobs:
         dotnet-version: '3.1.101'
 
     - name: Run dotnet tests
-      run: dotnet test src/docnet.sln
+      run: |
+        cd src
+        dotnet restore
+        dotnet test Docnet.Tests.Unit/
+        dotnet test Docnet.Tests.Integration/
+        dotnet build -c Release
 
   test-osx:
     name: Test MacOS
@@ -50,4 +60,9 @@ jobs:
         dotnet-version: '3.1.101'
 
     - name: Run dotnet tests
-      run: dotnet test src/docnet.sln
+      run: |
+        cd src
+        dotnet restore
+        dotnet test Docnet.Tests.Unit/
+        dotnet test Docnet.Tests.Integration/
+        dotnet build -c Release
