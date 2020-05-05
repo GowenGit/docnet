@@ -6,7 +6,6 @@ using Docnet.Core.Readers;
 using Docnet.Core.Validation;
 
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
-
 namespace Docnet.Core
 {
     public sealed class DocLib : IDocLib
@@ -100,7 +99,7 @@ namespace Docnet.Core
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));
-            Validator.ValidatePageIndices(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            Validator.ValidatePageIndices(pageFromIndex, pageToIndex);
 
             return _editor.Split(filePath, pageFromIndex, pageToIndex);
         }
@@ -109,7 +108,7 @@ namespace Docnet.Core
         public byte[] Split(byte[] bytes, int pageFromIndex, int pageToIndex)
         {
             Validator.CheckBytesNullOrZero(bytes, nameof(bytes));
-            Validator.ValidatePageIndices(pageFromIndex, pageToIndex, nameof(pageFromIndex), nameof(pageToIndex));
+            Validator.ValidatePageIndices(pageFromIndex, pageToIndex);
 
             return _editor.Split(bytes, pageFromIndex, pageToIndex);
         }
@@ -131,7 +130,6 @@ namespace Docnet.Core
 
             return _editor.Split(bytes, pageRange);
         }
-
 
         /// <inheritdoc />
         public byte[] Unlock(string filePath, string password)

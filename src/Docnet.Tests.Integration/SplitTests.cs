@@ -20,7 +20,7 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void Split_WhenCalledWithNullFilePath_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Split((string) null, 0, 0));
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Split((string)null, 0, 0));
             Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Split((string)null, string.Empty));
         }
 

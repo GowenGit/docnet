@@ -136,14 +136,13 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes, "Docs/simple_3.pdf", null, 1, "The end, and just as well.")]
         [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 4, "ASCIIHexDecode")]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 0, "The Secret (2016 film)")]
-        public void GetText_WhenCalled_ShouldContainValidText(Input type, string filePath, string password, int pageIndex,
-            string expectedText)
+        public void GetText_WhenCalled_ShouldContainValidText(Input type, string filePath, string password, int pageIndex, string expectedText)
         {
             ExecuteForDocument(type, filePath, password, 10, 10, pageIndex, pageReader =>
             {
                 var text = pageReader.GetText();
 
-                Assert.Contains(expectedText, text);
+                Assert.Contains(expectedText, text, StringComparison.Ordinal);
             });
         }
 
@@ -180,7 +179,7 @@ namespace Docnet.Tests.Integration
                 var bytes = pageReader.GetImage().ToArray();
 
                 Assert.True(bytes.Length > 0);
-                Assert.True(bytes.Count(x => x != 0) > 0);
+                Assert.NotEmpty(bytes.Where(x => x != 0));
             });
         }
 
@@ -198,7 +197,7 @@ namespace Docnet.Tests.Integration
                 var bytes = pageReader.GetImage(new NaiveTransparencyRemover()).ToArray();
 
                 Assert.True(bytes.Length > 0);
-                Assert.True(bytes.Count(x => x != 0) > 0);
+                Assert.NotEmpty(bytes.Where(x => x != 0));
             });
         }
 

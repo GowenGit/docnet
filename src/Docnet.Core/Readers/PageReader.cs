@@ -78,7 +78,7 @@ namespace Docnet.Core.Readers
 
             if (charactersWritten == 0)
             {
-                return "";
+                return string.Empty;
             }
 
             string result;
@@ -115,7 +115,10 @@ namespace Docnet.Core.Readers
 
                     var success = fpdf_text.FPDFTextGetCharBox(_text, i, ref left, ref right, ref bottom, ref top) == 1;
 
-                    if (!success) continue;
+                    if (!success)
+                    {
+                        continue;
+                    }
 
                     var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
                     var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
@@ -133,8 +136,16 @@ namespace Docnet.Core.Readers
             var y = 0;
 
             fpdf_view.FPDF_PageToDevice(
-                _page, 0, 0, width, height, 0,
-                pageX, pageY, ref x, ref y);
+                _page,
+                0,
+                0,
+                width,
+                height,
+                0,
+                pageX,
+                pageY,
+                ref x,
+                ref y);
 
             x = AdjustToRange(x, width);
             y = AdjustToRange(y, height);
@@ -178,9 +189,9 @@ namespace Docnet.Core.Readers
 
                 try
                 {
-                    //          | a b 0 |
-                    // matrix = | c d 0 |
-                    //          | e f 1 |
+                    // |          | a b 0 |
+                    // | matrix = | c d 0 |
+                    // |          | e f 1 |
                     using (var matrix = new FS_MATRIX_())
                     using (var clipping = new FS_RECTF_())
                     {

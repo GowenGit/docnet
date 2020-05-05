@@ -54,10 +54,4 @@ namespace Docnet.Tests.Integration.Utils
             return fixture.Lib.Split(bytes, pageRange);
         }
     }
-
-    public enum Input
-    {
-        FromFile,
-        FromBytes
-    }
 }

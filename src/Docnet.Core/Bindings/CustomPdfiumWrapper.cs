@@ -2,16 +2,24 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
+
+#pragma warning disable SA1300
+#pragma warning disable CA1707
+#pragma warning disable CA1051
+#pragma warning disable SA1401
+#pragma warning disable CA1052
+#pragma warning disable SA1307
+#pragma warning disable SA1214
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
-
 namespace Docnet.Core.Bindings
 {
     /// <summary>
     /// Flags:
     /// 1 - Incremental
     /// 2 - NoIncremental
-    /// 3 - RemoveSecurity
+    /// 3 - RemoveSecurity.
     /// </summary>
     internal class fpdf_save
     {

@@ -60,7 +60,7 @@ namespace Docnet.Core.Validation
             }
         }
 
-        public static void ValidatePageIndices(int pageFromIndex, int pageToIndex, string nameOne, string nameTwo)
+        public static void ValidatePageIndices(int pageFromIndex, int pageToIndex)
         {
             CheckNotLessThanZero(pageFromIndex, nameof(pageFromIndex));
             CheckNotLessThanZero(pageToIndex, nameof(pageToIndex));

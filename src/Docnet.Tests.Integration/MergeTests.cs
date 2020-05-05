@@ -31,7 +31,7 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void Merge_WhenCalledWithFirstEmptyBytes_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(new byte[0], new byte[1]));
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(Array.Empty<byte>(), new byte[1]));
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void Merge_WhenCalledWithSecondEmptyBytes_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(new byte[1], new byte[0]));
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(new byte[1], Array.Empty<byte>()));
         }
 
         [Theory]

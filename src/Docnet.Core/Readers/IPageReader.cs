@@ -8,7 +8,7 @@ namespace Docnet.Core.Readers
     public interface IPageReader : IDisposable
     {
         /// <summary>
-        /// Page index.
+        /// Gets page index.
         /// </summary>
         int PageIndex { get; }
 

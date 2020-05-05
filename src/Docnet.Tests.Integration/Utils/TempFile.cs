@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Docnet.Tests.Integration.Utils
 {
-    public class TempFile : IDisposable
+    public sealed class TempFile : IDisposable
     {
         public string FilePath { get; }
 

@@ -2,9 +2,11 @@ using System;
 using Docnet.Core;
 using Xunit;
 
+#pragma warning disable CA1711
+
 namespace Docnet.Tests.Integration.Utils
 {
-    public class LibFixture : IDisposable
+    public sealed class LibFixture : IDisposable
     {
         public LibFixture()
         {

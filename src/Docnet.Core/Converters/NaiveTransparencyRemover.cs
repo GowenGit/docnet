@@ -9,7 +9,7 @@
         public NaiveTransparencyRemover() { }
 
         /// <summary>
-        /// Specify background RGB
+        /// Specify background RGB.
         /// </summary>
         public NaiveTransparencyRemover(byte red, byte green, byte blue)
         {
@@ -21,8 +21,8 @@
         /// <summary>
         /// Removes full alpha transparency in a very naive way.
         /// </summary>
-        /// <param name="bytes">Image bytes</param>
-        /// <returns>Same B-G-R-A array with alpha filled with white color</returns>
+        /// <param name="bytes">Image bytes.</param>
+        /// <returns>Same B-G-R-A array with alpha filled with white color.</returns>
         public byte[] Convert(byte[] bytes)
         {
             for (var i = 0; i < bytes.Length / 4; i++)

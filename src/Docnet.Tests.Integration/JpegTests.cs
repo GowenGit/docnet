@@ -23,7 +23,7 @@ namespace Docnet.Tests.Integration
         {
             var image = new JpegImage
             {
-                Bytes = new byte[] { },
+                Bytes = Array.Empty<byte>(),
                 Width = 1,
                 Height = 1
             };

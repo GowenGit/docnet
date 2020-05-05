@@ -3,9 +3,9 @@
     public interface IImageBytesConverter
     {
         /// <summary>
-        /// Input is in B-G-R-A format
+        /// Input is in B-G-R-A format.
         /// </summary>
-        /// <param name="bytes">Image bytes</param>
+        /// <param name="bytes">Image bytes.</param>
         byte[] Convert(byte[] bytes);
     }
 }

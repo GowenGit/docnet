@@ -21,4 +21,11 @@
   <ItemGroup>
     <Content Include="runtimes/**" PackagePath="runtimes" Visible="true" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Obsessive.Defender" Version="0.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

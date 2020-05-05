@@ -1,10 +1,10 @@
+using System;
 using Docnet.Core.Validation;
 
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
-
 namespace Docnet.Core.Models
 {
-    public struct BoundBox
+    public struct BoundBox : IEquatable<BoundBox>
     {
         public int Left { get; }
 
@@ -30,6 +30,24 @@ namespace Docnet.Core.Models
             Bottom = bottom;
         }
 
+        public static bool operator ==(BoundBox obj1, BoundBox obj2)
+        {
+            return obj1.Equals(obj2);
+        }
+
+        public static bool operator !=(BoundBox obj1, BoundBox obj2)
+        {
+            return !(obj1 == obj2);
+        }
+
+        public bool Equals(BoundBox other)
+        {
+            return Left == other.Left &&
+                   Top == other.Top &&
+                   Right == other.Right &&
+                   Bottom == other.Bottom;
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is BoundBox))
@@ -39,10 +57,7 @@ namespace Docnet.Core.Models
 
             var box = (BoundBox)obj;
 
-            return Left == box.Left &&
-                   Top == box.Top &&
-                   Right == box.Right &&
-                   Bottom == box.Bottom;
+            return Equals(box);
         }
 
         public override int GetHashCode()

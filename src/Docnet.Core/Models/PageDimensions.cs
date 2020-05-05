@@ -23,8 +23,8 @@ namespace Docnet.Core.Models
         /// the document gets scaled to fit without modifying
         /// it's aspect ratio.
         /// </summary>
-        /// <param name="dimOne">Smaller dimension</param>
-        /// <param name="dimTwo">Larger dimension</param>
+        /// <param name="dimOne">Smaller dimension.</param>
+        /// <param name="dimTwo">Larger dimension.</param>
         public PageDimensions(int dimOne, int dimTwo)
         {
             Validator.CheckNotLessOrEqualToZero(dimOne, nameof(dimOne));
@@ -42,7 +42,7 @@ namespace Docnet.Core.Models
         /// scalingFactor represents a value to which physical page
         /// dimensions should scale in a pixel space.
         /// </summary>
-        /// <param name="scalingFactor">Page scaling PPI factor</param>
+        /// <param name="scalingFactor">Page scaling PPI factor.</param>
         public PageDimensions(double scalingFactor)
         {
             Validator.CheckNotLessOrEqualToZero(scalingFactor, nameof(scalingFactor));
@@ -58,11 +58,14 @@ namespace Docnet.Core.Models
         ///
         /// Note: make sure that the semaphore is locked before access.
         /// </summary>
-        /// <param name="page">Page object</param>
-        /// <returns>Scaling factor</returns>
+        /// <param name="page">Page object.</param>
+        /// <returns>Scaling factor.</returns>
         internal double GetScalingFactor(FpdfPageT page)
         {
-            if (_scalingFactor != null) return _scalingFactor.Value;
+            if (_scalingFactor != null)
+            {
+                return _scalingFactor.Value;
+            }
 
             var width = fpdf_view.FPDF_GetPageWidth(page);
             var height = fpdf_view.FPDF_GetPageHeight(page);

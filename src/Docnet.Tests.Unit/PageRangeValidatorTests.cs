@@ -15,7 +15,7 @@ namespace Docnet.Tests.Unit
         [InlineData(3, -20)]
         public void Split_WhenCalledWithInvalidIndex_ShouldThrow(int fromIndex, int toIndex)
         {
-            Assert.Throws<ArgumentException>(() => Validator.ValidatePageIndices(fromIndex, toIndex, nameof(fromIndex), nameof(toIndex)));
+            Assert.Throws<ArgumentException>(() => Validator.ValidatePageIndices(fromIndex, toIndex));
         }
 
         [Theory]

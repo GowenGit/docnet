@@ -2,9 +2,15 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
+
+#pragma warning disable SA1300
+#pragma warning disable CA1707
+#pragma warning disable CA1051
+#pragma warning disable SA1401
+#pragma warning disable CA1052
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
-
 namespace Docnet.Core.Bindings
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -40,7 +46,10 @@ namespace Docnet.Core.Bindings
 
             var fileRead = new FileHandle(count, (ignore, position, buffer, size) =>
             {
-                if (!stream.CanRead) return false;
+                if (!stream.CanRead)
+                {
+                    return false;
+                }
 
                 stream.Position = start + position;
 
@@ -49,12 +58,12 @@ namespace Docnet.Core.Bindings
                     data = new byte[size];
                 }
 
-                if (stream.Read(data, 0, (int) size) != size)
+                if (stream.Read(data, 0, (int)size) != size)
                 {
                     return false;
                 }
 
-                Marshal.Copy(data, 0, buffer, (int) size);
+                Marshal.Copy(data, 0, buffer, (int)size);
 
                 return true;
             });

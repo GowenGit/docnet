@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Docnet.Core.Models
 {
-    public struct PdfVersion
+    public struct PdfVersion : IEquatable<PdfVersion>
     {
         private static readonly HashSet<int> SupportedVersions = new HashSet<int>
         {
@@ -30,6 +30,21 @@ namespace Docnet.Core.Models
             return $"{major}.{minor}";
         }
 
+        public static bool operator ==(PdfVersion obj1, PdfVersion obj2)
+        {
+            return obj1.Equals(obj2);
+        }
+
+        public static bool operator !=(PdfVersion obj1, PdfVersion obj2)
+        {
+            return !(obj1 == obj2);
+        }
+
+        public bool Equals(PdfVersion other)
+        {
+            return Number == other.Number;
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is PdfVersion))
@@ -38,7 +53,8 @@ namespace Docnet.Core.Models
             }
 
             var version = (PdfVersion)obj;
-            return Number == version.Number;
+
+            return Equals(version);
         }
 
         public override int GetHashCode()

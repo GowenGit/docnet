@@ -40,7 +40,8 @@ namespace Docnet.Core.Editors
                 var success = fpdf_ppo.FPDF_ImportPages(
                                   docOneWrapper.Instance,
                                   docTwoWrapper.Instance,
-                                  null, pageCountOne) == 1;
+                                  null,
+                                  pageCountOne) == 1;
 
                 if (!success)
                 {
@@ -101,7 +102,6 @@ namespace Docnet.Core.Editors
         }
 
         private static byte[] Split(DocumentWrapper srcWrapper, string pageRange)
-
         {
             using (var newWrapper = new DocumentWrapper(fpdf_edit.FPDF_CreateNewDocument()))
             using (var stream = new MemoryStream())
@@ -109,7 +109,8 @@ namespace Docnet.Core.Editors
                 var success = fpdf_ppo.FPDF_ImportPages(
                                   newWrapper.Instance,
                                   srcWrapper.Instance,
-                                  pageRange, 0) == 1;
+                                  pageRange,
+                                  0) == 1;
 
                 if (!success)
                 {
@@ -159,7 +160,7 @@ namespace Docnet.Core.Editors
                             var imageObj = fpdf_edit.FPDFPageObjNewImageObj(newWrapper.Instance);
 
                             fpdf_custom_edit.FPDFImageObjLoadJpegFile(page, 1, imageObj, FileHandle.FromStream(stream, image.Bytes.Length));
-                            fpdf_edit.FPDFImageObjSetMatrix(imageObj, image.Width, 0 , 0, image.Height, 0, 0);
+                            fpdf_edit.FPDFImageObjSetMatrix(imageObj, image.Width, 0, 0, image.Height, 0, 0);
                             fpdf_edit.FPDFPageInsertObject(page, imageObj);
                             fpdf_edit.FPDFPageGenerateContent(page);
                             fpdf_view.FPDF_ClosePage(page);
