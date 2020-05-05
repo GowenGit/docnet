@@ -1,0 +1,50 @@
+name: Test Commit
+
+on: push
+
+jobs:
+
+  test-win:
+    name: Testing Windows
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.101'
+
+    - name: Run dotnet tests
+      run: dotnet test
+
+  test-linux:
+    name: Test Linux
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.101'
+
+    - name: Run dotnet tests
+      run: dotnet test
+
+  test-osx:
+    name: Test MacOS
+
+    runs-on: macos-10.15
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.101'
+
+    - name: Run dotnet tests
+      run: dotnet test
