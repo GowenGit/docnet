@@ -16,7 +16,15 @@
     <RepositoryUrl>https://github.com/GowenGit/docnet</RepositoryUrl>
     <PackageTags>PDF; Reader; netstandard; PDFium; JPEG; JPG</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/GowenGit/docnet/master/assets/icon.png</PackageIconUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <Content Include="runtimes/**" PackagePath="runtimes" Visible="true" />
