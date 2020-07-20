@@ -5,3 +5,4 @@ bin/
 obj/
 nuget/
 .DS_Store
+assets/output.png

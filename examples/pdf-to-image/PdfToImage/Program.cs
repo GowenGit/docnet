@@ -30,7 +30,7 @@ namespace PdfToImage
                         break;
                 }
 
-                File.WriteAllBytes("output.png", result);
+                File.WriteAllBytes(Path.Combine(Path.GetDirectoryName(args[0]), "output.png"), result);
             }
         }
     }
