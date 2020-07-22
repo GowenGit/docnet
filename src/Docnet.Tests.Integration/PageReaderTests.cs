@@ -233,6 +233,16 @@ namespace Docnet.Tests.Integration
         }
 
         [Fact]
+        public void GetImage_WhenCalledWithoutRenderAnnotationsFlag_ShouldNotRenderAnnotation()
+        {
+            ExecuteForDocument(Input.FromFile, "Docs/annotation_0.pdf", null, 1, 0, pageReader =>
+            {
+                var bytes = pageReader.GetImage().ToArray();
+                Assert.True(bytes.All(x => x == 0));
+            });
+        }
+
+        [Fact]
         public void GetImage_WhenCalledWithRenderAnnotationsFlag_ShouldRenderAnnotation()
         {
             ExecuteForDocument(Input.FromFile, "Docs/annotation_0.pdf", null, 1, 0, pageReader =>
