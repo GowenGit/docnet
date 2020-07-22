@@ -30,9 +30,6 @@ namespace PdfToImage
 
             var width = pageReader.GetPageWidth();
             var height = pageReader.GetPageHeight();
-
-            var characters = pageReader.GetCharacters();
-
             using (var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb))
             {
                 bmp.AddBytes(rawBytes);
