@@ -248,6 +248,22 @@ namespace Docnet.Tests.Integration
             });
         }
 
+        [Fact]
+        public void GetImage_WhenCalledWithRenderAnnotationsAndGrayscaleFlags_ShouldRenderAnnotationGrayscale()
+        {
+            ExecuteForDocument(Input.FromFile, "Docs/annotation_0.pdf", null, 1, 0, pageReader =>
+            {
+                // verify pixel in center of image is the correct gray color
+                var bytes = pageReader.GetImage(RenderFlags.RenderAnnotations | RenderFlags.Grayscale).ToArray();
+                const int bpp = 4;
+                var center = bytes.Length / bpp / 2 * bpp; // note integer division by 2 here.  we're getting the first byte in the central pixel
+                Assert.Equal(234, bytes[center]); // Blue
+                Assert.Equal(234, bytes[center + 1]); // Green
+                Assert.Equal(234, bytes[center + 2]); // Red
+                Assert.Equal(255, bytes[center + 3]); // Alpha
+            });
+        }
+
         private static int GetNonZeroByteCount(Input type, string filePath, LibFixture fixture)
         {
             using (var reader = fixture.GetDocReader(type, filePath, null, 1000, 1000))
