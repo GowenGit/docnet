@@ -28,6 +28,9 @@ namespace PdfToImage
                     case "2":
                         result = ExampleThree.ConvertPageToSimpleImageWithoutTransparency(library, args[0], int.Parse(args[1]));
                         break;
+                    case "3":
+                        result = ExampleFour.ConvertPageToGrayscaleImageIncludeAnnotations(library, args[0], int.Parse(args[1]));
+                        break;
                 }
 
                 File.WriteAllBytes(Path.Combine(Path.GetDirectoryName(args[0]), "output.png"), result);
