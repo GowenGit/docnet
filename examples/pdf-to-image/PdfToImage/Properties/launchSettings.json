@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "PdfToImage": {
-      "commandName": "Project",
-      "commandLineArgs": "\"D:\\git\\pdf\\docnet\\assets\\wikipedia_0.pdf\" 1 0"
-    }
-  }
-}

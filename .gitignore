@@ -3,6 +3,8 @@
 
 bin/
 obj/
-nuget/
 .DS_Store
-assets/output.png
+*.snupkg
+
+output_image.png
+output_file.pdf
