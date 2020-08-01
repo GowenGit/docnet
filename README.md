@@ -35,10 +35,10 @@ Supported platforms:
 
 ## Examples
 
-* Render PDF page as PNG and display all character bounding boxes: [example](examples/pdf-to-image/PdfToImage/Program.cs)
+* Render PDF page as PNG and display all character bounding boxes: [example](examples/nuget-usage/NugetUsageAnyCpu/PdfToImageExamples.cs)
 
    ![Render PDF page example](assets/demo_thumb_0.png)
 
     **Note:** If you have issues running on Linux make sure that `libgdiplus` is installed since this example uses `System.Drawing.Common`.
 
-* Convert JPEG file to PDF: [example](examples/image-to-pdf/ImageToPdf/Program.cs)
+* Convert JPEG file to PDF: [example](examples/nuget-usage/NugetUsageAnyCpu/ImageToPdfExamples.cs)

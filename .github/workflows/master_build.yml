@@ -24,6 +24,11 @@ jobs:
         cd src
         dotnet test
 
+    - name: Run example dotnet tests
+      run: |
+        cd ../examples/nuget-usage
+        dotnet test
+
   test-linux:
     name: Test Linux
 
@@ -41,6 +46,11 @@ jobs:
         cd src
         dotnet test
 
+    - name: Run example dotnet tests
+      run: |
+        cd ../examples/nuget-usage
+        dotnet test
+
   test-osx:
     name: Test MacOS
 
@@ -56,4 +66,9 @@ jobs:
     - name: Run dotnet tests
       run: |
         cd src
+        dotnet test
+
+    - name: Run example dotnet tests
+      run: |
+        cd ../examples/nuget-usage
         dotnet test
