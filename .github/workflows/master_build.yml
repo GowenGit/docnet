@@ -70,5 +70,6 @@ jobs:
 
     - name: Run example dotnet tests
       run: |
+        brew install libgdiplus
         cd examples/nuget-usage
         dotnet test
