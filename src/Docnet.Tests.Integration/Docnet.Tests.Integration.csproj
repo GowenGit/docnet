@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\linux\native\pdfium.so" Visible="false" />
-    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\win-x64\native\pdfium.dll" Visible="false" />
+    <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\win-x86\native\pdfium.dll" Visible="false" />
     <None CopyToOutputDirectory="PreserveNewest" Include="..\Docnet.Core\runtimes\osx\native\pdfium.dylib" Visible="false" />
   </ItemGroup>
 </Project>

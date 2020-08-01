@@ -14,12 +14,12 @@ using System.Security;
 namespace Docnet.Core.Bindings
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate bool FileReadBlockHandler(IntPtr ignore, long position, IntPtr buffer, long size);
+    public delegate bool FileReadBlockHandler(IntPtr ignore, int position, IntPtr buffer, int size);
 
     [StructLayout(LayoutKind.Sequential)]
     public class FileHandle
     {
-        public readonly long _fileLength;
+        public readonly int _fileLength;
 
         [MarshalAs(UnmanagedType.FunctionPtr)]
         public readonly FileReadBlockHandler _readBlock;
