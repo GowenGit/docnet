@@ -3,12 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1701;1702;1591;0649</NoWarn>
+
+    <version>$(VersionSuffix)</version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
     <Authors>Modestas Petravicius</Authors>
     <Product>DocNet</Product>
     <Description>DocNET is a fast PDF editing and reading library for modern .NET applications.</Description>
-    <version>$(VersionSuffix)</version>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1701;1702;1591;0649</NoWarn>
     <Copyright>MIT</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/GowenGit/docnet</PackageProjectUrl>
@@ -16,6 +18,7 @@
     <PackageTags>PDF; Reader; netstandard; PDFium; JPEG; JPG</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
