@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Docnet.Core.Converters;
 using Docnet.Core.Exceptions;
+using Docnet.Core.Models;
 using Docnet.Core.Readers;
 using Docnet.Tests.Integration.Utils;
 using Xunit;
@@ -228,6 +229,48 @@ namespace Docnet.Tests.Integration
 
                 Assert.Equal(expectedWidth, width);
                 Assert.Equal(expectedHeight, height);
+            });
+        }
+
+        [Fact]
+        public void GetImage_WhenCalledWithoutRenderAnnotationsFlag_ShouldNotRenderAnnotation()
+        {
+            ExecuteForDocument(Input.FromFile, "Docs/annotation_0.pdf", null, 1, 0, pageReader =>
+            {
+                var bytes = pageReader.GetImage().ToArray();
+                Assert.True(bytes.All(x => x == 0));
+            });
+        }
+
+        [Fact]
+        public void GetImage_WhenCalledWithRenderAnnotationsFlag_ShouldRenderAnnotation()
+        {
+            ExecuteForDocument(Input.FromFile, "Docs/annotation_0.pdf", null, 1, 0, pageReader =>
+            {
+                // verify pixel in center of image is the correct yellow color
+                var bytes = pageReader.GetImage(RenderFlags.RenderAnnotations).ToArray();
+                const int bpp = 4;
+                var center = bytes.Length / bpp / 2 * bpp; // note integer division by 2 here.  we're getting the first byte in the central pixel
+                Assert.Equal(133, bytes[center]); // Blue
+                Assert.Equal(244, bytes[center + 1]); // Green
+                Assert.Equal(252, bytes[center + 2]); // Red
+                Assert.Equal(255, bytes[center + 3]); // Alpha
+            });
+        }
+
+        [Fact]
+        public void GetImage_WhenCalledWithRenderAnnotationsAndGrayscaleFlags_ShouldRenderAnnotationGrayscale()
+        {
+            ExecuteForDocument(Input.FromFile, "Docs/annotation_0.pdf", null, 1, 0, pageReader =>
+            {
+                // verify pixel in center of image is the correct gray color
+                var bytes = pageReader.GetImage(RenderFlags.RenderAnnotations | RenderFlags.Grayscale).ToArray();
+                const int bpp = 4;
+                var center = bytes.Length / bpp / 2 * bpp; // note integer division by 2 here.  we're getting the first byte in the central pixel
+                Assert.Equal(234, bytes[center]); // Blue
+                Assert.Equal(234, bytes[center + 1]); // Green
+                Assert.Equal(234, bytes[center + 2]); // Red
+                Assert.Equal(255, bytes[center + 3]); // Alpha
             });
         }
 

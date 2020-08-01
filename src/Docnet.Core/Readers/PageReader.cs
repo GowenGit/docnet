@@ -169,7 +169,10 @@ namespace Docnet.Core.Readers
         }
 
         /// <inheritdoc />
-        public byte[] GetImage()
+        public byte[] GetImage() => GetImage(0);
+
+        /// <inheritdoc />
+        public byte[] GetImage(RenderFlags flags)
         {
             lock (DocLib.Lock)
             {
@@ -207,7 +210,7 @@ namespace Docnet.Core.Readers
                         clipping.Bottom = 0;
                         clipping.Top = height;
 
-                        fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, 0);
+                        fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, (int)flags);
 
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
 
@@ -228,9 +231,12 @@ namespace Docnet.Core.Readers
         }
 
         /// <inheritdoc />
-        public byte[] GetImage(IImageBytesConverter converter)
+        public byte[] GetImage(IImageBytesConverter converter) => GetImage(converter, 0);
+
+        /// <inheritdoc />
+        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags)
         {
-            var bytes = GetImage();
+            var bytes = GetImage(flags);
 
             return converter.Convert(bytes);
         }
