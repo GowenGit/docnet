@@ -42,3 +42,7 @@ Supported platforms:
     **Note:** If you have issues running on Linux make sure that `libgdiplus` is installed since this example uses `System.Drawing.Common`.
 
 * Convert JPEG file to PDF: [example](examples/nuget-usage/NugetUsageAnyCpu/ImageToPdfExamples.cs)
+
+## Usage
+
+* DocLib.Instance should be treated as a singleton that lives as long as your application. It should only be disposed when you intend to clean all unmanaged resources of PDFium.
