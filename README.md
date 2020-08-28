@@ -27,6 +27,7 @@ Supported platforms:
    - [x] Get page text
    - [x] Get characters
    - [x] Get character boundaries
+   - [x] Get character angles
    - [x] Render page to image
 - [x] Split **PDF** document
 - [x] Merge **PDF** document

@@ -8,10 +8,13 @@ namespace Docnet.Core.Models
 
         public BoundBox Box { get; }
 
-        public Character(char character, BoundBox box)
+        public float Angle { get; }
+
+        public Character(char character, BoundBox box, float angle)
         {
             Char = character;
             Box = box;
+            Angle = angle;
         }
 
         public static bool operator ==(Character obj1, Character obj2)
@@ -26,7 +29,7 @@ namespace Docnet.Core.Models
 
         public bool Equals(Character other)
         {
-            return Char == other.Char && Box.Equals(other.Box);
+            return Char == other.Char && Box.Equals(other.Box) && Angle == other.Angle;
         }
 
         public override bool Equals(object obj)
