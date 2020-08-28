@@ -2387,6 +2387,11 @@ namespace Docnet.Core.Bindings
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFText_GetCharAngle")]
+            internal static extern float FPDFTextGetCharAngle(IntPtr text_page, int index);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharOrigin")]
             internal static extern int FPDFTextGetCharOrigin(IntPtr text_page, int index, double* x,
                 double* y);
@@ -2559,6 +2564,13 @@ namespace Docnet.Core.Bindings
                     }
                 }
             }
+        }
+
+        public static float FPDFTextGetCharAngle(FpdfTextpageT text_page, int index)
+        {
+            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
+            var __ret = __Internal.FPDFTextGetCharAngle(__arg0, index);
+            return __ret;
         }
 
         public static int FPDFTextGetCharOrigin(FpdfTextpageT text_page, int index,

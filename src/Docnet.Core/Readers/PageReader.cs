@@ -107,6 +107,7 @@ namespace Docnet.Core.Readers
                 for (var i = 0; i < charCount; i++)
                 {
                     var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
+                    var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
 
                     double left = 0;
                     double top = 0;
