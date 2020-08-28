@@ -107,6 +107,7 @@ namespace Docnet.Core.Readers
                 for (var i = 0; i < charCount; i++)
                 {
                     var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
+                    var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
 
                     double left = 0;
                     double top = 0;
@@ -125,7 +126,7 @@ namespace Docnet.Core.Readers
 
                     var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
 
-                    yield return new Character(charCode, box);
+                    yield return new Character(charCode, box, fontSize);
                 }
             }
         }
