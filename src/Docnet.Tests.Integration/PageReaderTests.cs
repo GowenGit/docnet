@@ -108,6 +108,47 @@ namespace Docnet.Tests.Integration
         }
 
         [Theory]
+        [InlineData(Input.FromFile)]
+        [InlineData(Input.FromBytes)]
+        public void GetCharacters_WhenCalled_ShouldReturnCorrectCharacters(Input type)
+        {
+            ExecuteForDocument(type, "Docs/simple_6.pdf", null, 10, 10, 0, pageReader =>
+            {
+                var characters = pageReader.GetCharacters().ToArray();
+
+                Assert.Equal(20, characters.Length);
+
+                var firstText = string.Empty;
+
+                for (var i = 0; i < 10; i++)
+                {
+                    var ch = characters[i];
+
+                    Assert.Equal(12, ch.FontSize);
+                    Assert.Equal(0, ch.Angle);
+
+                    firstText += ch.Char;
+                }
+
+                Assert.Equal("Horizontal", firstText);
+
+                var secondText = string.Empty;
+
+                for (var i = 12; i < 20; i++)
+                {
+                    var ch = characters[i];
+
+                    Assert.Equal(12, ch.FontSize);
+                    Assert.Equal(4.712, ch.Angle, 3);
+
+                    secondText += ch.Char;
+                }
+
+                Assert.Equal("Vertical", secondText);
+            });
+        }
+
+        [Theory]
         [InlineData(Input.FromFile, "Docs/simple_2.pdf", 1, "2")]
         [InlineData(Input.FromFile, "Docs/simple_2.pdf", 3, "4 CONTENTS")]
         [InlineData(Input.FromFile, "Docs/simple_4.pdf", 0, "")]
@@ -266,7 +307,7 @@ namespace Docnet.Tests.Integration
                 // verify pixel in center of image is the correct gray color
                 var bytes = pageReader.GetImage(RenderFlags.RenderAnnotations | RenderFlags.Grayscale).ToArray();
                 const int bpp = 4;
-                var center = bytes.Length / bpp / 2 * bpp; // note integer division by 2 here.  we're getting the first byte in the central pixel
+                var center = bytes.Length / bpp / 2 * bpp; // note integer division by 2 here. we're getting the first byte in the central pixel
                 Assert.Equal(234, bytes[center]); // Blue
                 Assert.Equal(234, bytes[center + 1]); // Green
                 Assert.Equal(234, bytes[center + 2]); // Red

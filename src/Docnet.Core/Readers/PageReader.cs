@@ -125,7 +125,10 @@ namespace Docnet.Core.Readers
 
                     var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
 
-                    yield return new Character(charCode, box);
+                    var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
+                    var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
+
+                    yield return new Character(charCode, box, angle, fontSize);
                 }
             }
         }
