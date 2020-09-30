@@ -16,7 +16,7 @@ namespace Docnet.Core.Bindings
 
             if (Instance == null)
             {
-                throw new DocnetException("unable to open the document");
+                throw new DocnetLoadDocumentException("unable to open the document", fpdf_view.FPDF_GetLastError());
             }
         }
 
@@ -30,7 +30,7 @@ namespace Docnet.Core.Bindings
 
             if (Instance == null)
             {
-                throw new DocnetException("unable to open the document");
+                throw new DocnetLoadDocumentException("unable to open the document", fpdf_view.FPDF_GetLastError());
             }
         }
 
@@ -40,7 +40,7 @@ namespace Docnet.Core.Bindings
 
             if (Instance == null)
             {
-                throw new DocnetException("unable to open the document");
+                throw new DocnetLoadDocumentException("unable to open the document");
             }
         }
 

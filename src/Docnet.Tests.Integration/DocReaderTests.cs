@@ -33,7 +33,7 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromFile)]
         public void GetDocReader_WhenCalledWithInvalidFileData_ShouldThrow(Input type)
         {
-            Assert.Throws<DocnetException>(() => _fixture.GetDocReader(type, "Docs/protected_0.pdf", null, 10, 10));
+            Assert.Throws<DocnetLoadDocumentException>(() => _fixture.GetDocReader(type, "Docs/protected_0.pdf", null, 10, 10));
         }
 
         [Theory]
