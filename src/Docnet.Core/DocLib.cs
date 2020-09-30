@@ -166,6 +166,7 @@ namespace Docnet.Core
             lock (Lock)
             {
                 var code = fpdf_view.FPDF_GetLastError();
+
                 return LastError.ErrorCodePhrase(code);
             }
         }

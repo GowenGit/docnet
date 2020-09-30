@@ -39,14 +39,20 @@ namespace Docnet.Tests.Integration
         }
 
         [Theory]
-        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, -1)]
-        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 19)]
         [InlineData(Input.FromFile, "Docs/protected_0.pdf", null, -3)]
         [InlineData(Input.FromFile, "Docs/protected_0.pdf", null, 10)]
-        [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, -1)]
-        [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 19)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", null, -3)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", null, 10)]
+        public void GetPageReader_WhenCalledWithInvalidFile_ShouldThrow(Input type, string filePath, string password, int pageIndex)
+        {
+            Assert.Throws<DocnetLoadDocumentException>(() => ExecuteForDocument(type, filePath, password, 10, 10, pageIndex, _ => { }));
+        }
+
+        [Theory]
+        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, -1)]
+        [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 19)]
+        [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, -1)]
+        [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 19)]
         public void GetPageReader_WhenCalledWithInvalidIndex_ShouldThrow(Input type, string filePath, string password, int pageIndex)
         {
             Assert.Throws<DocnetException>(() => ExecuteForDocument(type, filePath, password, 10, 10, pageIndex, _ => { }));

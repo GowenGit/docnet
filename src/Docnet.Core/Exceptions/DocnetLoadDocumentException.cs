@@ -1,7 +1,6 @@
+using System;
 
 #pragma warning disable CA2237
-
-using System;
 
 namespace Docnet.Core.Exceptions
 {

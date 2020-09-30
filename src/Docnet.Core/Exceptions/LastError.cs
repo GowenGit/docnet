@@ -1,4 +1,3 @@
-
 namespace Docnet.Core.Exceptions
 {
     internal static class LastError
