@@ -60,6 +60,14 @@ namespace Docnet.Core.Readers
             }
         }
 
+        public int GetPageRotation()
+        {
+            lock (DocLib.Lock)
+            {
+                return fpdf_edit.FPDFPageGetRotation(_page);
+            }
+        }
+
         /// <inheritdoc />
         public string GetText()
         {
@@ -108,6 +116,34 @@ namespace Docnet.Core.Readers
                 {
                     var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
                     var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
+                    var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
+                    var renderMode = (TextRenderMode)fpdf_text.FPDFTextGetTextRenderMode(_text, i);
+                    var pageRotation = GetPageRotation();
+
+                    uint r = 0, g = 0, b = 0, a = 0;
+                    fpdf_text.FPDFTextGetStrokeColor(_text, i, ref r, ref g, ref b, ref a);
+                    var strokeColor = new List<uint>(4) { r, g, b, a };
+
+                    switch (pageRotation)
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            angle += (float)(Math.PI / 2);
+                            break;
+                        case 2:
+                            angle += (float)Math.PI;
+                            break;
+                        case 3:
+                            angle += (float)(Math.PI * 3 / 2);
+                            break;
+                    }
+
+                    double originX = 0;
+                    double originY = 0;
+                    var origin = fpdf_text.FPDFTextGetCharOrigin(_text, i, ref originX, ref originY);
+
+                    var (adjustedOriginX, adjustedOriginY) = GetAdjustedCoords(width, height, originX, originY);
 
                     double left = 0;
                     double top = 0;
@@ -124,9 +160,37 @@ namespace Docnet.Core.Readers
                     var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
                     var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
 
+                    adjustedLeft = Math.Min(adjustedLeft, adjustRight);
+                    adjustRight = Math.Max(adjustedLeft, adjustRight);
+                    adjustedTop = Math.Min(adjustedTop, adjustBottom);
+                    adjustBottom = Math.Max(adjustedTop, adjustBottom);
+
                     var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
 
-                    yield return new Character(charCode, box, fontSize);
+                    BoundBox looseBox;
+
+                    using (FS_RECTF_ rec = new FS_RECTF_())
+                    {
+                        var success2 = fpdf_text.FPDFTextGetLooseCharBox(_text, i, rec) == 1;
+                        if (!success2)
+                        {
+                            continue;
+                        }
+
+                        var (adjLooseLeft, adjLooseTop) = GetAdjustedCoords(width, height, rec.Left, rec.Top);
+                        var (adjLooseRight, adjLooseBottom) = GetAdjustedCoords(width, height, rec.Right, rec.Bottom);
+
+                        adjLooseLeft = Math.Min(adjLooseLeft, adjLooseRight);
+                        adjLooseRight = Math.Max(adjLooseLeft, adjLooseRight);
+                        adjLooseTop = Math.Min(adjLooseTop, adjLooseBottom);
+                        adjLooseBottom = Math.Max(adjLooseTop, adjLooseBottom);
+
+                        looseBox = new BoundBox(adjLooseLeft, adjLooseTop, adjLooseRight, adjLooseBottom);
+
+                        rec.Dispose();
+                    }
+
+                    yield return new Character(charCode, fontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, pageRotation, strokeColor);
                 }
             }
         }

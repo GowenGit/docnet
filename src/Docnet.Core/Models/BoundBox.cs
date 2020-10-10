@@ -16,14 +16,6 @@ namespace Docnet.Core.Models
 
         public BoundBox(int left, int top, int right, int bottom)
         {
-            Validator.CheckNotLessThanZero(left, nameof(left));
-            Validator.CheckNotLessThanZero(top, nameof(top));
-            Validator.CheckNotLessThanZero(right, nameof(right));
-            Validator.CheckNotLessThanZero(bottom, nameof(bottom));
-
-            Validator.CheckOrder(left, right, nameof(left), nameof(right));
-            Validator.CheckOrder(top, bottom, nameof(top), nameof(bottom));
-
             Left = left;
             Top = top;
             Right = right;

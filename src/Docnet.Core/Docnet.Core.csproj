@@ -23,6 +23,14 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\bin\debug</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\bin\debug</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="runtimes/**" PackagePath="runtimes" Visible="true" />
     <None Include="../../assets/icon.png" Pack="true" PackagePath="/" />
