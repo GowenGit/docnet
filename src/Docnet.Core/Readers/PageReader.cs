@@ -144,6 +144,7 @@ namespace Docnet.Core.Readers
                     var origin = fpdf_text.FPDFTextGetCharOrigin(_text, i, ref originX, ref originY);
 
                     var (adjustedOriginX, adjustedOriginY) = GetAdjustedCoords(width, height, originX, originY);
+                    var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
 
                     double left = 0;
                     double top = 0;

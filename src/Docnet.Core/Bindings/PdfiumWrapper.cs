@@ -2405,6 +2405,11 @@ namespace Docnet.Core.Bindings
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetLooseCharBox")]
             internal static extern int FPDFTextGetLooseCharBox(IntPtr text_page, int index, IntPtr rect);
+          
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFText_GetCharAngle")]
+            internal static extern float FPDFTextGetCharAngle(IntPtr text_page, int index);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
@@ -2626,6 +2631,13 @@ namespace Docnet.Core.Bindings
             var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
             var __arg1 = ReferenceEquals(rect, null) ? IntPtr.Zero : rect.__Instance;
             var __ret = __Internal.FPDFTextGetLooseCharBox(__arg0, index, __arg1);
+            return __ret;
+        }
+      
+        public static float FPDFTextGetCharAngle(FpdfTextpageT text_page, int index)
+        {
+            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
+            var __ret = __Internal.FPDFTextGetCharAngle(__arg0, index);
             return __ret;
         }
 

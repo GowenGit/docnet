@@ -64,6 +64,7 @@ namespace Docnet.Core.Models
                    && Box.Equals(other.Box)
                    && Math.Abs(Angle - other.Angle) < Tolerance
                    && Math.Abs(FontSize - other.FontSize) < Tolerance;
+            return Char == other.Char && Box.Equals(other.Box) && Angle == other.Angle;
         }
 
         public override bool Equals(object obj)
