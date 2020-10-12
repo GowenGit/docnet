@@ -1,20 +1,51 @@
 using System;
+using System.Collections.Generic;
 
 namespace Docnet.Core.Models
 {
     public struct Character : IEquatable<Character>
     {
-        public char Char { get; }
+        private const double Tolerance = 0.001;
 
-        public BoundBox Box { get; }
+        public char Char { get; set; }
 
-        public float Angle { get; }
+        public BoundBox Box { get; set; }
 
-        public Character(char character, BoundBox box, float angle)
+        public BoundBox LooseBox { get; set; }
+
+        public double FontSize { get; set; }
+
+        public double Angle { get; set; }
+
+        public double OriginX { get; set; }
+
+        public double OriginY { get; set; }
+
+        public int PageRotation { get; set; }
+
+        public List<uint> ColorARGB { get; set; }
+
+        public TextRenderMode RenderMode { get; set; }
+
+        public Character(char character, double fontSize, double angle, TextRenderMode renderMode, BoundBox box, BoundBox looseBox, double originX, double originY, int pageRot, List<uint> colorARGB)
         {
+            if (colorARGB.Count != 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(colorARGB) + " needs to have a length of 4");
+            }
+
             Char = character;
+            FontSize = fontSize;
             Box = box;
+            LooseBox = looseBox;
             Angle = angle;
+            RenderMode = renderMode;
+            OriginX = originX;
+            OriginY = originY;
+            PageRotation = pageRot;
+            Angle = angle;
+            FontSize = fontSize;
+            ColorARGB = colorARGB;
         }
 
         public static bool operator ==(Character obj1, Character obj2)
@@ -29,6 +60,10 @@ namespace Docnet.Core.Models
 
         public bool Equals(Character other)
         {
+            return Char == other.Char
+                   && Box.Equals(other.Box)
+                   && Math.Abs(Angle - other.Angle) < Tolerance
+                   && Math.Abs(FontSize - other.FontSize) < Tolerance;
             return Char == other.Char && Box.Equals(other.Box) && Angle == other.Angle;
         }
 

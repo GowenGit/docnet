@@ -2375,6 +2375,22 @@ namespace Docnet.Core.Bindings
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFText_GetTextRenderMode")]
+            internal static extern int FPDFTextGetTextRenderMode(IntPtr text_page, int index);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFText_GetStrokeColor")]
+            internal static extern bool FPDFTextGetStrokeColor(IntPtr text_page, int index, uint* R, uint* G, uint* B,
+                uint* A);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFText_GetCharAngle")]
+            internal static extern float FPDFTextGetCharAngle(IntPtr text_page, int index);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetFontInfo")]
             internal static extern uint FPDFTextGetFontInfo(IntPtr text_page, int index,
                 IntPtr buffer, uint buflen, int* flags);
@@ -2385,6 +2401,11 @@ namespace Docnet.Core.Bindings
             internal static extern int FPDFTextGetCharBox(IntPtr text_page, int index, double* left,
                 double* right, double* bottom, double* top);
 
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFText_GetLooseCharBox")]
+            internal static extern int FPDFTextGetLooseCharBox(IntPtr text_page, int index, IntPtr rect);
+          
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharAngle")]
@@ -2530,6 +2551,45 @@ namespace Docnet.Core.Bindings
             return __ret;
         }
 
+        public static int FPDFTextGetTextRenderMode(FpdfTextpageT text_page, int index)
+        {
+            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
+            var __ret = __Internal.FPDFTextGetTextRenderMode(__arg0, index);
+            return __ret;
+        }
+
+        public static bool FPDFTextGetStrokeColor(FpdfTextpageT text_page, int index,
+            ref uint R, ref uint G, ref uint B, ref uint A)
+        {
+            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
+
+            fixed (uint* __refParamPtr2 = &R)
+            {
+                var __arg2 = __refParamPtr2;
+                fixed (uint* __refParamPtr3 = &G)
+                {
+                    var __arg3 = __refParamPtr3;
+                    fixed (uint* __refParamPtr4 = &B)
+                    {
+                        var __arg4 = __refParamPtr4;
+                        fixed (uint* __refParamPtr5 = &A)
+                        {
+                            var __arg5 = __refParamPtr5;
+                            var __ret = __Internal.FPDFTextGetStrokeColor(__arg0, index, __arg2, __arg3, __arg4, __arg5);
+                            return __ret;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static float FPDFTextGetCharAngle(FpdfTextpageT text_page, int index)
+        {
+            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
+            var __ret = __Internal.FPDFTextGetCharAngle(__arg0, index);
+            return __ret;
+        }
+
         public static uint FPDFTextGetFontInfo(FpdfTextpageT text_page, int index,
             IntPtr buffer, uint buflen, ref int flags)
         {
@@ -2566,6 +2626,14 @@ namespace Docnet.Core.Bindings
             }
         }
 
+        public static int FPDFTextGetLooseCharBox(FpdfTextpageT text_page, int index, FS_RECTF_ rect)
+        {
+            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
+            var __arg1 = ReferenceEquals(rect, null) ? IntPtr.Zero : rect.__Instance;
+            var __ret = __Internal.FPDFTextGetLooseCharBox(__arg0, index, __arg1);
+            return __ret;
+        }
+      
         public static float FPDFTextGetCharAngle(FpdfTextpageT text_page, int index)
         {
             var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
