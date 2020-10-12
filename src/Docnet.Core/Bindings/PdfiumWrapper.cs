@@ -2386,11 +2386,6 @@ namespace Docnet.Core.Bindings
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "FPDFText_GetCharAngle")]
-            internal static extern float FPDFTextGetCharAngle(IntPtr text_page, int index);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetFontInfo")]
             internal static extern uint FPDFTextGetFontInfo(IntPtr text_page, int index,
                 IntPtr buffer, uint buflen, int* flags);
@@ -2581,13 +2576,6 @@ namespace Docnet.Core.Bindings
                     }
                 }
             }
-        }
-
-        public static float FPDFTextGetCharAngle(FpdfTextpageT text_page, int index)
-        {
-            var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
-            var __ret = __Internal.FPDFTextGetCharAngle(__arg0, index);
-            return __ret;
         }
 
         public static uint FPDFTextGetFontInfo(FpdfTextpageT text_page, int index,

@@ -144,7 +144,6 @@ namespace Docnet.Core.Readers
                     var origin = fpdf_text.FPDFTextGetCharOrigin(_text, i, ref originX, ref originY);
 
                     var (adjustedOriginX, adjustedOriginY) = GetAdjustedCoords(width, height, originX, originY);
-                    var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
 
                     double left = 0;
                     double top = 0;
@@ -191,7 +190,7 @@ namespace Docnet.Core.Readers
                         rec.Dispose();
                     }
 
-                    yield return new Character(charCode, fontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, pageRotation, strokeColor);
+                    yield return new Character(charCode, fontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, strokeColor);
                 }
             }
         }

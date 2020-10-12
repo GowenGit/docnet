@@ -21,13 +21,11 @@ namespace Docnet.Core.Models
 
         public double OriginY { get; set; }
 
-        public int PageRotation { get; set; }
-
         public List<uint> ColorARGB { get; set; }
 
         public TextRenderMode RenderMode { get; set; }
 
-        public Character(char character, double fontSize, double angle, TextRenderMode renderMode, BoundBox box, BoundBox looseBox, double originX, double originY, int pageRot, List<uint> colorARGB)
+        public Character(char character, double fontSize, double angle, TextRenderMode renderMode, BoundBox box, BoundBox looseBox, double originX, double originY, List<uint> colorARGB)
         {
             if (colorARGB.Count != 4)
             {
@@ -42,7 +40,6 @@ namespace Docnet.Core.Models
             RenderMode = renderMode;
             OriginX = originX;
             OriginY = originY;
-            PageRotation = pageRot;
             Angle = angle;
             FontSize = fontSize;
             ColorARGB = colorARGB;
@@ -64,7 +61,6 @@ namespace Docnet.Core.Models
                    && Box.Equals(other.Box)
                    && Math.Abs(Angle - other.Angle) < Tolerance
                    && Math.Abs(FontSize - other.FontSize) < Tolerance;
-            return Char == other.Char && Box.Equals(other.Box) && Angle == other.Angle;
         }
 
         public override bool Equals(object obj)

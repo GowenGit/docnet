@@ -61,7 +61,7 @@ namespace Docnet.Tests.Integration
         [InlineData(null)]
         public void Unlock_WhenCalledWithPathWrongPassword_ShouldThrow(string password)
         {
-            Assert.Throws<DocnetException>(() => _fixture.Lib.Unlock("Docs/protected_0.pdf", password));
+            Assert.Throws<DocnetLoadDocumentException>(() => _fixture.Lib.Unlock("Docs/protected_0.pdf", password));
         }
 
         [Theory]
@@ -71,7 +71,7 @@ namespace Docnet.Tests.Integration
         {
             var bytes = File.ReadAllBytes("Docs/protected_0.pdf");
 
-            Assert.Throws<DocnetException>(() => _fixture.Lib.Unlock(bytes, password));
+            Assert.Throws<DocnetLoadDocumentException>(() => _fixture.Lib.Unlock(bytes, password));
         }
 
         [Theory]
@@ -81,7 +81,7 @@ namespace Docnet.Tests.Integration
         {
             var bytes = File.ReadAllBytes("Docs/protected_0.pdf");
 
-            Assert.Throws<DocnetException>(() => _fixture.Lib.Unlock(bytes, password));
+            Assert.Throws<DocnetLoadDocumentException>(() => _fixture.Lib.Unlock(bytes, password));
 
             var message = _fixture.Lib.GetLastError();
 
