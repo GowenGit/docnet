@@ -24,7 +24,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="runtimes/**" PackagePath="runtimes" Visible="true" />
+    <Content Condition=" '$(OS)' == 'Windows_NT' " Include="runtimes/win-x86/**" PackagePath="runtimes" CopyToOutputDirectory="PreserveNewest" Visible="true" />
+    <Content Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' " Include="runtimes/linux/**" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes" Visible="true" />
+    <Content Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' " Include="runtimes/osx/**" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes" Visible="true" />
     <None Include="../../assets/icon.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 
