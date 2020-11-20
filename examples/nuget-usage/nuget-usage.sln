@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F61EB8
 		Assets\wikipedia_0.pdf = Assets\wikipedia_0.pdf
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NugetUsageAnyCpuNet47", "NugetUsageAnyCpuNet47\NugetUsageAnyCpuNet47.csproj", "{CE9B409D-3C37-434F-B832-E0028D6FFDF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EA2026A4-53DE-44DE-8B92-76AD1DEAA165}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA2026A4-53DE-44DE-8B92-76AD1DEAA165}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA2026A4-53DE-44DE-8B92-76AD1DEAA165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE9B409D-3C37-434F-B832-E0028D6FFDF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE9B409D-3C37-434F-B832-E0028D6FFDF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE9B409D-3C37-434F-B832-E0028D6FFDF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE9B409D-3C37-434F-B832-E0028D6FFDF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
