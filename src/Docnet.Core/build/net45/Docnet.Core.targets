@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DocnetRuntime Condition=" '$(DocnetRuntime)' == '' AND '$([MSBuild]::IsOsPlatform(OSX))' ">osx</DocnetRuntime>
+    <DocnetRuntime Condition=" '$(DocnetRuntime)' == '' AND '$([MSBuild]::IsOsPlatform(Linux))' ">linux</DocnetRuntime>
+    <DocnetRuntime Condition=" '$(DocnetRuntime)' == '' AND ('$(Prefer32Bit)' == 'true' OR '$(PlatformTarget)' == 'x86') AND '$([MSBuild]::IsOsPlatform(Windows))' ">win-x86</DocnetRuntime>
+    <DocnetRuntime Condition=" '$(DocnetRuntime)' == '' ">win-x64</DocnetRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\$(DocnetRuntime)\native\pdfium.*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-nuget:
+    name: Deployment
+
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Set version tag
+      id: vars
+      run: echo ::set-output name=tag::$(echo ${GITHUB_REF:11})
+
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.101'
+
+    - name: Build NuGet
+      run: dotnet pack -c Release -o out --version-suffix ${{ steps.vars.outputs.tag }} src/Docnet.Core/Docnet.Core.csproj
+
+    - name: Deploy NuGet Binaries
+      run: dotnet nuget push out/Docnet.Core.${{ steps.vars.outputs.tag }}.nupkg -k ${{ secrets.CICD_KEY }} -s https://api.nuget.org/v3/index.json
