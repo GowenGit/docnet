@@ -115,10 +115,12 @@ namespace Docnet.Core.Readers
                 for (var i = 0; i < charCount; i++)
                 {
                     var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
-                    var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
                     var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
                     var renderMode = (TextRenderMode)fpdf_text.FPDFTextGetTextRenderMode(_text, i);
                     var pageRotation = GetPageRotation();
+
+                    var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
+                    var adjustedFontSize = fontSize != 1 ? fontSize * _scaling : fontSize;
 
                     uint r = 0, g = 0, b = 0, a = 0;
                     fpdf_text.FPDFTextGetStrokeColor(_text, i, ref r, ref g, ref b, ref a);
@@ -142,7 +144,6 @@ namespace Docnet.Core.Readers
                     double originX = 0;
                     double originY = 0;
                     var origin = fpdf_text.FPDFTextGetCharOrigin(_text, i, ref originX, ref originY);
-
                     var (adjustedOriginX, adjustedOriginY) = GetAdjustedCoords(width, height, originX, originY);
 
                     double left = 0;
@@ -190,7 +191,7 @@ namespace Docnet.Core.Readers
                         rec.Dispose();
                     }
 
-                    yield return new Character(charCode, fontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, strokeColor);
+                    yield return new Character(charCode, adjustedFontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, strokeColor);
                 }
             }
         }
