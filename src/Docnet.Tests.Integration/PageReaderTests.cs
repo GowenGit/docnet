@@ -118,7 +118,7 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes)]
         public void GetCharacters_WhenCalled_ShouldReturnCorrectCharacters(Input type)
         {
-            ExecuteForDocument(type, "Docs/simple_6.pdf", null, 10, 10, 0, pageReader =>
+            ExecuteForDocument(type, "Docs/simple_6.pdf", null, 841, 841, 0, pageReader =>
             {
                 var characters = pageReader.GetCharacters().ToArray();
 
@@ -130,7 +130,7 @@ namespace Docnet.Tests.Integration
                 {
                     var ch = characters[i];
 
-                    Assert.Equal(12, ch.FontSize);
+                    Assert.Equal(12, Math.Round(ch.FontSize, 1));
                     Assert.Equal(0, ch.Angle);
 
                     firstText += ch.Char;
@@ -144,7 +144,7 @@ namespace Docnet.Tests.Integration
                 {
                     var ch = characters[i];
 
-                    Assert.Equal(12, ch.FontSize);
+                    Assert.Equal(12, Math.Round(ch.FontSize, 1));
                     Assert.Equal(4.712, ch.Angle, 3);
 
                     secondText += ch.Char;
