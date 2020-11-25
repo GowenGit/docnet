@@ -48,3 +48,13 @@ Supported platforms:
 ## Usage
 
 * DocLib.Instance should be treated as a singleton that lives as long as your application. It should only be disposed when you intend to clean all unmanaged resources of PDFium.
+
+## .NET Framework Support
+
+Newer versions of .NET Framework are also supported, `Docnet.Core.targets` tries to automatically find which version of the native `PDFium` binary to copy but that can sometime be unreliable especially if running on AnyCPU. You can manually specify `DocnetRuntime` property in your project file to influence which library version to copy. Allowed values are `win-x64`, `win-x86`, `linux` and `osx`:
+
+```
+  <PropertyGroup>
+    <DocnetRuntime Condition="'$([MSBuild]::IsOsPlatform(Windows))' ">win-x64</DocnetRuntime>
+  </PropertyGroup>
+```
