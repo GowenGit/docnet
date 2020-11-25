@@ -51,10 +51,12 @@ Supported platforms:
 
 ## .NET Framework Support
 
-Newer versions of .NET Framework are also supported, `Docnet.Core.targets` tries to automatically find which version of the native `PDFium` binary to copy but that can sometime be unreliable especially if running on AnyCPU. You can manually specify `DocnetRuntime` property in your project file to influence which library version to copy. Allowed values are `win-x64`, `win-x86`, `linux` and `osx`:
+Newer versions of .NET Framework are also supported, `Docnet.Core.targets` tries to automatically find which version of the native `PDFium` binary to copy but that can sometime be unreliable especially if running on AnyCPU. You can manually specify `DocnetRuntime` property in your project file to influence which library version to copy. Allowed values are `win-x64`, `win-x86`, `linux` and `osx`.
+
+Example below makes sure that we always copy x64 binary on windows:
 
 ```
   <PropertyGroup>
-    <DocnetRuntime Condition="'$([MSBuild]::IsOsPlatform(Windows))' ">win-x64</DocnetRuntime>
+    <DocnetRuntime Condition=" '$([MSBuild]::IsOsPlatform(Windows))' ">win-x64</DocnetRuntime>
   </PropertyGroup>
 ```
