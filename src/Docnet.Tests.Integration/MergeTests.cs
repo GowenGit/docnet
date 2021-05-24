@@ -43,7 +43,7 @@ namespace Docnet.Tests.Integration
         [Fact]
         public void Merge_WhenCalledWithSecondNullBytes_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(new byte[1], null));
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(new byte[1], (byte[])null));
         }
 
         [Fact]

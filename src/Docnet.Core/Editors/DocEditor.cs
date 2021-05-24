@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Docnet.Core.Bindings;
@@ -28,6 +29,58 @@ namespace Docnet.Core.Editors
                 {
                     return Merge(docOneWrapper, docTwoWrapper);
                 }
+            }
+        }
+
+        public byte[] Merge(byte[] fileOne, ICollection<byte[]> files)
+        {
+            lock (DocLib.Lock)
+            {
+                using (var docOneWrapper = new DocumentWrapper(fileOne, null))
+                {
+                    var documentWrappers = new List<DocumentWrapper>();
+
+                    try
+                    {
+                        foreach (var file in files)
+                        {
+                            documentWrappers.Add(new DocumentWrapper(file, null));
+                        }
+
+                        return Merge(docOneWrapper, documentWrappers);
+                    }
+                    finally
+                    {
+                        foreach (DocumentWrapper documentWrapper in documentWrappers)
+                        {
+                            documentWrapper.Dispose();
+                        }
+                    }
+                }
+            }
+        }
+
+        private static byte[] Merge(DocumentWrapper docOneWrapper, ICollection<DocumentWrapper> docTwoWrappers)
+        {
+            using (var stream = new MemoryStream())
+            {
+                foreach (DocumentWrapper documentWrapper in docTwoWrappers)
+                {
+                    var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
+
+                    var success = fpdf_ppo.FPDF_ImportPages(
+                                      docOneWrapper.Instance,
+                                      documentWrapper.Instance,
+                                      null,
+                                      pageCountOne) == 1;
+
+                    if (!success)
+                    {
+                        throw new DocnetException("failed to merge files");
+                    }
+                }
+
+                return GetBytes(stream, docOneWrapper);
             }
         }
 
