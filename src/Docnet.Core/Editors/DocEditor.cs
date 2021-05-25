@@ -60,11 +60,11 @@ namespace Docnet.Core.Editors
             }
         }
 
-        private static byte[] Merge(DocumentWrapper docOneWrapper, ICollection<DocumentWrapper> docTwoWrappers)
+        private static byte[] Merge(DocumentWrapper docOneWrapper, ICollection<DocumentWrapper> docWrappers)
         {
             using (var stream = new MemoryStream())
             {
-                foreach (DocumentWrapper documentWrapper in docTwoWrappers)
+                foreach (DocumentWrapper documentWrapper in docWrappers)
                 {
                     var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Docnet.Core.Models;
 using Docnet.Tests.Integration.Utils;
@@ -79,6 +80,28 @@ namespace Docnet.Tests.Integration
             var bytesTwo = File.ReadAllBytes(fileTwo);
 
             var mergedBytes = _fixture.Lib.Merge(bytesOne, bytesTwo);
+
+            using (var reader = _fixture.Lib.GetDocReader(mergedBytes, new PageDimensions(10, 10)))
+            {
+                Assert.Equal(expectedPageCount, reader.GetPageCount());
+            }
+        }
+
+        [Theory]
+        [InlineData("Docs/simple_0.pdf", "Docs/simple_1.pdf", "Docs/simple_2.pdf", 34)]
+        [InlineData("Docs/simple_0.pdf", "Docs/simple_2.pdf", "Docs/simple_3.pdf", 31)]
+        [InlineData("Docs/simple_1.pdf", "Docs/simple_3.pdf", "Docs/simple_4.pdf", 8)]
+        public void Merge_WhenCalledWithBytes_ShouldMergeThreeDocs(string fileOne, string fileTwo, string fileThree, int expectedPageCount)
+        {
+            var bytesOne = File.ReadAllBytes(fileOne);
+
+            var byteFiles = new List<byte[]>
+            {
+                File.ReadAllBytes(fileTwo),
+                File.ReadAllBytes(fileThree),
+            };
+
+            var mergedBytes = _fixture.Lib.Merge(bytesOne, byteFiles);
 
             using (var reader = _fixture.Lib.GetDocReader(mergedBytes, new PageDimensions(10, 10)))
             {
