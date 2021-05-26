@@ -97,15 +97,16 @@ namespace Docnet.Core
         }
 
         /// <inheritdoc />
-        public byte[] Merge(byte[] fileOne, ICollection<byte[]> files)
+        public byte[] Merge(IList<byte[]> files)
         {
-            Validator.CheckBytesNullOrZero(fileOne, nameof(fileOne));
+            Validator.CheckCollectionNotEmpty(files, nameof(files));
+
             foreach (var file in files)
             {
                 Validator.CheckBytesNullOrZero(file, nameof(files));
             }
 
-            return _editor.Merge(fileOne, files);
+            return _editor.Merge(files);
         }
 
         /// <inheritdoc />

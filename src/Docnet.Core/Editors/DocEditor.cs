@@ -32,51 +32,53 @@ namespace Docnet.Core.Editors
             }
         }
 
-        public byte[] Merge(byte[] fileOne, ICollection<byte[]> files)
+        public byte[] Merge(IList<byte[]> files)
         {
             lock (DocLib.Lock)
             {
-                using (var docOneWrapper = new DocumentWrapper(fileOne, null))
+                var documentWrappers = new List<DocumentWrapper>();
+
+                try
                 {
-                    var documentWrappers = new List<DocumentWrapper>();
-
-                    try
+                    foreach (var file in files)
                     {
-                        foreach (var file in files)
-                        {
-                            documentWrappers.Add(new DocumentWrapper(file, null));
-                        }
-
-                        return Merge(docOneWrapper, documentWrappers);
+                        documentWrappers.Add(new DocumentWrapper(file, null));
                     }
-                    finally
+
+                    return Merge(documentWrappers);
+                }
+                finally
+                {
+                    foreach (DocumentWrapper documentWrapper in documentWrappers)
                     {
-                        foreach (DocumentWrapper documentWrapper in documentWrappers)
-                        {
-                            documentWrapper.Dispose();
-                        }
+                        documentWrapper.Dispose();
                     }
                 }
             }
         }
 
-        private static byte[] Merge(DocumentWrapper docOneWrapper, ICollection<DocumentWrapper> docWrappers)
+        private static byte[] Merge(IList<DocumentWrapper> docWrappers)
         {
+            var docOneWrapper = docWrappers[0];
             using (var stream = new MemoryStream())
             {
-                foreach (DocumentWrapper documentWrapper in docWrappers)
+                if (docWrappers.Count > 1)
                 {
-                    var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
-
-                    var success = fpdf_ppo.FPDF_ImportPages(
-                                      docOneWrapper.Instance,
-                                      documentWrapper.Instance,
-                                      null,
-                                      pageCountOne) == 1;
-
-                    if (!success)
+                    for (int i = 1; i < docWrappers.Count; i++)
                     {
-                        throw new DocnetException("failed to merge files");
+                        var documentWrapper = docWrappers[i];
+                        var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
+
+                        var success = fpdf_ppo.FPDF_ImportPages(
+                                          docOneWrapper.Instance,
+                                          documentWrapper.Instance,
+                                          null,
+                                          pageCountOne) == 1;
+
+                        if (!success)
+                        {
+                            throw new DocnetException("failed to merge files");
+                        }
                     }
                 }
 

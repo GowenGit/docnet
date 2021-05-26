@@ -1,9 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Docnet.Core.Validation
 {
     internal static class Validator
     {
+        public static void CheckCollectionNotEmpty<T>(ICollection<T> enumerable, string name)
+        {
+            if (enumerable.Count <= 0)
+            {
+                throw new ArgumentException("Collection can't be empty", name);
+            }
+        }
+
         public static void CheckFilePathNotNull(string filePath, string name)
         {
             if (filePath == null)

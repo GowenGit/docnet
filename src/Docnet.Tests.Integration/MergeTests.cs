@@ -30,6 +30,18 @@ namespace Docnet.Tests.Integration
         }
 
         [Fact]
+        public void Merge_WhenCalledWithEnptyByteArray_ShouldThrow()
+        {
+            Assert.Throws<ArgumentException>(() => _fixture.Lib.Merge(new List<byte[]>()));
+        }
+
+        [Fact]
+        public void Merge_WhenCalledWithByteArrayWithFirstNullBytes_ShouldThrow()
+        {
+            Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(new List<byte[]> { Array.Empty<byte>() }));
+        }
+
+        [Fact]
         public void Merge_WhenCalledWithFirstEmptyBytes_ShouldThrow()
         {
             Assert.Throws<ArgumentNullException>(() => _fixture.Lib.Merge(Array.Empty<byte>(), new byte[1]));
@@ -93,15 +105,14 @@ namespace Docnet.Tests.Integration
         [InlineData("Docs/simple_1.pdf", "Docs/simple_3.pdf", "Docs/simple_4.pdf", 8)]
         public void Merge_WhenCalledWithBytes_ShouldMergeThreeDocs(string fileOne, string fileTwo, string fileThree, int expectedPageCount)
         {
-            var bytesOne = File.ReadAllBytes(fileOne);
-
             var byteFiles = new List<byte[]>
             {
+                File.ReadAllBytes(fileOne),
                 File.ReadAllBytes(fileTwo),
                 File.ReadAllBytes(fileThree),
             };
 
-            var mergedBytes = _fixture.Lib.Merge(bytesOne, byteFiles);
+            var mergedBytes = _fixture.Lib.Merge(byteFiles);
 
             using (var reader = _fixture.Lib.GetDocReader(mergedBytes, new PageDimensions(10, 10)))
             {
