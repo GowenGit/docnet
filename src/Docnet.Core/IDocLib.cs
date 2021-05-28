@@ -69,7 +69,7 @@ namespace Docnet.Core
         /// </summary>
         /// <param name="files">Files to merge to fileOne.</param>
         /// <returns>New file bytes.</returns>
-        byte[] Merge(IList<byte[]> files);
+        byte[] Merge(IReadOnlyList<byte[]> files);
 
         /// <summary>
         /// Split a range of pages into a separate document.

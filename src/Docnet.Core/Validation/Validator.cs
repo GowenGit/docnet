@@ -5,7 +5,7 @@ namespace Docnet.Core.Validation
 {
     internal static class Validator
     {
-        public static void CheckCollectionNotEmpty<T>(ICollection<T> enumerable, string name)
+        public static void CheckCollectionNotEmpty<T>(IReadOnlyList<T> enumerable, string name)
         {
             if (enumerable.Count <= 0)
             {

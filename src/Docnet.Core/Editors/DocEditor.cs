@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Docnet.Core.Bindings;
@@ -32,7 +31,7 @@ namespace Docnet.Core.Editors
             }
         }
 
-        public byte[] Merge(IList<byte[]> files)
+        public byte[] Merge(IReadOnlyList<byte[]> files)
         {
             lock (DocLib.Lock)
             {

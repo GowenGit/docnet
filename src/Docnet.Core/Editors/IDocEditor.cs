@@ -8,7 +8,7 @@ namespace Docnet.Core.Editors
 
         byte[] Merge(byte[] fileOne, byte[] fileTwo);
 
-        byte[] Merge(IList<byte[]> files);
+        byte[] Merge(IReadOnlyList<byte[]> files);
 
         byte[] Split(string filePath, int pageFromIndex, int pageToIndex);
 

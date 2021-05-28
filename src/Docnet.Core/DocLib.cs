@@ -97,7 +97,7 @@ namespace Docnet.Core
         }
 
         /// <inheritdoc />
-        public byte[] Merge(IList<byte[]> files)
+        public byte[] Merge(IReadOnlyList<byte[]> files)
         {
             Validator.CheckCollectionNotEmpty(files, nameof(files));
 
