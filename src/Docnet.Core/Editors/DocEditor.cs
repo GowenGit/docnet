@@ -57,11 +57,12 @@ namespace Docnet.Core.Editors
             var documentWrappers = new List<DocumentWrapper>();
             var documentLoadExceptions = new List<DocnetLoadDocumentError>();
 
-            for (int i = 0; i < files.Count; i++)
+            for (var i = 0; i < files.Count; i++)
             {
                 try
                 {
                     var wrapper = new DocumentWrapper(files[i], null);
+
                     documentWrappers.Add(wrapper);
                 }
                 catch (DocnetLoadDocumentException e)
@@ -75,7 +76,7 @@ namespace Docnet.Core.Editors
                 return documentWrappers.ToArray();
             }
 
-            foreach (DocumentWrapper documentWrapper in documentWrappers)
+            foreach (var documentWrapper in documentWrappers)
             {
                 documentWrapper.Dispose();
             }
