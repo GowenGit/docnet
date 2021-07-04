@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Docnet.Core.Bindings;
@@ -35,15 +36,10 @@ namespace Docnet.Core.Editors
         {
             lock (DocLib.Lock)
             {
-                var documentWrappers = new List<DocumentWrapper>();
+                var documentWrappers = OpenDocuments(files);
 
                 try
                 {
-                    foreach (var file in files)
-                    {
-                        documentWrappers.Add(new DocumentWrapper(file, null));
-                    }
-
                     return Merge(documentWrappers);
                 }
                 finally
@@ -54,6 +50,37 @@ namespace Docnet.Core.Editors
                     }
                 }
             }
+        }
+
+        private static DocumentWrapper[] OpenDocuments(IReadOnlyList<byte[]> files)
+        {
+            var documentWrappers = new List<DocumentWrapper>();
+            var documentLoadExceptions = new List<DocnetLoadDocumentError>();
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                try
+                {
+                    var wrapper = new DocumentWrapper(files[i], null);
+                    documentWrappers.Add(wrapper);
+                }
+                catch (DocnetLoadDocumentException e)
+                {
+                    documentLoadExceptions.Add(new DocnetLoadDocumentError(i, e));
+                }
+            }
+
+            if (documentLoadExceptions.Count <= 0)
+            {
+                return documentWrappers.ToArray();
+            }
+
+            foreach (DocumentWrapper documentWrapper in documentWrappers)
+            {
+                documentWrapper.Dispose();
+            }
+
+            throw new DocnetLoadDocumentsException("unable to open one or more documents", documentLoadExceptions.ToArray());
         }
 
         private static byte[] Merge(IList<DocumentWrapper> docWrappers)
