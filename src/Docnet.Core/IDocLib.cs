@@ -65,6 +65,13 @@ namespace Docnet.Core
         byte[] Merge(byte[] fileOne, byte[] fileTwo);
 
         /// <summary>
+        /// Merge documents into one.
+        /// </summary>
+        /// <param name="files">Files to merge to fileOne.</param>
+        /// <returns>New file bytes.</returns>
+        byte[] Merge(IReadOnlyList<byte[]> files);
+
+        /// <summary>
         /// Split a range of pages into a separate document.
         /// </summary>
         /// <param name="filePath">Full file path.</param>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Docnet.Core.Bindings;
@@ -28,6 +29,87 @@ namespace Docnet.Core.Editors
                 {
                     return Merge(docOneWrapper, docTwoWrapper);
                 }
+            }
+        }
+
+        public byte[] Merge(IReadOnlyList<byte[]> files)
+        {
+            lock (DocLib.Lock)
+            {
+                var documentWrappers = OpenDocuments(files);
+
+                try
+                {
+                    return Merge(documentWrappers);
+                }
+                finally
+                {
+                    foreach (DocumentWrapper documentWrapper in documentWrappers)
+                    {
+                        documentWrapper.Dispose();
+                    }
+                }
+            }
+        }
+
+        private static DocumentWrapper[] OpenDocuments(IReadOnlyList<byte[]> files)
+        {
+            var documentWrappers = new List<DocumentWrapper>();
+            var documentLoadExceptions = new List<DocnetLoadDocumentError>();
+
+            for (var i = 0; i < files.Count; i++)
+            {
+                try
+                {
+                    var wrapper = new DocumentWrapper(files[i], null);
+
+                    documentWrappers.Add(wrapper);
+                }
+                catch (DocnetLoadDocumentException e)
+                {
+                    documentLoadExceptions.Add(new DocnetLoadDocumentError(i, e));
+                }
+            }
+
+            if (documentLoadExceptions.Count <= 0)
+            {
+                return documentWrappers.ToArray();
+            }
+
+            foreach (var documentWrapper in documentWrappers)
+            {
+                documentWrapper.Dispose();
+            }
+
+            throw new DocnetLoadDocumentsException("unable to open one or more documents", documentLoadExceptions.ToArray());
+        }
+
+        private static byte[] Merge(IList<DocumentWrapper> docWrappers)
+        {
+            var docOneWrapper = docWrappers[0];
+            using (var stream = new MemoryStream())
+            {
+                if (docWrappers.Count > 1)
+                {
+                    for (int i = 1; i < docWrappers.Count; i++)
+                    {
+                        var documentWrapper = docWrappers[i];
+                        var pageCountOne = fpdf_view.FPDF_GetPageCount(docOneWrapper.Instance);
+
+                        var success = fpdf_ppo.FPDF_ImportPages(
+                                          docOneWrapper.Instance,
+                                          documentWrapper.Instance,
+                                          null,
+                                          pageCountOne) == 1;
+
+                        if (!success)
+                        {
+                            throw new DocnetException("failed to merge files");
+                        }
+                    }
+                }
+
+                return GetBytes(stream, docOneWrapper);
             }
         }
 

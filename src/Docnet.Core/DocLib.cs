@@ -97,6 +97,19 @@ namespace Docnet.Core
         }
 
         /// <inheritdoc />
+        public byte[] Merge(IReadOnlyList<byte[]> files)
+        {
+            Validator.CheckCollectionNotEmpty(files, nameof(files));
+
+            foreach (var file in files)
+            {
+                Validator.CheckBytesNullOrZero(file, nameof(files));
+            }
+
+            return _editor.Merge(files);
+        }
+
+        /// <inheritdoc />
         public byte[] Split(string filePath, int pageFromIndex, int pageToIndex)
         {
             Validator.CheckFilePathNotNull(filePath, nameof(filePath));
