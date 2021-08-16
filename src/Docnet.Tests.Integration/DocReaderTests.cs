@@ -93,5 +93,41 @@ namespace Docnet.Tests.Integration
                 Assert.Equal(expectedVersion, version.Number);
             }
         }
+
+        [Fact]
+        public void GetPdfVersion_WhenCalledWhenDisposed_ShouldThrow()
+        {
+            var reader = _fixture.GetDocReader(Input.FromFile, "Docs/simple_0.pdf", null, 10, 10);
+            reader.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reader.GetPdfVersion();
+            });
+        }
+
+        [Fact]
+        public void GetPageCount_WhenCalledWhenDisposed_ShouldThrow()
+        {
+            var reader = _fixture.GetDocReader(Input.FromFile, "Docs/simple_0.pdf", null, 10, 10);
+            reader.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reader.GetPageCount();
+            });
+        }
+
+        [Fact]
+        public void GetPageReader_WhenCalledWhenDisposed_ShouldThrow()
+        {
+            var reader = _fixture.GetDocReader(Input.FromFile, "Docs/simple_0.pdf", null, 10, 10);
+            reader.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                reader.GetPageReader(0);
+            });
+        }
     }
 }
