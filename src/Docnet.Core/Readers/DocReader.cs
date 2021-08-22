@@ -1,3 +1,4 @@
+using System;
 using Docnet.Core.Bindings;
 using Docnet.Core.Exceptions;
 using Docnet.Core.Models;
@@ -9,6 +10,8 @@ namespace Docnet.Core.Readers
     {
         private readonly DocumentWrapper _docWrapper;
         private readonly PageDimensions _dimensions;
+
+        private bool _disposed;
 
         public DocReader(string filePath, string password, PageDimensions dimensions)
         {
@@ -33,6 +36,11 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public PdfVersion GetPdfVersion()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException("DocReader has been disposed.");
+            }
+
             var version = 0;
 
             lock (DocLib.Lock)
@@ -51,6 +59,11 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public int GetPageCount()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException("DocReader has been disposed.");
+            }
+
             lock (DocLib.Lock)
             {
                 return fpdf_view.FPDF_GetPageCount(_docWrapper.Instance);
@@ -60,6 +73,11 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public IPageReader GetPageReader(int pageIndex)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException("DocReader has been disposed.");
+            }
+
             return new PageReader(_docWrapper, pageIndex, _dimensions);
         }
 
@@ -68,6 +86,7 @@ namespace Docnet.Core.Readers
             lock (DocLib.Lock)
             {
                 _docWrapper?.Dispose();
+                _disposed = true;
             }
         }
     }
