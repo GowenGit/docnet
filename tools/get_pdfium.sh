@@ -1,21 +1,22 @@
 #!/bin/bash
 
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4250/pdfium-linux.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4648/pdfium-linux-arm.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4250/pdfium-windows-x64.zip
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4250/pdfium-windows-x86.zip
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4250/pdfium-darwin.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4655/pdfium-linux-x64.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4655/pdfium-linux-arm.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4655/pdfium-windows-x64.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4655/pdfium-windows-x86.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4655/pdfium-darwin-x64.tgz
 
 mkdir linux
 mkdir linux-arm
 mkdir windows
+mkdir windowsx86
 mkdir osx
 
-tar -xvf pdfium-linux.tgz -C linux
+tar -xvf pdfium-linux-x64.tgz -C linux
 tar -xvf pdfium-linux-arm.tgz -C linux-arm
-tar -xvf pdfium-darwin.tgz -C osx
-unzip pdfium-windows-x64.zip -d windows
-unzip pdfium-windows-x86.zip -d windowsx86
+tar -xvf pdfium-darwin-x64.tgz -C osx
+tar -xvf pdfium-windows-x64.tgz -C windows
+tar -xvf pdfium-windows-x86.tgz -C windowsx86
 
 mkdir -p ../src/Docnet.Core/runtimes/linux/native/
 mkdir -p ../src/Docnet.Core/runtimes/linux-arm/native/
@@ -38,5 +39,5 @@ cp windows/LICENSE ../src/Docnet.Core/runtimes/win-x64/native/LICENSE
 cp windowsx86/x86/bin/pdfium.dll ../src/Docnet.Core/runtimes/win-x86/native/pdfium.dll
 cp windowsx86/LICENSE ../src/Docnet.Core/runtimes/win-x86/native/LICENSE
 
-rm pdfium-linux.tgz pdfium-linux-arm.tgz pdfium-windows-x64.zip pdfium-windows-x86.zip pdfium-darwin.tgz
+rm pdfium-linux-x64.tgz pdfium-linux-arm.tgz pdfium-windows-x64.tgz pdfium-windows-x86.tgz pdfium-darwin-x64.tgz
 rm -rf linux linux-arm windows windowsx86 osx
