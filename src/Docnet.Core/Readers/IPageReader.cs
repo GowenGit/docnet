@@ -34,6 +34,11 @@ namespace Docnet.Core.Readers
         IEnumerable<Character> GetCharacters();
 
         /// <summary>
+        /// Get all page annotations.
+        /// </summary>
+        IEnumerable<(string uri, BoundBox bbox)> GetUriAnnotations();
+
+        /// <summary>
         /// Return a byte representation
         /// of the page image.
         /// Byte array is formatted as
@@ -68,5 +73,7 @@ namespace Docnet.Core.Readers
         /// to modify the image.
         /// </summary>
         byte[] GetImage(IImageBytesConverter converter, RenderFlags flags);
+
+        List<(uint, uint)> GetDimensionsOfEmbeddedImages();
     }
 }

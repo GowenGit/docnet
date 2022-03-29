@@ -17,6 +17,7 @@
 // ReSharper disable ArrangeAccessorOwnerBody
 // ReSharper disable MergeConditionalExpression
 
+using Docnet.Core.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
@@ -1469,6 +1470,116 @@ namespace Docnet.Core.Bindings
         }
     }
 
+    internal unsafe partial class FS_POINTF_ : IDisposable
+    {
+        [StructLayout(LayoutKind.Explicit, Size = 8)]
+        public partial struct __Internal
+        {
+            [FieldOffset(0)] internal float x;
+
+            [FieldOffset(4)] internal float y;
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "??0_FS_POINTF_@@QEAA@AEBU0@@Z")]
+            internal static extern IntPtr
+                cctor(IntPtr instance, IntPtr _0);
+        }
+
+        public IntPtr __Instance { get; protected set; }
+
+        protected int __PointerAdjustment;
+
+        internal static readonly
+            ConcurrentDictionary<IntPtr, FS_POINTF_>
+            NativeToManagedMap =
+                new ConcurrentDictionary<IntPtr,
+                    FS_POINTF_>();
+
+        protected void*[] __OriginalVTables;
+
+        protected bool __ownsNativeInstance;
+
+        internal static FS_POINTF_ __CreateInstance(IntPtr native,
+            bool skipVTables = false)
+        {
+            return new FS_POINTF_(native.ToPointer(), skipVTables);
+        }
+
+        internal static FS_POINTF_ __CreateInstance(
+            __Internal native, bool skipVTables = false)
+        {
+            return new FS_POINTF_(native, skipVTables);
+        }
+
+        private static void* __CopyValue(__Internal native)
+        {
+            var ret = Marshal.AllocHGlobal(sizeof(__Internal));
+            *(__Internal*)ret = native;
+            return ret.ToPointer();
+        }
+
+        private FS_POINTF_(__Internal native, bool skipVTables = false)
+            : this(__CopyValue(native), skipVTables)
+        {
+            __ownsNativeInstance = true;
+            NativeToManagedMap[__Instance] = this;
+        }
+
+        protected FS_POINTF_(void* native, bool skipVTables = false)
+        {
+            if (native == null)
+                return;
+            __Instance = new IntPtr(native);
+        }
+
+        public FS_POINTF_()
+        {
+            __Instance = Marshal.AllocHGlobal(sizeof(__Internal));
+            __ownsNativeInstance = true;
+            NativeToManagedMap[__Instance] = this;
+        }
+
+        public FS_POINTF_(FS_POINTF_ _0)
+        {
+            __Instance = Marshal.AllocHGlobal(sizeof(__Internal));
+            __ownsNativeInstance = true;
+            NativeToManagedMap[__Instance] = this;
+            *((__Internal*)__Instance) =
+                *((__Internal*)_0.__Instance);
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (__Instance == IntPtr.Zero)
+                return;
+            FS_POINTF_ __dummy;
+            NativeToManagedMap.TryRemove(__Instance, out __dummy);
+            if (__ownsNativeInstance)
+                Marshal.FreeHGlobal(__Instance);
+            __Instance = IntPtr.Zero;
+        }
+
+        public float X
+        {
+            get { return ((__Internal*)__Instance)->x; }
+
+            set { ((__Internal*)__Instance)->x = value; }
+        }
+
+        public float Y
+        {
+            get { return ((__Internal*)__Instance)->y; }
+
+            set { ((__Internal*)__Instance)->y = value; }
+        }
+    }
+
     internal unsafe partial class FPDF_LIBRARY_CONFIG_ : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 32)]
@@ -2344,6 +2455,370 @@ namespace Docnet.Core.Bindings
         }
     }
 
+    internal unsafe partial class fpdf_annot
+    {
+        public partial struct __Internal
+        {
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFPage_GetAnnotCount")]
+            internal static extern int FPDFPageGetAnnotCount(IntPtr page);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFPage_GetAnnot")]
+            internal static extern IntPtr FPDFPageGetAnnot(IntPtr page, int index);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFPage_CloseAnnot")]
+            internal static extern void FPDFPageCloseAnnot(IntPtr annot);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetSubtype")]
+            internal static extern int FPDFAnnotGetSubtype(IntPtr annot);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_IsObjectSupportedSubtype")]
+            internal static extern bool FPDFAnnotIsObjectSupportedSubtype(int annotSubtype);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetObjectCount")]
+            internal static extern int FPDFAnnotGetObjectCount(IntPtr annot);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetObject")]
+            internal static extern IntPtr FPDFAnnotGetObject(IntPtr annot, int index);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetRect")]
+            internal static extern int FPDFAnnotGetRect(IntPtr annot, IntPtr rect);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetLinkedAnnot")]
+            internal static extern IntPtr FPDFAnnotGetLinkedAnnot(IntPtr annot,
+                [MarshalAs(UnmanagedType.LPStr)] string key);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetLink")]
+            internal static extern IntPtr FPDFAnnotGetLink(IntPtr annot);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_HasKey")]
+            internal static extern bool FPDFAnnotHasKey(IntPtr annot,
+                [MarshalAs(UnmanagedType.LPStr)] string key);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_SetColor")]
+            internal static extern bool FPDFAnnotGetColor(IntPtr annot, int colorType,
+                uint* R, uint* G, uint* B, uint* A);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetValueType")]
+            internal static extern int FPDFAnnotGetValueType(IntPtr annot,
+                [MarshalAs(UnmanagedType.LPStr)] string key);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetStringValue")]
+            internal static extern ulong FPDFAnnotGetStringValue(IntPtr annot,
+                [MarshalAs(UnmanagedType.LPStr)] string key, ushort* buffer, int buflen);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetNumberValue")]
+            internal static extern bool FPDFAnnotGetNumberValue(IntPtr annot,
+                [MarshalAs(UnmanagedType.LPStr)] string key, float* value);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAnnot_GetLine")]
+            internal static extern bool FPDFAnnotGetLine(IntPtr annot, IntPtr start, IntPtr end);
+        }
+
+        public static int FPDFPageGetAnnotCount(FpdfPageT page)
+        {
+            var __arg0 = ReferenceEquals(page, null) ? IntPtr.Zero : page.__Instance;
+            var __ret = __Internal.FPDFPageGetAnnotCount(__arg0);
+            return __ret;
+        }
+
+        public static FpdfAnnotationT FPDFPageGetAnnot(FpdfPageT page, int annotation_index)
+        {
+            var __arg0 = ReferenceEquals(page, null) ? IntPtr.Zero : page.__Instance;
+            var __ret = __Internal.FPDFPageGetAnnot(__arg0, annotation_index);
+            FpdfAnnotationT __result0;
+            if (__ret == IntPtr.Zero) __result0 = null;
+            else if (FpdfAnnotationT.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (FpdfAnnotationT)FpdfAnnotationT
+                    .NativeToManagedMap[__ret];
+            else __result0 = FpdfAnnotationT.__CreateInstance(__ret);
+            return __result0;
+        }
+
+        public static void FPDFPageCloseAnnot(FpdfAnnotationT annot)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            __Internal.FPDFPageCloseAnnot(__arg0);
+        }
+
+        public static FpdfAnnotationT FPDFAnnotGetLinkedAnnot(FpdfAnnotationT annotation, string key)
+        {
+            var __arg0 = ReferenceEquals(annotation, null) ? IntPtr.Zero : annotation.__Instance;
+            var __ret = __Internal.FPDFAnnotGetLinkedAnnot(__arg0, key);
+            FpdfAnnotationT __result0;
+            if (__ret == IntPtr.Zero) __result0 = null;
+            else if (FpdfAnnotationT.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (FpdfAnnotationT)FpdfAnnotationT
+                    .NativeToManagedMap[__ret];
+            else __result0 = FpdfAnnotationT.__CreateInstance(__ret);
+            return __result0;
+        }
+
+        public static int FPDFAnnotGetSubtype(FpdfAnnotationT annot)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __ret = __Internal.FPDFAnnotGetSubtype(__arg0);
+            return __ret;
+        }
+
+        /// <summary>
+        /// Experimental API.
+        /// Check if an annotation subtype is currently supported for object extraction,
+        /// update, and removal.
+        /// Currently supported subtypes: ink and stamp.
+        /// </summary>
+        /// <param name="annotSubtype">the subtype to be checked.</param>
+        /// <returns>returns true if this subtype supported.</returns>
+        public static bool FPDFAnnotIsObjectSupportedSubtype(int annotSubtype)
+        {
+            var __ret = __Internal.FPDFAnnotIsObjectSupportedSubtype(annotSubtype);
+            return __ret;
+        }
+
+        /// <summary>
+        /// Get the total number of objects in <see cref="FpdfAnnotationT"/>, including path objects, text
+        /// objects, external objects, image objects, and shading objects.
+        /// </summary>
+        /// <param name="annot">handle to an annotation.</param>
+        /// <returns>Returns the number of objects in <see cref="FpdfAnnotationT"/>.</returns>
+        public static int FPDFAnnotGetObjectCount(FpdfAnnotationT annot)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __ret = __Internal.FPDFAnnotGetObjectCount(__arg0);
+            return __ret;
+        }
+
+        /// <summary>
+        /// Get the object in |annot| at |index|.
+        /// </summary>
+        /// <param name="annot">handle to an annotation.</param>
+        /// <param name="index">the index of the object.</param>
+        /// <returns>Return a handle to the object, or NULL on failure.</returns>
+        public static FpdfPageobjectT FPDFAnnotGetObject(FpdfAnnotationT annot, int index)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __ret = __Internal.FPDFAnnotGetObject(__arg0, index);
+            FpdfPageobjectT __result0;
+            if (__ret == IntPtr.Zero) __result0 = null;
+            else if (FpdfPageobjectT.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (FpdfPageobjectT)FpdfPageobjectT
+                    .NativeToManagedMap[__ret];
+            else __result0 = FpdfPageobjectT.__CreateInstance(__ret);
+            return __result0;
+        }
+
+        public static int FPDFAnnotGetRect(FpdfAnnotationT annot, FS_RECTF_ rect)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __arg1 = ReferenceEquals(rect, null) ? IntPtr.Zero : rect.__Instance;
+            var __ret = __Internal.FPDFAnnotGetRect(__arg0, __arg1);
+            return __ret;
+        }
+
+        public static FpdfLinkT FPDFAnnotGetLink(FpdfAnnotationT annotation)
+        {
+            var __arg0 = ReferenceEquals(annotation, null) ? IntPtr.Zero : annotation.__Instance;
+            var __ret = __Internal.FPDFAnnotGetLink(__arg0);
+            FpdfLinkT __result0;
+            if (__ret == IntPtr.Zero) __result0 = null;
+            else if (FpdfLinkT.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (FpdfLinkT)FpdfLinkT
+                    .NativeToManagedMap[__ret];
+            else __result0 = FpdfLinkT.__CreateInstance(__ret);
+            return __result0;
+        }
+
+        public static bool FPDFAnnotHasKey(FpdfAnnotationT annot, string key)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __ret = __Internal.FPDFAnnotHasKey(__arg0, key);
+            return __ret;
+        }
+
+        public static bool FPDFAnnotGetColor(FpdfAnnotationT annot, int type,
+            ref uint R, ref uint G, ref uint B, ref uint A)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+
+            fixed (uint* __refParamPtr2 = &R)
+            {
+                var __arg2 = __refParamPtr2;
+                fixed (uint* __refParamPtr3 = &G)
+                {
+                    var __arg3 = __refParamPtr3;
+                    fixed (uint* __refParamPtr4 = &B)
+                    {
+                        var __arg4 = __refParamPtr4;
+                        fixed (uint* __refParamPtr5 = &A)
+                        {
+                            var __arg5 = __refParamPtr5;
+                            var __ret = __Internal.FPDFAnnotGetColor(__arg0, type, __arg2, __arg3, __arg4, __arg5);
+                            return __ret;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Experimental API.
+        /// Get the type of the value corresponding to |key| in |annot|'s dictionary.
+        /// </summary>
+        /// <param name="annot">handle to an annotation.</param>
+        /// <param name="key">the key to look for, encoded in UTF-8.</param>
+        /// <returns>Returns the type of the dictionary value.</returns>
+        public static int FPDFAnnotGetValueType(FpdfAnnotationT annot, string key)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __ret = __Internal.FPDFAnnotGetValueType(__arg0, key);
+            return __ret;
+        }
+
+        /// <summary>
+        /// Experimental API.
+        /// Get the string value corresponding to |key| in |annot|'s dictionary. |buffer|
+        /// is only modified if |buflen| is longer than the length of contents. Note that
+        /// if |key| does not exist in the dictionary or if |key|'s corresponding value
+        /// in the dictionary is not a string (i.e. the value is not of type
+        /// FPDF_OBJECT_STRING or FPDF_OBJECT_NAME), then an empty string would be copied
+        /// to |buffer| and the return value would be 2. On other errors, nothing would
+        /// be added to |buffer| and the return value would be 0.
+        /// </summary>
+        /// <param name="annot">Experimental API.</param>
+        /// <param name="key">the key to the requested dictionary entry, encoded in UTF-8.</param>
+        /// <param name="buffer">buffer for holding the value string, encoded in UTF-16LE.</param>
+        /// <param name="buflen">length of the buffer in bytes.</param>
+        /// <returns></returns>
+        public static ulong FPDFAnnotGetStringValue(FpdfAnnotationT annot, string key, ref ushort buffer, int buflen)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            fixed (ushort* __refParamPtr2 = &buffer)
+            {
+                var __arg2 = __refParamPtr2;
+                var __ret = __Internal.FPDFAnnotGetStringValue(__arg0, key, __arg2, buflen);
+                return __ret;
+            }
+        }
+
+        // Returns True if value found, False otherwise.
+        /// <summary>
+        /// Experimental API.
+        /// Get the float value corresponding to |key| in |annot|'s dictionary. Writes
+        /// value to |value| and returns True if |key| exists in the dictionary and
+        /// |key|'s corresponding value is a number (FPDF_OBJECT_NUMBER), False
+        /// otherwise.
+        /// </summary>
+        /// <param name="annot">handle to an annotation.</param>
+        /// <param name="key">he key to the requested dictionary entry, encoded in UTF-8.</param>
+        /// <param name="value">receives the value, must not be NULL.</param>
+        /// <returns>True if value found, False otherwise.</returns>
+        public static bool FPDFAnnotGetNumberValue(FpdfAnnotationT annot, string key, ref float value)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            fixed (float* __refParamPtr2 = &value)
+            {
+                var __arg2 = __refParamPtr2;
+                var __ret = __Internal.FPDFAnnotGetNumberValue(__arg0, key, __arg2);
+                return __ret;
+            }
+        }
+
+        public static bool FPDFAnnotGetLine(FpdfAnnotationT annot, FS_POINTF_ start, FS_POINTF_ end)
+        {
+            var __arg0 = ReferenceEquals(annot, null) ? IntPtr.Zero : annot.__Instance;
+            var __arg1 = ReferenceEquals(start, null) ? IntPtr.Zero : start.__Instance;
+            var __arg2 = ReferenceEquals(end, null) ? IntPtr.Zero : end.__Instance;
+            var __ret = __Internal.FPDFAnnotGetLine(__arg0, __arg1, __arg2);
+            return __ret;
+        }
+    }
+
+    internal unsafe partial class fpdf_doc
+    {
+        public partial struct __Internal
+        {
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAction_GetType")]
+            internal static extern ulong FPDFActionGetType(IntPtr action);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFLink_GetAction")]
+            internal static extern IntPtr FPDFLinkGetAction(IntPtr link);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFAction_GetURIPath")]
+            internal static extern ulong FPDFActionGetURIPath(IntPtr document, IntPtr action,
+                byte* buffer, int buflen);
+        }
+
+        public static ulong FPDFActionGetType(FpdfActionT action)
+        {
+            var __arg0 = ReferenceEquals(action, null) ? IntPtr.Zero : action.__Instance;
+            var __ret = __Internal.FPDFActionGetType(__arg0);
+            return __ret;
+        }
+
+
+        public static FpdfActionT FPDFLinkGetAction(FpdfLinkT link)
+        {
+            var __arg0 = ReferenceEquals(link, null) ? IntPtr.Zero : link.__Instance;
+            var __ret = __Internal.FPDFLinkGetAction(__arg0);
+            FpdfActionT __result0;
+            if (__ret == IntPtr.Zero) __result0 = null;
+            else if (FpdfActionT.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (FpdfActionT)FpdfActionT
+                    .NativeToManagedMap[__ret];
+            else __result0 = FpdfActionT.__CreateInstance(__ret);
+            return __result0;
+        }
+
+        public static ulong FPDFActionGetURIPath(FpdfDocumentT document, FpdfActionT action, ref byte buffer, int buflen)
+        {
+            var __arg0 = ReferenceEquals(document, null) ? IntPtr.Zero : document.__Instance;
+            var __arg1 = ReferenceEquals(action, null) ? IntPtr.Zero : action.__Instance;
+            fixed (byte* __refParamPtr2 = &buffer)
+            {
+                var __arg2 = __refParamPtr2;
+                var __ret = __Internal.FPDFActionGetURIPath(__arg0, __arg1, __arg2, buflen);
+                return __ret;
+            }
+        }
+    }
+
     internal unsafe partial class fpdf_text
     {
         public partial struct __Internal
@@ -2381,14 +2856,14 @@ namespace Docnet.Core.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetStrokeColor")]
-            internal static extern bool FPDFTextGetStrokeColor(IntPtr text_page, int index, uint* R, uint* G, uint* B,
-                uint* A);
+            internal static extern bool FPDFTextGetStrokeColor(IntPtr text_page, int index,
+                uint* R, uint* G, uint* B, uint* A);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetFontInfo")]
             internal static extern uint FPDFTextGetFontInfo(IntPtr text_page, int index,
-                IntPtr buffer, uint buflen, int* flags);
+                byte* buffer, ulong buflen, int* flags);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
@@ -2400,7 +2875,7 @@ namespace Docnet.Core.Bindings
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetLooseCharBox")]
             internal static extern int FPDFTextGetLooseCharBox(IntPtr text_page, int index, IntPtr rect);
-          
+
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharAngle")]
@@ -2505,8 +2980,7 @@ namespace Docnet.Core.Bindings
             internal static extern void FPDFLinkCloseWebLinks(IntPtr link_page);
         }
 
-        public static FpdfTextpageT FPDFTextLoadPage(
-            FpdfPageT page)
+        public static FpdfTextpageT FPDFTextLoadPage(FpdfPageT page)
         {
             var __arg0 = ReferenceEquals(page, null) ? IntPtr.Zero : page.__Instance;
             var __ret = __Internal.FPDFTextLoadPage(__arg0);
@@ -2578,15 +3052,37 @@ namespace Docnet.Core.Bindings
             }
         }
 
+        /// <summary>
+        /// Experimental API.
+        /// Function: FPDFText_GetFontInfo
+        ///          Get the font name and flags of a particular character.
+        /// </summary>
+        /// <param name="text_page">Handle to a text page information structure.
+        /// Returned by FPDFText_LoadPage function.</param>
+        /// <param name="index">Zero-based index of the character.</param>
+        /// <param name="buffer">A buffer receiving the font name.</param>
+        /// <param name="buflen">The length of |buffer| in bytes.</param>
+        /// <param name="flags">Optional pointer to an int receiving the font flags.
+        /// These flags should be interpreted per PDF spec 1.7
+        /// Section 5.7.1 Font Descriptor Flags.</param>
+        /// <returns>On success, return the length of the font name, including the
+        /// trailing NUL character, in bytes. If this length is less than or
+        /// equal to |length|, |buffer| is set to the font name, |flags| is
+        /// set to the font flags. |buffer| is in UTF-8 encoding. Return 0 on
+        /// failure.</returns>
         public static uint FPDFTextGetFontInfo(FpdfTextpageT text_page, int index,
-            IntPtr buffer, uint buflen, ref int flags)
+            ref byte buffer, ulong buflen, ref int flags)
         {
             var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
-            fixed (int* __refParamPtr4 = &flags)
+            fixed (byte* __refParamPtr2 = &buffer)
             {
-                var __arg4 = __refParamPtr4;
-                var __ret = __Internal.FPDFTextGetFontInfo(__arg0, index, buffer, buflen, __arg4);
-                return __ret;
+                var __arg2 = __refParamPtr2;
+                fixed (int* __refParamPtr4 = &flags)
+                {
+                    var __arg4 = __refParamPtr4;
+                    var __ret = __Internal.FPDFTextGetFontInfo(__arg0, index, __arg2, buflen, __arg4);
+                    return __ret;
+                }
             }
         }
 
@@ -2621,7 +3117,7 @@ namespace Docnet.Core.Bindings
             var __ret = __Internal.FPDFTextGetLooseCharBox(__arg0, index, __arg1);
             return __ret;
         }
-      
+
         public static float FPDFTextGetCharAngle(FpdfTextpageT text_page, int index)
         {
             var __arg0 = ReferenceEquals(text_page, null) ? IntPtr.Zero : text_page.__Instance;
@@ -3295,7 +3791,7 @@ namespace Docnet.Core.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetImageMetadata")]
-            internal static extern int FPDFImageObjGetImageMetadata(IntPtr image_object,
+            internal static extern bool FPDFImageObjGetImageMetadata(IntPtr image_object,
                 IntPtr page, IntPtr metadata);
 
             [SuppressUnmanagedCodeSecurity]
@@ -3341,7 +3837,7 @@ namespace Docnet.Core.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetStrokeColor")]
-            internal static extern int FPDFPageObjGetStrokeColor(IntPtr page_object, uint* R, uint* G,
+            internal static extern bool FPDFPageObjGetStrokeColor(IntPtr page_object, uint* R, uint* G,
                 uint* B, uint* A);
 
             [SuppressUnmanagedCodeSecurity]
@@ -3461,8 +3957,7 @@ namespace Docnet.Core.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_GetMatrix")]
-            internal static extern int FPDFPathGetMatrix(IntPtr path, double* a, double* b, double* c,
-                double* d, double* e, double* f);
+            internal static extern bool FPDFPathGetMatrix(IntPtr path, IntPtr matrix);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
@@ -3666,11 +4161,11 @@ namespace Docnet.Core.Bindings
             return __ret;
         }
 
-        public static int FPDFPageObjGetType(FpdfPageobjectT page_object)
+        public static PdfPageObjectType FPDFPageObjGetType(FpdfPageobjectT page_object)
         {
             var __arg0 = ReferenceEquals(page_object, null) ? IntPtr.Zero : page_object.__Instance;
             var __ret = __Internal.FPDFPageObjGetType(__arg0);
-            return __ret;
+            return (PdfPageObjectType)__ret;
         }
 
         public static void FPDFPageObjTransform(FpdfPageobjectT page_object, double a,
@@ -3946,7 +4441,18 @@ namespace Docnet.Core.Bindings
             return __ret;
         }
 
-        public static int FPDFImageObjGetImageMetadata(FpdfPageobjectT image_object,
+        /// <summary>
+        /// Get the image metadata of |image_object|, including dimension, DPI, bits per
+        /// pixel, and colorspace. If the |image_object| is not an image object or if it
+        /// does not have an image, then the return value will be false. Otherwise,
+        /// failure to retrieve any specific parameter would result in its value being 0.
+        /// </summary>
+        /// <param name="image_object">handle to an image object.</param>
+        /// <param name="page">handle to the page that |image_object| is on. Required for
+        /// retrieving the image's bits per pixel and colorspace.</param>
+        /// <param name="metadata">receives the image metadata; must not be NULL.</param>
+        /// <returns>true if successful.</returns>
+        public static bool FPDFImageObjGetImageMetadata(FpdfPageobjectT image_object,
             FpdfPageT page, FPDF_IMAGEOBJ_METADATA metadata)
         {
             var __arg0 = ReferenceEquals(image_object, null) ? IntPtr.Zero : image_object.__Instance;
@@ -4052,7 +4558,16 @@ namespace Docnet.Core.Bindings
             }
         }
 
-        public static int FPDFPageObjGetStrokeColor(FpdfPageobjectT page_object,
+        /// <summary>
+        /// Get the stroke RGBA of a page object. Range of values: 0 - 255.
+        /// </summary>
+        /// <param name="page_object">the handle to the page object.</param>
+        /// <param name="R">the red component of the path stroke color.</param>
+        /// <param name="G">the green component of the object's stroke color.</param>
+        /// <param name="B">the blue component of the object's stroke color.</param>
+        /// <param name="A">the stroke alpha of the object.</param>
+        /// <returns></returns>
+        public static bool FPDFPageObjGetStrokeColor(FpdfPageobjectT page_object,
             ref uint R, ref uint G, ref uint B, ref uint A)
         {
             var __arg0 = ReferenceEquals(page_object, null) ? IntPtr.Zero : page_object.__Instance;
@@ -4297,37 +4812,12 @@ namespace Docnet.Core.Bindings
             }
         }
 
-        public static int FPDFPathGetMatrix(FpdfPageobjectT path, ref double a,
-            ref double b, ref double c, ref double d, ref double e, ref double f)
+        public static bool FPDFPathGetMatrix(FpdfPageobjectT path, FS_MATRIX_ matrix)
         {
             var __arg0 = ReferenceEquals(path, null) ? IntPtr.Zero : path.__Instance;
-            fixed (double* __refParamPtr1 = &a)
-            {
-                var __arg1 = __refParamPtr1;
-                fixed (double* __refParamPtr2 = &b)
-                {
-                    var __arg2 = __refParamPtr2;
-                    fixed (double* __refParamPtr3 = &c)
-                    {
-                        var __arg3 = __refParamPtr3;
-                        fixed (double* __refParamPtr4 = &d)
-                        {
-                            var __arg4 = __refParamPtr4;
-                            fixed (double* __refParamPtr5 = &e)
-                            {
-                                var __arg5 = __refParamPtr5;
-                                fixed (double* __refParamPtr6 = &f)
-                                {
-                                    var __arg6 = __refParamPtr6;
-                                    var __ret = __Internal.FPDFPathGetMatrix(__arg0, __arg1, __arg2, __arg3, __arg4,
-                                        __arg5, __arg6);
-                                    return __ret;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            var __arg1 = ReferenceEquals(matrix, null) ? IntPtr.Zero : matrix.__Instance;
+            var __ret = __Internal.FPDFPathGetMatrix(__arg0, __arg1);
+            return __ret;
         }
 
         public static int FPDFPathSetMatrix(FpdfPageobjectT path, double a, double b,
