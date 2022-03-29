@@ -22,6 +22,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 
 namespace Docnet.Core.Bindings
 {
@@ -1856,7 +1857,7 @@ namespace Docnet.Core.Bindings
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_LoadDocument")]
             internal static extern IntPtr FPDF_LoadDocument(
-                [MarshalAs(UnmanagedType.LPStr)] string file_path, [MarshalAs(UnmanagedType.LPStr)] string password);
+                IntPtr file_path, [MarshalAs(UnmanagedType.LPStr)] string password);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
@@ -2086,16 +2087,33 @@ namespace Docnet.Core.Bindings
             return __ret;
         }
 
+        private static IntPtr NativeUtf8FromString(string managedString) {
+            int len = Encoding.UTF8.GetByteCount(managedString);
+            byte[] buffer = new byte[len + 1];
+            Encoding.UTF8.GetBytes(managedString, 0, managedString.Length, buffer, 0);
+            IntPtr nativeUtf8 = Marshal.AllocHGlobal(buffer.Length);
+            Marshal.Copy(buffer, 0, nativeUtf8, buffer.Length);
+            return nativeUtf8;
+        }
+
         public static FpdfDocumentT FPDF_LoadDocument(string file_path, string password)
         {
-            var __ret = __Internal.FPDF_LoadDocument(file_path, password);
-            FpdfDocumentT __result0;
-            if (__ret == IntPtr.Zero) __result0 = null;
-            else if (FpdfDocumentT.NativeToManagedMap.ContainsKey(__ret))
-                __result0 = (FpdfDocumentT)FpdfDocumentT
-                    .NativeToManagedMap[__ret];
-            else __result0 = FpdfDocumentT.__CreateInstance(__ret);
-            return __result0;
+            var ptr = NativeUtf8FromString(file_path);
+            try
+            {
+                var __ret = __Internal.FPDF_LoadDocument(ptr, password);
+                FpdfDocumentT __result0;
+                if (__ret == IntPtr.Zero) __result0 = null;
+                else if (FpdfDocumentT.NativeToManagedMap.ContainsKey(__ret))
+                    __result0 = (FpdfDocumentT)FpdfDocumentT
+                        .NativeToManagedMap[__ret];
+                else __result0 = FpdfDocumentT.__CreateInstance(__ret);
+                return __result0;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(ptr);
+            }
         }
 
         public static FpdfDocumentT FPDF_LoadMemDocument(IntPtr data_buf,
