@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using Docnet.Core.Bindings;
 using Docnet.Core.Converters;
 using Docnet.Core.Exceptions;
@@ -10,8 +11,9 @@ namespace Docnet.Core.Readers
 {
     internal sealed class PageReader : IPageReader
     {
+        private readonly FpdfDocumentT document;
         private readonly FpdfPageT _page;
-        private readonly FpdfTextpageT _text;
+        private readonly FpdfTextpageT _textPage;
 
         private readonly double _scaling;
 
@@ -20,6 +22,7 @@ namespace Docnet.Core.Readers
 
         public PageReader(DocumentWrapper docWrapper, int pageIndex, PageDimensions pageDimensions)
         {
+            document = docWrapper.Instance;
             PageIndex = pageIndex;
 
             lock (DocLib.Lock)
@@ -31,9 +34,9 @@ namespace Docnet.Core.Readers
                     throw new DocnetException($"failed to open page for page index {pageIndex}");
                 }
 
-                _text = fpdf_text.FPDFTextLoadPage(_page);
+                _textPage = fpdf_text.FPDFTextLoadPage(_page);
 
-                if (_text == null)
+                if (_textPage == null)
                 {
                     throw new DocnetException($"failed to open page text for page index {pageIndex}");
                 }
@@ -68,6 +71,33 @@ namespace Docnet.Core.Readers
             }
         }
 
+        public List<(uint, uint)> GetDimensionsOfEmbeddedImages()
+        {
+            var imageDimensionList = new List<(uint, uint)>();
+
+            var objCount = fpdf_edit.FPDFPageCountObjects(_page);
+            for (int i = 0; i < objCount; i++)
+            {
+                var pageObj = fpdf_edit.FPDFPageGetObject(_page, i);
+                var objectType = fpdf_edit.FPDFPageObjGetType(pageObj);
+
+                if (objectType == PdfPageObjectType.FPDF_PAGEOBJ_IMAGE)
+                {
+                    FPDF_IMAGEOBJ_METADATA imageMetaData = new FPDF_IMAGEOBJ_METADATA();
+                    var hasMetaData = fpdf_edit.FPDFImageObjGetImageMetadata(pageObj, _page, imageMetaData);
+                    if (hasMetaData)
+                    {
+                        var size = (imageMetaData.Width, imageMetaData.Height);
+                        imageDimensionList.Add(size);
+                    }
+
+                    imageMetaData.Dispose();
+                }
+            }
+
+            return imageDimensionList;
+        }
+
         /// <inheritdoc />
         public string GetText()
         {
@@ -77,11 +107,11 @@ namespace Docnet.Core.Readers
 
             lock (DocLib.Lock)
             {
-                var charCount = fpdf_text.FPDFTextCountChars(_text);
+                var charCount = fpdf_text.FPDFTextCountChars(_textPage);
 
                 buffer = new ushort[charCount + 1];
 
-                charactersWritten = fpdf_text.FPDFTextGetText(_text, 0, charCount, ref buffer[0]);
+                charactersWritten = fpdf_text.FPDFTextGetText(_textPage, 0, charCount, ref buffer[0]);
             }
 
             if (charactersWritten == 0)
@@ -102,6 +132,74 @@ namespace Docnet.Core.Readers
             return result;
         }
 
+        public IEnumerable<(string uri, BoundBox bbox)> GetUriAnnotations()
+        {
+            lock (DocLib.Lock)
+            {
+                var width = GetPageWidth();
+                var height = GetPageHeight();
+                var annotCount = fpdf_annot.FPDFPageGetAnnotCount(_page);
+
+                for (var i = 0; i < annotCount; i++)
+                {
+                    var annot = fpdf_annot.FPDFPageGetAnnot(_page, i);
+                    var subtype = (FpdfAnnotationSubtype)fpdf_annot.FPDFAnnotGetSubtype(annot);
+                    if (subtype != FpdfAnnotationSubtype.FPDF_ANNOT_LINK)
+                    {
+                        continue;
+                    }
+
+                    var link = fpdf_annot.FPDFAnnotGetLink(annot);
+                    var action = fpdf_doc.FPDFLinkGetAction(link);
+                    var actionType = (PdfActionType)fpdf_doc.FPDFActionGetType(action);
+                    if (actionType != PdfActionType.URI)
+                    {
+                        continue;
+                    }
+
+                    // read uri string
+                    var uriBuffer = new byte[128];
+                    var uriLength = fpdf_doc.FPDFActionGetURIPath(document, action, ref uriBuffer[0], uriBuffer.Length);
+                    if (uriBuffer.Length < (int)uriLength)
+                    {
+                        uriBuffer = new byte[uriLength + 10];
+                        uriLength = fpdf_doc.FPDFActionGetURIPath(document, action, ref uriBuffer[0], uriBuffer.Length);
+                    }
+
+                    byte[] asBytes = new byte[uriLength];
+                    Buffer.BlockCopy(uriBuffer, 0, asBytes, 0, asBytes.Length);
+                    var uriString = Encoding.ASCII.GetString(asBytes);
+                    uriString = uriString.Replace("\0", string.Empty);
+
+                    // read annot bounding box
+                    BoundBox annotBoundBox = new BoundBox(0, 0, 0, 0);
+
+                    using (FS_RECTF_ rec = new FS_RECTF_())
+                    {
+                        var success2 = fpdf_annot.FPDFAnnotGetRect(annot, rec) == 1;
+                        if (success2)
+                        {
+                            var (left, top) = GetAdjustedCoords(width, height, rec.Left, rec.Top);
+                            var (right, bottom) = GetAdjustedCoords(width, height, rec.Right, rec.Bottom);
+
+                            var adjLeft = Math.Min(left, right);
+                            var adjRight = Math.Max(left, right);
+                            var adjTop = Math.Min(top, bottom);
+                            var adjBottom = Math.Max(top, bottom);
+
+                            annotBoundBox = new BoundBox(adjLeft, adjTop, adjRight, adjBottom);
+
+                            rec.Dispose();
+                        }
+                    }
+
+                    fpdf_annot.FPDFPageCloseAnnot(annot);
+
+                    yield return (uriString, annotBoundBox);
+                }
+            }
+        }
+
         /// <inheritdoc />
         public IEnumerable<Character> GetCharacters()
         {
@@ -110,20 +208,40 @@ namespace Docnet.Core.Readers
                 var width = GetPageWidth();
                 var height = GetPageHeight();
 
-                var charCount = fpdf_text.FPDFTextCountChars(_text);
+                var charCount = fpdf_text.FPDFTextCountChars(_textPage);
 
                 for (var i = 0; i < charCount; i++)
                 {
-                    var charCode = (char)fpdf_text.FPDFTextGetUnicode(_text, i);
-                    var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
-                    var renderMode = (TextRenderMode)fpdf_text.FPDFTextGetTextRenderMode(_text, i);
+                    var charCode = (char)fpdf_text.FPDFTextGetUnicode(_textPage, i);
+                    var angle = fpdf_text.FPDFTextGetCharAngle(_textPage, i);
+                    var renderMode = (TextRenderMode)fpdf_text.FPDFTextGetTextRenderMode(_textPage, i);
                     var pageRotation = GetPageRotation();
 
-                    var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
-                    var adjustedFontSize = fontSize != 1 ? fontSize * _scaling : fontSize;
+                    var fontSize = fpdf_text.FPDFTextGetFontSize(_textPage, i);
+                    var adjustedFontSize = fontSize != 1 || fontSize != 1.2857141494750977 ?
+                        fontSize * _scaling : fontSize;
+
+                    // get font type + some info about it.
+                    string fontInfo = string.Empty;
+                    var fontBuffer = new byte[128];
+                    int fontFlags = 0;
+                    var fontTextLen = fpdf_text.FPDFTextGetFontInfo(_textPage, i, ref fontBuffer[0], (ulong)fontBuffer.Length, ref fontFlags);
+                    if (fontTextLen > 0)
+                    {
+                        if (fontBuffer.Length < fontTextLen)
+                        {
+                            fontBuffer = new byte[fontTextLen];
+                            fontTextLen = fpdf_text.FPDFTextGetFontInfo(_textPage, i, ref fontBuffer[0], (ulong)fontBuffer.Length, ref fontFlags);
+                        }
+
+                        byte[] asBytes = new byte[fontTextLen];
+                        Buffer.BlockCopy(fontBuffer, 0, asBytes, 0, asBytes.Length);
+                        var str = Encoding.UTF8.GetString(asBytes);
+                        fontInfo = str.Length > 0 && str.Substring(str.Length - 1) == "\0" ? str.Substring(0, str.Length - 1) : str;
+                    }
 
                     uint r = 0, g = 0, b = 0, a = 0;
-                    fpdf_text.FPDFTextGetStrokeColor(_text, i, ref r, ref g, ref b, ref a);
+                    fpdf_text.FPDFTextGetStrokeColor(_textPage, i, ref r, ref g, ref b, ref a);
                     var strokeColor = new List<uint>(4) { r, g, b, a };
 
                     switch (pageRotation)
@@ -143,7 +261,7 @@ namespace Docnet.Core.Readers
 
                     double originX = 0;
                     double originY = 0;
-                    var origin = fpdf_text.FPDFTextGetCharOrigin(_text, i, ref originX, ref originY);
+                    var origin = fpdf_text.FPDFTextGetCharOrigin(_textPage, i, ref originX, ref originY);
                     var (adjustedOriginX, adjustedOriginY) = GetAdjustedCoords(width, height, originX, originY);
 
                     double left = 0;
@@ -151,7 +269,7 @@ namespace Docnet.Core.Readers
                     double right = 0;
                     double bottom = 0;
 
-                    var success = fpdf_text.FPDFTextGetCharBox(_text, i, ref left, ref right, ref bottom, ref top) == 1;
+                    var success = fpdf_text.FPDFTextGetCharBox(_textPage, i, ref left, ref right, ref bottom, ref top) == 1;
 
                     if (!success)
                     {
@@ -161,18 +279,18 @@ namespace Docnet.Core.Readers
                     var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
                     var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
 
-                    adjustedLeft = Math.Min(adjustedLeft, adjustRight);
-                    adjustRight = Math.Max(adjustedLeft, adjustRight);
-                    adjustedTop = Math.Min(adjustedTop, adjustBottom);
-                    adjustBottom = Math.Max(adjustedTop, adjustBottom);
+                    var fixAdjustedLeft = Math.Min(adjustedLeft, adjustRight);
+                    var fixAdjustRight = Math.Max(adjustedLeft, adjustRight);
+                    var fixAdjustedTop = Math.Min(adjustedTop, adjustBottom);
+                    var fixAdjustBottom = Math.Max(adjustedTop, adjustBottom);
 
-                    var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
+                    var box = new BoundBox(fixAdjustedLeft, fixAdjustedTop, fixAdjustRight, fixAdjustBottom);
 
                     BoundBox looseBox;
 
                     using (FS_RECTF_ rec = new FS_RECTF_())
                     {
-                        var success2 = fpdf_text.FPDFTextGetLooseCharBox(_text, i, rec) == 1;
+                        var success2 = fpdf_text.FPDFTextGetLooseCharBox(_textPage, i, rec) == 1;
                         if (!success2)
                         {
                             continue;
@@ -191,7 +309,7 @@ namespace Docnet.Core.Readers
                         rec.Dispose();
                     }
 
-                    yield return new Character(charCode, adjustedFontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, strokeColor);
+                    yield return new Character(charCode, fontInfo, adjustedFontSize, angle, renderMode, box, looseBox, adjustedOriginX, adjustedOriginY, strokeColor);
                 }
             }
         }
@@ -311,9 +429,9 @@ namespace Docnet.Core.Readers
         {
             lock (DocLib.Lock)
             {
-                if (_text != null)
+                if (_textPage != null)
                 {
-                    fpdf_text.FPDFTextClosePage(_text);
+                    fpdf_text.FPDFTextClosePage(_textPage);
                 }
 
                 if (_page == null)

@@ -9,6 +9,8 @@ namespace Docnet.Core.Models
 
         public char Char { get; set; }
 
+        public string FontInfo { get; set; }
+
         public BoundBox Box { get; set; }
 
         public BoundBox LooseBox { get; set; }
@@ -25,7 +27,7 @@ namespace Docnet.Core.Models
 
         public TextRenderMode RenderMode { get; set; }
 
-        public Character(char character, double fontSize, double angle, TextRenderMode renderMode, BoundBox box, BoundBox looseBox, double originX, double originY, List<uint> colorARGB)
+        public Character(char character, string fontInfo, double fontSize, double angle, TextRenderMode renderMode, BoundBox box, BoundBox looseBox, double originX, double originY, List<uint> colorARGB)
         {
             if (colorARGB.Count != 4)
             {
@@ -33,6 +35,7 @@ namespace Docnet.Core.Models
             }
 
             Char = character;
+            FontInfo = fontInfo;
             FontSize = fontSize;
             Box = box;
             LooseBox = looseBox;
