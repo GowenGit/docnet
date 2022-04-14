@@ -76,7 +76,6 @@ namespace Docnet.Core.Bindings
 
     public class fpdf_custom_edit
     {
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl, EntryPoint = "FPDFImageObj_LoadJpegFileInline")]
         internal static extern unsafe int FPDFImageObjLoadJpegFileInternal(IntPtr* pages, int nCount, IntPtr image_object, FileHandle fileAccess);
 

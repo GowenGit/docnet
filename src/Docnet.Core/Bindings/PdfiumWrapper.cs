@@ -1210,9 +1210,7 @@ namespace Docnet.Core.Bindings
 
             [FieldOffset(16)] internal float e;
 
-            [FieldOffset(20)] internal float f;
-
-            [SuppressUnmanagedCodeSecurity]
+            [FieldOffset(20)] internal float f;
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "??0_FS_MATRIX_@@QEAA@AEBU0@@Z")]
             internal static extern IntPtr
@@ -1352,9 +1350,7 @@ namespace Docnet.Core.Bindings
 
             [FieldOffset(8)] internal float right;
 
-            [FieldOffset(12)] internal float bottom;
-
-            [SuppressUnmanagedCodeSecurity]
+            [FieldOffset(12)] internal float bottom;
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "??0_FS_RECTF_@@QEAA@AEBU0@@Z")]
             internal static extern IntPtr
@@ -1480,9 +1476,7 @@ namespace Docnet.Core.Bindings
 
             [FieldOffset(16)] internal IntPtr m_pIsolate;
 
-            [FieldOffset(24)] internal uint m_v8EmbedderSlot;
-
-            [SuppressUnmanagedCodeSecurity]
+            [FieldOffset(24)] internal uint m_v8EmbedderSlot;
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "??0FPDF_LIBRARY_CONFIG_@@QEAA@AEBU0@@Z")]
             internal static extern IntPtr
@@ -1604,9 +1598,7 @@ namespace Docnet.Core.Bindings
 
             [FieldOffset(8)] internal IntPtr m_GetBlock;
 
-            [FieldOffset(16)] internal IntPtr m_Param;
-
-            [SuppressUnmanagedCodeSecurity]
+            [FieldOffset(16)] internal IntPtr m_Param;
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "??0FPDF_FILEACCESS@@QEAA@AEBU0@@Z")]
             internal static extern IntPtr
@@ -1715,233 +1707,148 @@ namespace Docnet.Core.Bindings
     internal unsafe partial class fpdf_view
     {
         public partial struct __Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
+        {
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_InitLibrary")]
-            internal static extern void FPDF_InitLibrary();
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDF_InitLibrary();
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_InitLibraryWithConfig")]
-            internal static extern void FPDF_InitLibraryWithConfig(IntPtr config);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDF_InitLibraryWithConfig(IntPtr config);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_DestroyLibrary")]
-            internal static extern void FPDF_DestroyLibrary();
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDF_DestroyLibrary();
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_SetSandBoxPolicy")]
-            internal static extern void FPDF_SetSandBoxPolicy(uint policy, int enable);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDF_SetSandBoxPolicy(uint policy, int enable);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_SetPrintMode")]
-            internal static extern int FPDF_SetPrintMode(int mode);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_SetPrintMode(int mode);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_LoadDocument")]
             internal static extern IntPtr FPDF_LoadDocument(
-                [MarshalAs(UnmanagedType.LPStr)] string file_path, [MarshalAs(UnmanagedType.LPStr)] string password);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string file_path, [MarshalAs(UnmanagedType.LPStr)] string password);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_LoadMemDocument")]
             internal static extern IntPtr FPDF_LoadMemDocument(IntPtr data_buf, int size,
-                [MarshalAs(UnmanagedType.LPStr)] string password);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string password);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_LoadCustomDocument")]
             internal static extern IntPtr FPDF_LoadCustomDocument(IntPtr pFileAccess,
-                [MarshalAs(UnmanagedType.LPStr)] string password);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string password);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetFileVersion")]
-            internal static extern int FPDF_GetFileVersion(IntPtr doc, int* fileVersion);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_GetFileVersion(IntPtr doc, int* fileVersion);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetLastError")]
-            internal static extern uint FPDF_GetLastError();
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern uint FPDF_GetLastError();
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetDocPermissions")]
-            internal static extern uint FPDF_GetDocPermissions(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern uint FPDF_GetDocPermissions(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetSecurityHandlerRevision")]
-            internal static extern int FPDF_GetSecurityHandlerRevision(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_GetSecurityHandlerRevision(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetPageCount")]
-            internal static extern int FPDF_GetPageCount(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_GetPageCount(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_LoadPage")]
-            internal static extern IntPtr FPDF_LoadPage(IntPtr document, int page_index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDF_LoadPage(IntPtr document, int page_index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetPageWidth")]
-            internal static extern double FPDF_GetPageWidth(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern double FPDF_GetPageWidth(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetPageHeight")]
-            internal static extern double FPDF_GetPageHeight(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern double FPDF_GetPageHeight(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetPageBoundingBox")]
-            internal static extern int FPDF_GetPageBoundingBox(IntPtr page, IntPtr rect);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_GetPageBoundingBox(IntPtr page, IntPtr rect);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetPageSizeByIndex")]
             internal static extern int FPDF_GetPageSizeByIndex(IntPtr document, int page_index,
-                double* width, double* height);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* width, double* height);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_RenderPageBitmap")]
             internal static extern void FPDF_RenderPageBitmap(IntPtr bitmap, IntPtr page,
-                int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
-
-            [SuppressUnmanagedCodeSecurity]
+                int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_RenderPageBitmapWithMatrix")]
             internal static extern void FPDF_RenderPageBitmapWithMatrix(IntPtr bitmap,
-                IntPtr page, IntPtr matrix, IntPtr clipping, int flags);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr page, IntPtr matrix, IntPtr clipping, int flags);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_ClosePage")]
-            internal static extern void FPDF_ClosePage(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDF_ClosePage(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_CloseDocument")]
-            internal static extern void FPDF_CloseDocument(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDF_CloseDocument(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_DeviceToPage")]
             internal static extern int FPDF_DeviceToPage(IntPtr page, int start_x, int start_y,
-                int size_x, int size_y, int rotate, int device_x, int device_y, double* page_x, double* page_y);
-
-            [SuppressUnmanagedCodeSecurity]
+                int size_x, int size_y, int rotate, int device_x, int device_y, double* page_x, double* page_y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_PageToDevice")]
             internal static extern int FPDF_PageToDevice(IntPtr page, int start_x, int start_y,
-                int size_x, int size_y, int rotate, double page_x, double page_y, int* device_x, int* device_y);
-
-            [SuppressUnmanagedCodeSecurity]
+                int size_x, int size_y, int rotate, double page_x, double page_y, int* device_x, int* device_y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_Create")]
-            internal static extern IntPtr FPDFBitmapCreate(int width, int height, int alpha);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFBitmapCreate(int width, int height, int alpha);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_CreateEx")]
             internal static extern IntPtr FPDFBitmapCreateEx(int width, int height, int format,
-                IntPtr first_scan, int stride);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr first_scan, int stride);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_GetFormat")]
-            internal static extern int FPDFBitmapGetFormat(IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFBitmapGetFormat(IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_FillRect")]
             internal static extern void FPDFBitmapFillRect(IntPtr bitmap, int left, int top, int width,
-                int height, uint color);
-
-            [SuppressUnmanagedCodeSecurity]
+                int height, uint color);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_GetBuffer")]
-            internal static extern IntPtr FPDFBitmapGetBuffer(IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFBitmapGetBuffer(IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_GetWidth")]
-            internal static extern int FPDFBitmapGetWidth(IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFBitmapGetWidth(IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_GetHeight")]
-            internal static extern int FPDFBitmapGetHeight(IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFBitmapGetHeight(IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_GetStride")]
-            internal static extern int FPDFBitmapGetStride(IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFBitmapGetStride(IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_Destroy")]
-            internal static extern void FPDFBitmapDestroy(IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFBitmapDestroy(IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetPrintScaling")]
-            internal static extern int FPDF_VIEWERREF_GetPrintScaling(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_VIEWERREF_GetPrintScaling(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetNumCopies")]
-            internal static extern int FPDF_VIEWERREF_GetNumCopies(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDF_VIEWERREF_GetNumCopies(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetPrintPageRange")]
             internal static extern IntPtr FPDF_VIEWERREF_GetPrintPageRange(
-                IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetPrintPageRangeCount")]
-            internal static extern ulong FPDF_VIEWERREF_GetPrintPageRangeCount(IntPtr pagerange);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern ulong FPDF_VIEWERREF_GetPrintPageRangeCount(IntPtr pagerange);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetPrintPageRangeElement")]
             internal static extern int FPDF_VIEWERREF_GetPrintPageRangeElement(IntPtr pagerange,
-                ulong index);
-
-            [SuppressUnmanagedCodeSecurity]
+                ulong index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetDuplex")]
             internal static extern FPDF_DUPLEXTYPE_ FPDF_VIEWERREF_GetDuplex(
-                IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_VIEWERREF_GetName")]
             internal static extern uint FPDF_VIEWERREF_GetName(IntPtr document,
-                [MarshalAs(UnmanagedType.LPStr)] string key, sbyte* buffer, uint length);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string key, sbyte* buffer, uint length);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_CountNamedDests")]
-            internal static extern uint FPDF_CountNamedDests(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern uint FPDF_CountNamedDests(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetNamedDestByName")]
             internal static extern IntPtr FPDF_GetNamedDestByName(IntPtr document,
-                [MarshalAs(UnmanagedType.LPStr)] string name);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string name);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_GetNamedDest")]
             internal static extern IntPtr FPDF_GetNamedDest(IntPtr document, int index,
@@ -2347,143 +2254,92 @@ namespace Docnet.Core.Bindings
     internal unsafe partial class fpdf_text
     {
         public partial struct __Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
+        {
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_LoadPage")]
-            internal static extern IntPtr FPDFTextLoadPage(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFTextLoadPage(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_ClosePage")]
-            internal static extern void FPDFTextClosePage(IntPtr text_page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFTextClosePage(IntPtr text_page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_CountChars")]
-            internal static extern int FPDFTextCountChars(IntPtr text_page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextCountChars(IntPtr text_page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetUnicode")]
-            internal static extern uint FPDFTextGetUnicode(IntPtr text_page, int index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern uint FPDFTextGetUnicode(IntPtr text_page, int index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetFontSize")]
-            internal static extern double FPDFTextGetFontSize(IntPtr text_page, int index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern double FPDFTextGetFontSize(IntPtr text_page, int index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharAngle")]
-            internal static extern float FPDFTextGetCharAngle(IntPtr text_page, int index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern float FPDFTextGetCharAngle(IntPtr text_page, int index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetFontInfo")]
             internal static extern uint FPDFTextGetFontInfo(IntPtr text_page, int index,
-                IntPtr buffer, uint buflen, int* flags);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr buffer, uint buflen, int* flags);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharBox")]
             internal static extern int FPDFTextGetCharBox(IntPtr text_page, int index, double* left,
-                double* right, double* bottom, double* top);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* right, double* bottom, double* top);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharOrigin")]
             internal static extern int FPDFTextGetCharOrigin(IntPtr text_page, int index, double* x,
-                double* y);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetCharIndexAtPos")]
             internal static extern int FPDFTextGetCharIndexAtPos(IntPtr text_page, double x, double y,
-                double xTolerance, double yTolerance);
-
-            [SuppressUnmanagedCodeSecurity]
+                double xTolerance, double yTolerance);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetText")]
             internal static extern int FPDFTextGetText(IntPtr text_page, int start_index, int count,
-                ushort* result);
-
-            [SuppressUnmanagedCodeSecurity]
+                ushort* result);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_CountRects")]
-            internal static extern int FPDFTextCountRects(IntPtr text_page, int start_index, int count);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextCountRects(IntPtr text_page, int start_index, int count);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetRect")]
             internal static extern int FPDFTextGetRect(IntPtr text_page, int rect_index, double* left,
-                double* top, double* right, double* bottom);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* top, double* right, double* bottom);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetBoundedText")]
             internal static extern int FPDFTextGetBoundedText(IntPtr text_page, double left, double top,
-                double right, double bottom, ushort* buffer, int buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                double right, double bottom, ushort* buffer, int buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_FindStart")]
             internal static extern IntPtr FPDFTextFindStart(IntPtr text_page,
-                ushort* findwhat, uint flags, int start_index);
-
-            [SuppressUnmanagedCodeSecurity]
+                ushort* findwhat, uint flags, int start_index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_FindNext")]
-            internal static extern int FPDFTextFindNext(IntPtr handle);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextFindNext(IntPtr handle);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_FindPrev")]
-            internal static extern int FPDFTextFindPrev(IntPtr handle);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextFindPrev(IntPtr handle);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetSchResultIndex")]
-            internal static extern int FPDFTextGetSchResultIndex(IntPtr handle);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextGetSchResultIndex(IntPtr handle);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetSchCount")]
-            internal static extern int FPDFTextGetSchCount(IntPtr handle);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextGetSchCount(IntPtr handle);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_FindClose")]
-            internal static extern void FPDFTextFindClose(IntPtr handle);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFTextFindClose(IntPtr handle);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFLink_LoadWebLinks")]
-            internal static extern IntPtr FPDFLinkLoadWebLinks(IntPtr text_page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFLinkLoadWebLinks(IntPtr text_page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFLink_CountWebLinks")]
-            internal static extern int FPDFLinkCountWebLinks(IntPtr link_page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFLinkCountWebLinks(IntPtr link_page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFLink_GetURL")]
             internal static extern int FPDFLinkGetURL(IntPtr link_page, int link_index, ushort* buffer,
-                int buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                int buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFLink_CountRects")]
-            internal static extern int FPDFLinkCountRects(IntPtr link_page, int link_index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFLinkCountRects(IntPtr link_page, int link_index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFLink_GetRect")]
             internal static extern int FPDFLinkGetRect(IntPtr link_page, int link_index, int rect_index,
-                double* left, double* top, double* right, double* bottom);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* left, double* top, double* right, double* bottom);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFLink_CloseWebLinks")]
             internal static extern void FPDFLinkCloseWebLinks(IntPtr link_page);
@@ -2779,20 +2635,15 @@ namespace Docnet.Core.Bindings
     internal unsafe partial class fpdf_ppo
     {
         public partial struct __Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
+        {
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_ImportPages")]
             internal static extern int FPDF_ImportPages(IntPtr dest_doc, IntPtr src_doc,
-                [MarshalAs(UnmanagedType.LPStr)] string pagerange, int index);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string pagerange, int index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_ImportNPagesToOne")]
             internal static extern IntPtr FPDF_ImportNPagesToOne(IntPtr src_doc,
-                float output_width, float output_height, uint num_pages_on_x_axis, uint num_pages_on_y_axis);
-
-            [SuppressUnmanagedCodeSecurity]
+                float output_width, float output_height, uint num_pages_on_x_axis, uint num_pages_on_y_axis);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_CopyViewerPreferences")]
             internal static extern int FPDF_CopyViewerPreferences(IntPtr dest_doc,
@@ -2851,9 +2702,7 @@ namespace Docnet.Core.Bindings
 
             [FieldOffset(20)] internal int colorspace;
 
-            [FieldOffset(24)] internal int marked_content_id;
-
-            [SuppressUnmanagedCodeSecurity]
+            [FieldOffset(24)] internal int marked_content_id;
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "??0FPDF_IMAGEOBJ_METADATA@@QEAA@AEBU0@@Z")]
             internal static extern IntPtr
@@ -3001,499 +2850,322 @@ namespace Docnet.Core.Bindings
     internal unsafe partial class fpdf_edit
     {
         public partial struct __Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
+        {
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_CreateNewDocument")]
-            internal static extern IntPtr FPDF_CreateNewDocument();
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDF_CreateNewDocument();
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_New")]
             internal static extern IntPtr FPDFPageNew(IntPtr document, int page_index,
-                double width, double height);
-
-            [SuppressUnmanagedCodeSecurity]
+                double width, double height);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_Delete")]
-            internal static extern void FPDFPageDelete(IntPtr document, int page_index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFPageDelete(IntPtr document, int page_index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_GetRotation")]
-            internal static extern int FPDFPageGetRotation(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageGetRotation(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_SetRotation")]
-            internal static extern void FPDFPageSetRotation(IntPtr page, int rotate);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFPageSetRotation(IntPtr page, int rotate);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_InsertObject")]
             internal static extern void
-                FPDFPageInsertObject(IntPtr page, IntPtr page_obj);
-
-            [SuppressUnmanagedCodeSecurity]
+                FPDFPageInsertObject(IntPtr page, IntPtr page_obj);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_RemoveObject")]
-            internal static extern int FPDFPageRemoveObject(IntPtr page, IntPtr page_obj);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageRemoveObject(IntPtr page, IntPtr page_obj);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_CountObjects")]
-            internal static extern int FPDFPageCountObjects(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageCountObjects(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_GetObject")]
-            internal static extern IntPtr FPDFPageGetObject(IntPtr page, int index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFPageGetObject(IntPtr page, int index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_HasTransparency")]
-            internal static extern int FPDFPageHasTransparency(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageHasTransparency(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_GenerateContent")]
-            internal static extern int FPDFPageGenerateContent(IntPtr page);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageGenerateContent(IntPtr page);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_Destroy")]
-            internal static extern void FPDFPageObjDestroy(IntPtr page_obj);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFPageObjDestroy(IntPtr page_obj);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_HasTransparency")]
-            internal static extern int FPDFPageObjHasTransparency(IntPtr page_object);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjHasTransparency(IntPtr page_object);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetType")]
-            internal static extern int FPDFPageObjGetType(IntPtr page_object);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjGetType(IntPtr page_object);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_Transform")]
             internal static extern void FPDFPageObjTransform(IntPtr page_object, double a, double b,
-                double c, double d, double e, double f);
-
-            [SuppressUnmanagedCodeSecurity]
+                double c, double d, double e, double f);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPage_TransformAnnots")]
             internal static extern void FPDFPageTransformAnnots(IntPtr page, double a, double b,
-                double c, double d, double e, double f);
-
-            [SuppressUnmanagedCodeSecurity]
+                double c, double d, double e, double f);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_NewImageObj")]
-            internal static extern IntPtr FPDFPageObjNewImageObj(IntPtr document);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFPageObjNewImageObj(IntPtr document);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_CountMarks")]
-            internal static extern int FPDFPageObjCountMarks(IntPtr page_object);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjCountMarks(IntPtr page_object);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetMark")]
             internal static extern IntPtr FPDFPageObjGetMark(IntPtr page_object,
-                uint index);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_AddMark")]
             internal static extern IntPtr FPDFPageObjAddMark(IntPtr page_object,
-                [MarshalAs(UnmanagedType.LPStr)] string name);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string name);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_RemoveMark")]
             internal static extern int FPDFPageObjRemoveMark(IntPtr page_object,
-                IntPtr mark);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr mark);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_GetName")]
             internal static extern int FPDFPageObjMarkGetName(IntPtr mark, IntPtr buffer,
-                uint buflen, uint* out_buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint buflen, uint* out_buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_CountParams")]
-            internal static extern int FPDFPageObjMarkCountParams(IntPtr mark);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjMarkCountParams(IntPtr mark);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_GetParamKey")]
             internal static extern int FPDFPageObjMarkGetParamKey(IntPtr mark, uint index,
-                IntPtr buffer, uint buflen, uint* out_buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr buffer, uint buflen, uint* out_buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_GetParamValueType")]
             internal static extern int FPDFPageObjMarkGetParamValueType(IntPtr mark,
-                [MarshalAs(UnmanagedType.LPStr)] string key);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string key);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_GetParamIntValue")]
             internal static extern int FPDFPageObjMarkGetParamIntValue(IntPtr mark,
-                [MarshalAs(UnmanagedType.LPStr)] string key, int* out_value);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string key, int* out_value);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_GetParamStringValue")]
             internal static extern int FPDFPageObjMarkGetParamStringValue(IntPtr mark,
                 [MarshalAs(UnmanagedType.LPStr)] string key, IntPtr buffer, uint buflen,
-                uint* out_buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint* out_buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_GetParamBlobValue")]
             internal static extern int FPDFPageObjMarkGetParamBlobValue(IntPtr mark,
                 [MarshalAs(UnmanagedType.LPStr)] string key, IntPtr buffer, uint buflen,
-                uint* out_buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint* out_buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_SetIntParam")]
             internal static extern int FPDFPageObjMarkSetIntParam(IntPtr document,
                 IntPtr page_object, IntPtr mark,
-                [MarshalAs(UnmanagedType.LPStr)] string key, int value);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string key, int value);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_SetStringParam")]
             internal static extern int FPDFPageObjMarkSetStringParam(IntPtr document,
                 IntPtr page_object, IntPtr mark,
-                [MarshalAs(UnmanagedType.LPStr)] string key, [MarshalAs(UnmanagedType.LPStr)] string value);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string key, [MarshalAs(UnmanagedType.LPStr)] string value);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_SetBlobParam")]
             internal static extern int FPDFPageObjMarkSetBlobParam(IntPtr document,
                 IntPtr page_object, IntPtr mark,
-                [MarshalAs(UnmanagedType.LPStr)] string key, IntPtr value, uint value_len);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string key, IntPtr value, uint value_len);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObjMark_RemoveParam")]
             internal static extern int FPDFPageObjMarkRemoveParam(IntPtr page_object,
-                IntPtr mark, [MarshalAs(UnmanagedType.LPStr)] string key);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr mark, [MarshalAs(UnmanagedType.LPStr)] string key);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_LoadJpegFile")]
             internal static extern int FPDFImageObjLoadJpegFile(IntPtr pages, int nCount,
-                IntPtr image_object, IntPtr fileAccess);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr image_object, IntPtr fileAccess);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_LoadJpegFileInline")]
             internal static extern int FPDFImageObjLoadJpegFileInline(IntPtr pages, int nCount,
-                IntPtr image_object, IntPtr fileAccess);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr image_object, IntPtr fileAccess);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_SetMatrix")]
             internal static extern int FPDFImageObjSetMatrix(IntPtr image_object, double a, double b,
-                double c, double d, double e, double f);
-
-            [SuppressUnmanagedCodeSecurity]
+                double c, double d, double e, double f);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_SetBitmap")]
             internal static extern int FPDFImageObjSetBitmap(IntPtr pages, int nCount,
-                IntPtr image_object, IntPtr bitmap);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr image_object, IntPtr bitmap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetBitmap")]
-            internal static extern IntPtr FPDFImageObjGetBitmap(IntPtr image_object);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFImageObjGetBitmap(IntPtr image_object);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetImageDataDecoded")]
             internal static extern uint FPDFImageObjGetImageDataDecoded(IntPtr image_object,
-                IntPtr buffer, uint buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr buffer, uint buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetImageDataRaw")]
             internal static extern uint FPDFImageObjGetImageDataRaw(IntPtr image_object,
-                IntPtr buffer, uint buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr buffer, uint buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetImageFilterCount")]
-            internal static extern int FPDFImageObjGetImageFilterCount(IntPtr image_object);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFImageObjGetImageFilterCount(IntPtr image_object);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetImageFilter")]
             internal static extern uint FPDFImageObjGetImageFilter(IntPtr image_object, int index,
-                IntPtr buffer, uint buflen);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr buffer, uint buflen);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFImageObj_GetImageMetadata")]
             internal static extern int FPDFImageObjGetImageMetadata(IntPtr image_object,
-                IntPtr page, IntPtr metadata);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr page, IntPtr metadata);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_CreateNewPath")]
-            internal static extern IntPtr FPDFPageObjCreateNewPath(float x, float y);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFPageObjCreateNewPath(float x, float y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_CreateNewRect")]
-            internal static extern IntPtr FPDFPageObjCreateNewRect(float x, float y, float w, float h);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFPageObjCreateNewRect(float x, float y, float w, float h);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetBounds")]
             internal static extern int FPDFPageObjGetBounds(IntPtr page_object, float* left,
-                float* bottom, float* right, float* top);
-
-            [SuppressUnmanagedCodeSecurity]
+                float* bottom, float* right, float* top);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_SetBlendMode")]
             internal static extern void FPDFPageObjSetBlendMode(IntPtr page_object,
-                [MarshalAs(UnmanagedType.LPStr)] string blend_mode);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string blend_mode);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetStrokeColor")]
             internal static extern int FPDFPathSetStrokeColor(IntPtr path, uint R, uint G, uint B,
-                uint A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_SetStrokeColor")]
             internal static extern int FPDFPageObjSetStrokeColor(IntPtr page_object, uint R, uint G,
-                uint B, uint A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint B, uint A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_GetStrokeColor")]
             internal static extern int FPDFPathGetStrokeColor(IntPtr path, uint* R, uint* G, uint* B,
-                uint* A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint* A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetStrokeColor")]
             internal static extern int FPDFPageObjGetStrokeColor(IntPtr page_object, uint* R, uint* G,
-                uint* B, uint* A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint* B, uint* A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetStrokeWidth")]
-            internal static extern int FPDFPathSetStrokeWidth(IntPtr path, float width);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathSetStrokeWidth(IntPtr path, float width);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_SetStrokeWidth")]
-            internal static extern int FPDFPageObjSetStrokeWidth(IntPtr page_object, float width);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjSetStrokeWidth(IntPtr page_object, float width);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetStrokeWidth")]
-            internal static extern int FPDFPageObjGetStrokeWidth(IntPtr page_object, float* width);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjGetStrokeWidth(IntPtr page_object, float* width);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetLineJoin")]
-            internal static extern void FPDFPathSetLineJoin(IntPtr page_object, int line_join);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFPathSetLineJoin(IntPtr page_object, int line_join);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_SetLineJoin")]
-            internal static extern int FPDFPageObjSetLineJoin(IntPtr page_object, int line_join);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjSetLineJoin(IntPtr page_object, int line_join);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetLineCap")]
-            internal static extern void FPDFPathSetLineCap(IntPtr page_object, int line_cap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFPathSetLineCap(IntPtr page_object, int line_cap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_SetLineCap")]
-            internal static extern int FPDFPageObjSetLineCap(IntPtr page_object, int line_cap);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPageObjSetLineCap(IntPtr page_object, int line_cap);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetFillColor")]
-            internal static extern int FPDFPathSetFillColor(IntPtr path, uint R, uint G, uint B, uint A);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathSetFillColor(IntPtr path, uint R, uint G, uint B, uint A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_SetFillColor")]
             internal static extern int FPDFPageObjSetFillColor(IntPtr page_object, uint R, uint G,
-                uint B, uint A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint B, uint A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_GetFillColor")]
             internal static extern int FPDFPathGetFillColor(IntPtr path, uint* R, uint* G, uint* B,
-                uint* A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint* A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_GetFillColor")]
             internal static extern int FPDFPageObjGetFillColor(IntPtr page_object, uint* R, uint* G,
-                uint* B, uint* A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint* B, uint* A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_CountSegments")]
-            internal static extern int FPDFPathCountSegments(IntPtr path);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathCountSegments(IntPtr path);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_GetPathSegment")]
-            internal static extern IntPtr FPDFPathGetPathSegment(IntPtr path, int index);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern IntPtr FPDFPathGetPathSegment(IntPtr path, int index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPathSegment_GetPoint")]
-            internal static extern int FPDFPathSegmentGetPoint(IntPtr segment, float* x, float* y);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathSegmentGetPoint(IntPtr segment, float* x, float* y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPathSegment_GetType")]
-            internal static extern int FPDFPathSegmentGetType(IntPtr segment);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathSegmentGetType(IntPtr segment);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPathSegment_GetClose")]
-            internal static extern int FPDFPathSegmentGetClose(IntPtr segment);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathSegmentGetClose(IntPtr segment);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_MoveTo")]
-            internal static extern int FPDFPathMoveTo(IntPtr path, float x, float y);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathMoveTo(IntPtr path, float x, float y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_LineTo")]
-            internal static extern int FPDFPathLineTo(IntPtr path, float x, float y);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathLineTo(IntPtr path, float x, float y);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_BezierTo")]
             internal static extern int FPDFPathBezierTo(IntPtr path, float x1, float y1, float x2,
-                float y2, float x3, float y3);
-
-            [SuppressUnmanagedCodeSecurity]
+                float y2, float x3, float y3);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_Close")]
-            internal static extern int FPDFPathClose(IntPtr path);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathClose(IntPtr path);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetDrawMode")]
-            internal static extern int FPDFPathSetDrawMode(IntPtr path, int fillmode, int stroke);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathSetDrawMode(IntPtr path, int fillmode, int stroke);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_GetDrawMode")]
-            internal static extern int FPDFPathGetDrawMode(IntPtr path, int* fillmode, int* stroke);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFPathGetDrawMode(IntPtr path, int* fillmode, int* stroke);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_GetMatrix")]
             internal static extern int FPDFPathGetMatrix(IntPtr path, double* a, double* b, double* c,
-                double* d, double* e, double* f);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* d, double* e, double* f);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPath_SetMatrix")]
             internal static extern int FPDFPathSetMatrix(IntPtr path, double a, double b, double c,
-                double d, double e, double f);
-
-            [SuppressUnmanagedCodeSecurity]
+                double d, double e, double f);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_NewTextObj")]
             internal static extern IntPtr FPDFPageObjNewTextObj(IntPtr document,
-                [MarshalAs(UnmanagedType.LPStr)] string font, float font_size);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string font, float font_size);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_SetText")]
-            internal static extern int FPDFTextSetText(IntPtr text_object, ushort* text);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextSetText(IntPtr text_object, ushort* text);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_LoadFont")]
             internal static extern IntPtr FPDFTextLoadFont(IntPtr document, byte* data,
-                uint size, int font_type, int cid);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint size, int font_type, int cid);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_LoadStandardFont")]
             internal static extern IntPtr FPDFTextLoadStandardFont(IntPtr document,
-                [MarshalAs(UnmanagedType.LPStr)] string font);
-
-            [SuppressUnmanagedCodeSecurity]
+                [MarshalAs(UnmanagedType.LPStr)] string font);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_SetFillColor")]
             internal static extern int FPDFTextSetFillColor(IntPtr text_object, uint R, uint G, uint B,
-                uint A);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint A);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetMatrix")]
             internal static extern int FPDFTextGetMatrix(IntPtr text, double* a, double* b, double* c,
-                double* d, double* e, double* f);
-
-            [SuppressUnmanagedCodeSecurity]
+                double* d, double* e, double* f);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFTextObj_GetFontSize")]
-            internal static extern double FPDFTextObjGetFontSize(IntPtr text);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern double FPDFTextObjGetFontSize(IntPtr text);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFFont_Close")]
-            internal static extern void FPDFFontClose(IntPtr font);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern void FPDFFontClose(IntPtr font);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFPageObj_CreateTextObj")]
             internal static extern IntPtr FPDFPageObjCreateTextObj(IntPtr document,
-                IntPtr font, float font_size);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr font, float font_size);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFText_GetTextRenderMode")]
-            internal static extern int FPDFTextGetTextRenderMode(IntPtr text);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFTextGetTextRenderMode(IntPtr text);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFTextObj_GetFontName")]
             internal static extern uint FPDFTextObjGetFontName(IntPtr text, IntPtr buffer,
-                uint length);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint length);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFTextObj_GetText")]
             internal static extern uint FPDFTextObjGetText(IntPtr text_object,
-                IntPtr text_page, IntPtr buffer, uint length);
-
-            [SuppressUnmanagedCodeSecurity]
+                IntPtr text_page, IntPtr buffer, uint length);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFFormObj_CountObjects")]
-            internal static extern int FPDFFormObjCountObjects(IntPtr form_object);
-
-            [SuppressUnmanagedCodeSecurity]
+            internal static extern int FPDFFormObjCountObjects(IntPtr form_object);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFFormObj_GetObject")]
             internal static extern IntPtr FPDFFormObjGetObject(IntPtr form_object,
-                uint index);
-
-            [SuppressUnmanagedCodeSecurity]
+                uint index);
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFFormObj_GetMatrix")]
             internal static extern int FPDFFormObjGetMatrix(IntPtr form_object, double* a, double* b,

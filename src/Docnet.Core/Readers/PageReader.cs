@@ -120,10 +120,10 @@ namespace Docnet.Core.Readers
                         continue;
                     }
 
-                    var (adjustedLeft, adjustedTop) = GetAdjustedCoords(width, height, left, top);
-                    var (adjustRight, adjustBottom) = GetAdjustedCoords(width, height, right, bottom);
+                    var adjustedLeftTop = GetAdjustedCoords(width, height, left, top);
+                    var adjustedRightBottom = GetAdjustedCoords(width, height, right, bottom);
 
-                    var box = new BoundBox(adjustedLeft, adjustedTop, adjustRight, adjustBottom);
+                    var box = new BoundBox(adjustedLeftTop.Item1, adjustedLeftTop.Item2, adjustedRightBottom.Item1, adjustedRightBottom.Item2);
 
                     var fontSize = fpdf_text.FPDFTextGetFontSize(_text, i);
                     var angle = fpdf_text.FPDFTextGetCharAngle(_text, i);
@@ -133,7 +133,7 @@ namespace Docnet.Core.Readers
             }
         }
 
-        private (int x, int y) GetAdjustedCoords(int width, int height, double pageX, double pageY)
+        private Tuple<int, int> GetAdjustedCoords(int width, int height, double pageX, double pageY)
         {
             var x = 0;
             var y = 0;
@@ -153,7 +153,7 @@ namespace Docnet.Core.Readers
             x = AdjustToRange(x, width);
             y = AdjustToRange(y, height);
 
-            return (x, y);
+            return new Tuple<int, int>(x, y);
         }
 
         private static int AdjustToRange(int coord, int range)
