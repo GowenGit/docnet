@@ -63,6 +63,7 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes, "Docs/simple_3.pdf", null, 2)]
         [InlineData(Input.FromFile, "Docs/protected_0.pdf", "password", 3)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 3)]
+        [InlineData(Input.FromFile, "Docs/fancy_doc_∮.pdf", null, 2)]
         public void GetPageCount_WhenCalled_ShouldReturnCorrectResults(Input type, string filePath, string password, int expectedCount)
         {
             using (var reader = _fixture.GetDocReader(type, filePath, password, 10, 10))
