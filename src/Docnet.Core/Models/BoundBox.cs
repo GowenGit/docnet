@@ -21,9 +21,6 @@ namespace Docnet.Core.Models
             Validator.CheckNotLessThanZero(right, nameof(right));
             Validator.CheckNotLessThanZero(bottom, nameof(bottom));
 
-            Validator.CheckOrder(left, right, nameof(left), nameof(right));
-            Validator.CheckOrder(top, bottom, nameof(top), nameof(bottom));
-
             Left = left;
             Top = top;
             Right = right;

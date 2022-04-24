@@ -42,7 +42,7 @@ namespace Docnet.Core.Models
         /// scalingFactor represents a value to which physical page
         /// dimensions should scale in a pixel space.
         /// </summary>
-        /// <param name="scalingFactor">Page scaling PPI factor.</param>
+        /// <param name="scalingFactor">Page scaling factor in pixels-per-point. Convert PPI to scaling factor as PPI/72.</param>
         public PageDimensions(double scalingFactor)
         {
             Validator.CheckNotLessOrEqualToZero(scalingFactor, nameof(scalingFactor));

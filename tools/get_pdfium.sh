@@ -1,11 +1,11 @@
 #!/bin/bash
 
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4955/pdfium-linux-x64.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4955/pdfium-linux-arm.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4955/pdfium-linux-arm64.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4955/pdfium-win-x64.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4955/pdfium-win-x86.tgz
-wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F4955/pdfium-mac-x64.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F5010/pdfium-linux-x64.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F5010/pdfium-linux-arm.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F5010/pdfium-linux-arm64.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F5010/pdfium-win-x64.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F5010/pdfium-win-x86.tgz
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F5010/pdfium-mac-x64.tgz
 
 mkdir linux
 mkdir linux-arm

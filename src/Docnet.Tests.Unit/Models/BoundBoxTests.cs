@@ -11,8 +11,6 @@ namespace Docnet.Tests.Unit.Models
         [InlineData(0, -1, 0, 0)]
         [InlineData(0, 0, -1, 0)]
         [InlineData(0, 0, 0, -1)]
-        [InlineData(5, 0, 2, 0)]
-        [InlineData(0, 5, 0, 2)]
         public void Ctor_WhenCalledWithInvalidVersion_ShouldThrow(int left, int top, int right, int bottom)
         {
             Assert.Throws<ArgumentException>(() => new BoundBox(left, top, right, bottom));

@@ -203,6 +203,7 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes, "Docs/simple_2.pdf", null, 3, 10)]
         [InlineData(Input.FromBytes, "Docs/simple_5.pdf", null, 0, 40)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 0, 2009)]
+        [InlineData(Input.FromBytes, "Docs/sample_bound_box_order_01.pdf", null, 0, 5432)]
         public void GetCharacters_WhenCalled_ShouldReturnCharacters(Input type, string filePath, string password, int pageIndex, int charCount)
         {
             ExecuteForDocument(type, filePath, password, 10, 10, pageIndex, pageReader =>
