@@ -22,6 +22,7 @@ using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Docnet.Core.Models;
 
 namespace Docnet.Core.Bindings
 {
@@ -31,6 +32,14 @@ namespace Docnet.Core.Bindings
         Simplex = 1,
         DuplexFlipShortEdge = 2,
         DuplexFlipLongEdge = 3
+    }
+
+    public enum PageRotate
+    {
+        Normal = 0,
+        Rotate90 = 1,
+        Rotate180 = 2,
+        Rotate270 = 3
     }
 
     internal unsafe partial class FpdfActionT
@@ -418,6 +427,76 @@ namespace Docnet.Core.Bindings
                 return;
             __Instance = new IntPtr(native);
         }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class FPDF_FORMFILLINFO
+    {
+        public int version;
+
+        private IntPtr Release;
+
+        private IntPtr FFI_Invalidate;
+
+        private IntPtr FFI_OutputSelectedRect;
+
+        private IntPtr FFI_SetCursor;
+
+        private IntPtr FFI_SetTimer;
+
+        private IntPtr FFI_KillTimer;
+
+        private IntPtr FFI_GetLocalTime;
+
+        private IntPtr FFI_OnChange;
+
+        private IntPtr FFI_GetPage;
+
+        private IntPtr FFI_GetCurrentPage;
+
+        private IntPtr FFI_GetRotation;
+
+        private IntPtr FFI_ExecuteNamedAction;
+
+        private IntPtr FFI_SetTextFieldFocus;
+
+        private IntPtr FFI_DoURIAction;
+
+        private IntPtr FFI_DoGoToAction;
+
+        private IntPtr m_pJsPlatform;
+
+        // XFA support i.e. version 2
+
+        private IntPtr FFI_DisplayCaret;
+
+        private IntPtr FFI_GetCurrentPageIndex;
+
+        private IntPtr FFI_SetCurrentPage;
+
+        private IntPtr FFI_GotoURL;
+
+        private IntPtr FFI_GetPageViewRect;
+
+        private IntPtr FFI_PageEvent;
+
+        private IntPtr FFI_PopupMenu;
+
+        private IntPtr FFI_OpenFile;
+
+        private IntPtr FFI_EmailTo;
+
+        private IntPtr FFI_UploadTo;
+
+        private IntPtr FFI_GetPlatform;
+
+        private IntPtr FFI_GetLanguage;
+
+        private IntPtr FFI_DownloadFromURL;
+
+        private IntPtr FFI_PostRequestURL;
+
+        private IntPtr FFI_PutRequestURL;
     }
 
     internal unsafe partial class FpdfDocumentT
@@ -1750,6 +1829,16 @@ namespace Docnet.Core.Bindings
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFDOC_InitFormFillEnvironment")]
+            internal static extern IntPtr FPDFDOC_InitFormFillEnvironment(IntPtr document, FPDF_FORMFILLINFO formInfo);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDFDOC_ExitFormFillEnvironment")]
+            internal static extern void FPDFDOC_ExitFormFillEnvironment(IntPtr form_handle);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_LoadMemDocument")]
             internal static extern IntPtr FPDF_LoadMemDocument(IntPtr data_buf, int size,
                 [MarshalAs(UnmanagedType.LPStr)] string password);
@@ -1849,6 +1938,19 @@ namespace Docnet.Core.Bindings
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFBitmap_Create")]
             internal static extern IntPtr FPDFBitmapCreate(int width, int height, int alpha);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDF_FFLDraw")]
+            internal static extern void FPDFFFLDraw(IntPtr form_handle,
+                IntPtr bitmap,
+                IntPtr page,
+                int start_x,
+                int start_y,
+                int size_x,
+                int size_y,
+                PageRotate rotate,
+                RenderFlags flags);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
@@ -2049,6 +2151,11 @@ namespace Docnet.Core.Bindings
             return __ret;
         }
 
+        public static void FPDF_ExitFormFillEnvironment(IntPtr form_handle)
+        {
+            __Internal.FPDFDOC_ExitFormFillEnvironment(form_handle);
+        }
+
         public static uint FPDF_GetDocPermissions(FpdfDocumentT document)
         {
             var __arg0 = ReferenceEquals(document, null) ? IntPtr.Zero : document.__Instance;
@@ -2199,6 +2306,29 @@ namespace Docnet.Core.Bindings
                     .NativeToManagedMap[__ret];
             else __result0 = FpdfBitmapT.__CreateInstance(__ret);
             return __result0;
+        }
+
+        public static IntPtr FPDFDOCInitFormFillEnvironment(IntPtr bitmap, FPDF_FORMFILLINFO formInfo)
+        {
+            //var __arg0 = ReferenceEquals(bitmap, null) ? IntPtr.Zero : bitmap.__Instance;
+            var __ret = __Internal.FPDFDOC_InitFormFillEnvironment(bitmap, formInfo);
+            
+            return __ret;
+        }
+
+        public static void FPDFFFLDraw(IntPtr form_handle,
+            FpdfBitmapT bitmap,
+            FpdfPageT page,
+            int start_x,
+            int start_y,
+            int size_x,
+            int size_y,
+            PageRotate rotate,
+            RenderFlags flags)
+        {
+
+            __Internal.FPDFFFLDraw(form_handle, bitmap.__Instance, page.__Instance, start_x, start_y, size_x, size_y, rotate, flags);
+
         }
 
         public static FpdfBitmapT FPDFBitmapCreateEx(int width, int height, int format,

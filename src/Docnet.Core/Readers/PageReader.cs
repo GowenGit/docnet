@@ -15,6 +15,10 @@ namespace Docnet.Core.Readers
 
         private readonly double _scaling;
 
+        private IntPtr formHandle;
+
+        private FPDF_FORMFILLINFO formInfo = new FPDF_FORMFILLINFO();
+
         /// <inheritdoc />
         public int PageIndex { get; }
 
@@ -25,6 +29,17 @@ namespace Docnet.Core.Readers
             lock (DocLib.Lock)
             {
                 _page = fpdf_view.FPDF_LoadPage(docWrapper.Instance, pageIndex);
+
+                for (int i = 1; i <= 2; i++)
+                {
+                    formInfo.version = i;
+
+                    formHandle = fpdf_view.FPDFDOCInitFormFillEnvironment(docWrapper.Instance.__Instance, formInfo);
+                    if (formHandle != IntPtr.Zero)
+                    {
+                        break;
+                    }
+                }
 
                 if (_page == null)
                 {
@@ -215,6 +230,10 @@ namespace Docnet.Core.Readers
 
                         fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, (int)flags);
 
+                        // var form_handle = fpdf_view.FPDFDOCInitFormFillEnvironment(bitmap, formInfo);
+                        PageRotate rotate = PageRotate.Normal;
+                        fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, rotate, flags);
+                        fpdf_view.FPDF_ExitFormFillEnvironment(formHandle);
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
 
                         Marshal.Copy(buffer, result, 0, result.Length);
