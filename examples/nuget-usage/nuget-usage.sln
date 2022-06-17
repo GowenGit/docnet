@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NugetUsageAnyCpu", "NugetUsageAnyCpu\NugetUsageAnyCpu.csproj", "{6D97BB9F-80B8-414D-8472-725EA638B580}"
 EndProject
@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NugetUsageX86", "NugetUsage
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F61EB8D0-A0C9-4AEA-9E28-DBCFFF7E50F9}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\annotations_01.pdf = Assets\annotations_01.pdf
+		Assets\annotations_02.pdf = Assets\annotations_02.pdf
 		Assets\image_0.png = Assets\image_0.png
 		Assets\wikipedia_0.pdf = Assets\wikipedia_0.pdf
 	EndProjectSection

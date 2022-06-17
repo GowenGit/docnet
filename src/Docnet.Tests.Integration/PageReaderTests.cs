@@ -268,7 +268,7 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 1, 595, 841)]
         [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 10, 5953, 8419)]
         [InlineData(Input.FromFile, "Docs/simple_0.pdf", null, 15, 8929, 12628)]
-        public void GetPageWidthOrHeight_WhenCalledWithScalingFactor_ShouldMach(Input type, string filePath, string password, double scaling, int expectedWidth, int expectedHeight)
+        public void GetPageWidthOrHeight_WhenCalledWithScalingFactor_ShouldMatch(Input type, string filePath, string password, double scaling, int expectedWidth, int expectedHeight)
         {
             ExecuteForDocument(type, filePath, password, scaling, 0, pageReader =>
             {
@@ -319,6 +319,20 @@ namespace Docnet.Tests.Integration
                 Assert.Equal(234, bytes[center + 1]); // Green
                 Assert.Equal(234, bytes[center + 2]); // Red
                 Assert.Equal(255, bytes[center + 3]); // Alpha
+            });
+        }
+
+        [Theory]
+        [InlineData("Docs/sample_form_fields_01.pdf")]
+        [InlineData("Docs/sample_form_fields_02.pdf")]
+        public void GetImage_WhenAnnotationsRendered_ShouldHaveDifferentBytes(string filePath)
+        {
+            ExecuteForDocument(Input.FromFile, filePath, null, 1, 0, pageReader =>
+            {
+                var bytesWithoutAnnotations = pageReader.GetImage().ToArray();
+                var bytesWithAnnotations = pageReader.GetImage(RenderFlags.RenderAnnotations).ToArray();
+
+                Assert.NotEqual(bytesWithAnnotations.Count(x => x != 0), bytesWithoutAnnotations.Count(x => x != 0));
             });
         }
 

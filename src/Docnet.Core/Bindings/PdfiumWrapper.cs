@@ -24,6 +24,8 @@ using System.Security;
 using System.Text;
 using Docnet.Core.Models;
 
+#pragma warning disable CS0169
+
 namespace Docnet.Core.Bindings
 {
     public enum FPDF_DUPLEXTYPE_
@@ -430,7 +432,7 @@ namespace Docnet.Core.Bindings
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public class FPDF_FORMFILLINFO
+    internal class FPDF_FORMFILLINFO
     {
         public int version;
 
@@ -2308,10 +2310,16 @@ namespace Docnet.Core.Bindings
             return __result0;
         }
 
-        public static IntPtr FPDFDOCInitFormFillEnvironment(IntPtr bitmap, FPDF_FORMFILLINFO formInfo)
+        public static IntPtr FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, int version)
         {
-            //var __arg0 = ReferenceEquals(bitmap, null) ? IntPtr.Zero : bitmap.__Instance;
-            var __ret = __Internal.FPDFDOC_InitFormFillEnvironment(bitmap, formInfo);
+            var formInfo = new FPDF_FORMFILLINFO
+            {
+                version = version
+            };
+
+            var __arg0 = ReferenceEquals(document, null) ? IntPtr.Zero : document.__Instance;
+
+            var __ret = __Internal.FPDFDOC_InitFormFillEnvironment(__arg0, formInfo);
             
             return __ret;
         }
@@ -2326,9 +2334,7 @@ namespace Docnet.Core.Bindings
             PageRotate rotate,
             RenderFlags flags)
         {
-
             __Internal.FPDFFFLDraw(form_handle, bitmap.__Instance, page.__Instance, start_x, start_y, size_x, size_y, rotate, flags);
-
         }
 
         public static FpdfBitmapT FPDFBitmapCreateEx(int width, int height, int format,

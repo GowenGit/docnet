@@ -12,7 +12,7 @@ namespace NugetUsageAnyCpu
     [Collection("Example collection")]
     public class PdfToImageExamples
     {
-        private const string Path = "Assets/wikipedia_0.pdf";
+        private const string Path = "Assets/annotations_01.pdf";
 
         private readonly ExampleFixture _fixture;
 
