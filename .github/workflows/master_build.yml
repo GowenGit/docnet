@@ -41,6 +41,10 @@ jobs:
       with:
         dotnet-version: '3.1.x'
 
+    - name: Install GDI
+      run: |
+        apt-get install -y libgdiplus
+
     - name: Run dotnet tests
       run: |
         cd src
