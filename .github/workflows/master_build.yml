@@ -43,7 +43,7 @@ jobs:
 
     - name: Install GDI
       run: |
-        apt-get install -y libgdiplus
+        sudo apt-get install -y libgdiplus
 
     - name: Run dotnet tests
       run: |
@@ -58,7 +58,7 @@ jobs:
   test-osx:
     name: Test MacOS
 
-    runs-on: macos-10.15
+    runs-on: macos-11
 
     steps:
     - uses: actions/checkout@v1
