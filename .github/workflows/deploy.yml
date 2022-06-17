@@ -9,7 +9,7 @@ jobs:
   build-nuget:
     name: Deployment
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Set version tag
@@ -20,7 +20,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.101'
+        dotnet-version: '3.1.x'
 
     - name: Build NuGet
       run: dotnet pack -c Release -o out --version-suffix ${{ steps.vars.outputs.tag }} src/Docnet.Core/Docnet.Core.csproj

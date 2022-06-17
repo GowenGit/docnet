@@ -17,7 +17,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.101'
+        dotnet-version: '3.1.x'
 
     - name: Run dotnet tests
       run: |
@@ -32,14 +32,14 @@ jobs:
   test-linux:
     name: Test Linux
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v1
 
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.101'
+        dotnet-version: '3.1.x'
 
     - name: Run dotnet tests
       run: |
@@ -61,7 +61,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.101'
+        dotnet-version: '3.1.x'
 
     - name: Run dotnet tests
       run: |
