@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using Docnet.Core.Bindings;
 using Docnet.Core.Converters;
@@ -268,6 +269,22 @@ namespace Docnet.Core.Readers
             var bytes = GetImage(flags);
 
             return converter.Convert(bytes);
+        }
+
+        public void RenderDeviceContext(IntPtr deviceContext, Rectangle bounds) =>
+            RenderDeviceContext(deviceContext, bounds, 0);
+
+        public void RenderDeviceContext(IntPtr deviceContext, Rectangle bounds, RenderFlags flags)
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                throw new NotSupportedException("Rendering to a device context is only supported for Windows.");
+            }
+
+            lock (DocLib.Lock)
+            {
+                fpdf_view.FDPF_RenderPage(deviceContext, _page, bounds.Left, bounds.Top, bounds.Width, bounds.Height, 0, flags);
+            }
         }
 
         public void Dispose()
