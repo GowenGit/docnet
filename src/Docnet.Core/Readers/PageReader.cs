@@ -217,7 +217,7 @@ namespace Docnet.Core.Readers
                         clipping.Bottom = 0;
                         clipping.Top = height;
 
-                        var formHandle = IntPtr.Zero;
+                        FpdfFormHandleT formHandle = null;
 
                         if (flags.HasFlag(RenderFlags.RenderAnnotations))
                         {
@@ -225,7 +225,7 @@ namespace Docnet.Core.Readers
                             {
                                 formHandle = fpdf_view.FPDFDOCInitFormFillEnvironment(_docWrapper.Instance, i);
 
-                                if (formHandle != IntPtr.Zero)
+                                if (formHandle != null)
                                 {
                                     break;
                                 }
@@ -234,10 +234,9 @@ namespace Docnet.Core.Readers
 
                         fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, (int)flags);
 
-                        if (flags.HasFlag(RenderFlags.RenderAnnotations))
+                        if (flags.HasFlag(RenderFlags.RenderAnnotations) && formHandle != null)
                         {
                             fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, PageRotate.Normal, flags);
-
                             fpdf_view.FPDF_ExitFormFillEnvironment(formHandle);
                         }
 

@@ -20,7 +20,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.x'
+        dotnet-version: '6.0.x'
 
     - name: Build NuGet
       run: dotnet pack -c Release -o out --version-suffix ${{ steps.vars.outputs.tag }} src/Docnet.Core/Docnet.Core.csproj

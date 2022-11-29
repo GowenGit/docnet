@@ -313,8 +313,11 @@ namespace Docnet.Tests.Integration
             {
                 // verify pixel in center of image is the correct gray color
                 var bytes = pageReader.GetImage(RenderFlags.RenderAnnotations | RenderFlags.Grayscale).ToArray();
+
                 const int bpp = 4;
+
                 var center = bytes.Length / bpp / 2 * bpp; // note integer division by 2 here. we're getting the first byte in the central pixel
+
                 Assert.Equal(234, bytes[center]); // Blue
                 Assert.Equal(234, bytes[center + 1]); // Green
                 Assert.Equal(234, bytes[center + 2]); // Red

@@ -2153,9 +2153,9 @@ namespace Docnet.Core.Bindings
             return __ret;
         }
 
-        public static void FPDF_ExitFormFillEnvironment(IntPtr form_handle)
+        public static void FPDF_ExitFormFillEnvironment(FpdfFormHandleT form_handle)
         {
-            __Internal.FPDFDOC_ExitFormFillEnvironment(form_handle);
+            __Internal.FPDFDOC_ExitFormFillEnvironment(form_handle.__Instance);
         }
 
         public static uint FPDF_GetDocPermissions(FpdfDocumentT document)
@@ -2310,7 +2310,7 @@ namespace Docnet.Core.Bindings
             return __result0;
         }
 
-        public static IntPtr FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, int version)
+        public static FpdfFormHandleT FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, int version)
         {
             var formInfo = new FPDF_FORMFILLINFO
             {
@@ -2320,11 +2320,17 @@ namespace Docnet.Core.Bindings
             var __arg0 = ReferenceEquals(document, null) ? IntPtr.Zero : document.__Instance;
 
             var __ret = __Internal.FPDFDOC_InitFormFillEnvironment(__arg0, formInfo);
-            
-            return __ret;
+
+            FpdfFormHandleT __result0;
+            if (__ret == IntPtr.Zero) __result0 = null;
+            else if (FpdfFormHandleT.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (FpdfFormHandleT)FpdfFormHandleT
+                    .NativeToManagedMap[__ret];
+            else __result0 = FpdfFormHandleT.__CreateInstance(__ret);
+            return __result0;
         }
 
-        public static void FPDFFFLDraw(IntPtr form_handle,
+        public static void FPDFFFLDraw(FpdfFormHandleT form_handle,
             FpdfBitmapT bitmap,
             FpdfPageT page,
             int start_x,
@@ -2334,7 +2340,7 @@ namespace Docnet.Core.Bindings
             PageRotate rotate,
             RenderFlags flags)
         {
-            __Internal.FPDFFFLDraw(form_handle, bitmap.__Instance, page.__Instance, start_x, start_y, size_x, size_y, rotate, flags);
+            __Internal.FPDFFFLDraw(form_handle.__Instance, bitmap.__Instance, page.__Instance, start_x, start_y, size_x, size_y, rotate, flags);
         }
 
         public static FpdfBitmapT FPDFBitmapCreateEx(int width, int height, int format,
