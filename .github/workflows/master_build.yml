@@ -52,7 +52,9 @@ jobs:
 
     - name: Run example dotnet tests
       run: |
-        cd examples/nuget-usage
+        cd examples/nuget-usage/NugetUsageAnyCpu
+        dotnet test
+        cd ../NugetUsageX64
         dotnet test
 
   test-osx:
@@ -75,5 +77,7 @@ jobs:
     - name: Run example dotnet tests
       run: |
         brew install mono-libgdiplus
-        cd examples/nuget-usage
+        cd examples/nuget-usage/NugetUsageAnyCpu
+        dotnet test
+        cd ../NugetUsageX64
         dotnet test
