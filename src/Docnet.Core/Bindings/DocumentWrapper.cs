@@ -10,6 +10,9 @@ namespace Docnet.Core.Bindings
 
         public FpdfDocumentT Instance { get; private set; }
 
+        private FPDF_FORMFILLINFO _formInfo;
+        private FpdfFormHandleT _formHandle;
+
         public DocumentWrapper(string filePath, string password)
         {
             Instance = fpdf_view.FPDF_LoadDocument(filePath, password);
@@ -44,11 +47,40 @@ namespace Docnet.Core.Bindings
             }
         }
 
+        public FpdfFormHandleT GetFormHandle()
+        {
+            if (_formHandle != null)
+            {
+                return _formHandle;
+            }
+
+            _formInfo = new FPDF_FORMFILLINFO();
+
+            for (var i = 1; i <= 2; i++)
+            {
+                _formInfo.version = i;
+
+                _formHandle = fpdf_view.FPDFDOCInitFormFillEnvironment(Instance, _formInfo);
+
+                if (_formHandle != null)
+                {
+                    break;
+                }
+            }
+
+            return _formHandle;
+        }
+
         public void Dispose()
         {
             if (Instance == null)
             {
                 return;
+            }
+
+            if (_formHandle != null)
+            {
+                fpdf_view.FPDF_ExitFormFillEnvironment(_formHandle);
             }
 
             fpdf_view.FPDF_CloseDocument(Instance);

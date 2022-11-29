@@ -2310,13 +2310,8 @@ namespace Docnet.Core.Bindings
             return __result0;
         }
 
-        public static FpdfFormHandleT FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, int version)
+        public static FpdfFormHandleT FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, FPDF_FORMFILLINFO formInfo)
         {
-            var formInfo = new FPDF_FORMFILLINFO
-            {
-                version = version
-            };
-
             var __arg0 = ReferenceEquals(document, null) ? IntPtr.Zero : document.__Instance;
 
             var __ret = __Internal.FPDFDOC_InitFormFillEnvironment(__arg0, formInfo);
