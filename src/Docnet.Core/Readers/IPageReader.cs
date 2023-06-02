@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Docnet.Core.Converters;
 using Docnet.Core.Models;
 
@@ -68,5 +69,15 @@ namespace Docnet.Core.Readers
         /// to modify the image.
         /// </summary>
         byte[] GetImage(IImageBytesConverter converter, RenderFlags flags);
+
+        /// <summary>
+        /// Renders the page onto a device context.
+        /// </summary>
+        void RenderDeviceContext(IntPtr deviceContext, Rectangle bounds);
+
+        /// <summary>
+        /// Renders the page onto a device context.
+        /// </summary>
+        void RenderDeviceContext(IntPtr deviceContext, Rectangle bounds, RenderFlags flags);
     }
 }

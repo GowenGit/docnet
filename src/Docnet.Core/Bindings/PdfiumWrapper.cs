@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -1904,6 +1905,12 @@ namespace Docnet.Core.Bindings
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
+                EntryPoint = "FPDF_RenderPage")]
+            internal static extern void FPDF_RenderPage(IntPtr dc, IntPtr page,
+                int start_x, int start_y, int size_x, int size_y, int rotate, RenderFlags flags);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDF_RenderPageBitmap")]
             internal static extern void FPDF_RenderPageBitmap(IntPtr bitmap, IntPtr page,
                 int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
@@ -2230,6 +2237,14 @@ namespace Docnet.Core.Bindings
                     return __ret;
                 }
             }
+        }
+
+        public static void FDPF_RenderPage(IntPtr deviceContext, FpdfPageT page,
+            int start_x, int start_y, int size_x, int size_y, int rotate, RenderFlags flags)
+        {
+            var __arg1 = ReferenceEquals(page, null) ? IntPtr.Zero : page.__Instance;
+
+            __Internal.FPDF_RenderPage(deviceContext, __arg1, start_x, start_y, size_x, size_y, rotate, flags);
         }
 
         public static void FPDF_RenderPageBitmap(FpdfBitmapT bitmap,
