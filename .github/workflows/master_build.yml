@@ -26,7 +26,9 @@ jobs:
 
     - name: Run example dotnet tests
       run: |
-        cd examples/nuget-usage
+        cd examples/nuget-usage/NugetUsageAnyCpu
+        dotnet test
+        cd ../NugetUsageX64
         dotnet test
 
   test-linux:
