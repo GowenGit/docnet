@@ -47,6 +47,15 @@ namespace Docnet.Core.Readers
         /// of the page image.
         /// Byte array is formatted as
         /// B-G-R-A ordered list.
+        /// Use result if you create the array before
+        /// </summary>
+        byte[] GetImage(RenderFlags flags, byte[] result);
+
+        /// <summary>
+        /// Return a byte representation
+        /// of the page image.
+        /// Byte array is formatted as
+        /// B-G-R-A ordered list.
         /// </summary>
         byte[] GetImage();
 
@@ -69,6 +78,17 @@ namespace Docnet.Core.Readers
         /// to modify the image.
         /// </summary>
         byte[] GetImage(IImageBytesConverter converter, RenderFlags flags);
+
+        /// <summary>
+        /// Return a byte representation
+        /// of the page image.
+        /// Byte array is formatted as
+        /// B-G-R-A ordered list. Then it
+        /// applies a predefined byte transformation
+        /// to modify the image.
+        /// Use result if you create the array before
+        /// </summary>
+        byte[] GetImage(IImageBytesConverter converter, RenderFlags flags, byte[] result);
 
         /// <summary>
         /// Renders the page onto a device context.

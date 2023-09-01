@@ -177,10 +177,13 @@ namespace Docnet.Core.Readers
         }
 
         /// <inheritdoc />
-        public byte[] GetImage() => GetImage(0);
+        public byte[] GetImage() => GetImage(0, result: null);
 
         /// <inheritdoc />
-        public byte[] GetImage(RenderFlags flags)
+        public byte[] GetImage(RenderFlags flags) => GetImage(flags, result: null);
+
+        /// <inheritdoc />
+        public byte[] GetImage(RenderFlags flags, byte[] result)
         {
             lock (DocLib.Lock)
             {
@@ -195,8 +198,14 @@ namespace Docnet.Core.Readers
                 }
 
                 var stride = fpdf_view.FPDFBitmapGetStride(bitmap);
+                var length = stride * height;
 
-                var result = new byte[stride * height];
+                result = result is null ? new byte[length] : result;
+
+                if (result.Length < length)
+                {
+                    throw new DocnetException($"result array length should be greater or equal than {length}");
+                }
 
                 try
                 {
@@ -234,7 +243,7 @@ namespace Docnet.Core.Readers
 
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
 
-                        Marshal.Copy(buffer, result, 0, result.Length);
+                        Marshal.Copy(buffer, result, 0, length);
                     }
                 }
                 catch (Exception ex)
@@ -256,7 +265,15 @@ namespace Docnet.Core.Readers
         /// <inheritdoc />
         public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags)
         {
-            var bytes = GetImage(flags);
+            var bytes = GetImage(flags, result: null);
+
+            return converter.Convert(bytes);
+        }
+
+        /// <inheritdoc />
+        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags, byte[] result)
+        {
+            var bytes = GetImage(flags, result: result);
 
             return converter.Convert(bytes);
         }
