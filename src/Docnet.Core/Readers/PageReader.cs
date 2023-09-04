@@ -264,8 +264,7 @@ namespace Docnet.Core.Readers
 
                         if (flags.HasFlag(RenderFlags.RenderAnnotations) && formHandle != null)
                         {
-                            fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, PageRotate.Normal,
-                                flags);
+                            fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, PageRotate.Normal, flags);
                         }
 
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
@@ -298,8 +297,7 @@ namespace Docnet.Core.Readers
 
             lock (DocLib.Lock)
             {
-                fpdf_view.FDPF_RenderPage(deviceContext, _page, bounds.Left, bounds.Top, bounds.Width, bounds.Height, 0,
-                    flags);
+                fpdf_view.FDPF_RenderPage(deviceContext, _page, bounds.Left, bounds.Top, bounds.Width, bounds.Height, 0, flags);
             }
         }
 
