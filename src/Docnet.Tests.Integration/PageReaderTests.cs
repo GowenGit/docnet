@@ -347,15 +347,17 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes, "Docs/simple_3.pdf", null, 1)]
         [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 18)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 0)]
-        public void GetImageWithResultByteAndNoRenderFlags_WhenCalled_ShouldReturnNonZeroRawByteArray(Input type, string filePath, string password, int pageIndex)
+        public void WriteImageToBufferWithResultByteAndNoRenderFlags_WhenCalled_ShouldReturnNonZeroRawByteArray(Input type, string filePath, string password, int pageIndex)
         {
             ExecuteForDocument(type, filePath, password, 1, pageIndex, pageReader =>
             {
 
                 var height = pageReader.GetPageHeight();
                 var stride = 4 * pageReader.GetPageWidth(); //4 is for B-G-R-A format
+
                 var bytes = new byte[stride * height];
-                pageReader.GetImage(0, bytes);
+
+                pageReader.WriteImageToBuffer(0, bytes);
 
                 Assert.True(bytes.Length > 0);
                 Assert.NotEmpty(bytes.Where(x => x != 0));
@@ -369,16 +371,17 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes, "Docs/simple_3.pdf", null, 1)]
         [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 18)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 0)]
-        public void GetImageWithResultByteWithLowerLengthAndNoRenderFlags_WhenCalled_ShouldReturnException(Input type, string filePath, string password, int pageIndex)
+        public void WriteImageToBufferWithResultByteWithLowerLengthAndNoRenderFlags_WhenCalled_ShouldReturnException(Input type, string filePath, string password, int pageIndex)
         {
             ExecuteForDocument(type, filePath, password, 1, pageIndex, pageReader =>
             {
                 var height = pageReader.GetPageHeight();
                 var stride = 4 * pageReader.GetPageWidth(); //4 is for B-G-R-A format
+
                 var bytes = new byte[stride * height - 1];
 
 
-                Assert.Throws<DocnetException>(() => pageReader.GetImage(0, bytes));
+                Assert.Throws<DocnetException>(() => pageReader.WriteImageToBuffer(0, bytes));
             });
         }
 
@@ -389,7 +392,7 @@ namespace Docnet.Tests.Integration
         [InlineData(Input.FromBytes, "Docs/simple_3.pdf", null, 1)]
         [InlineData(Input.FromBytes, "Docs/simple_0.pdf", null, 18)]
         [InlineData(Input.FromBytes, "Docs/protected_0.pdf", "password", 0)]
-        public void GetImageWithResultFromArrayPoolNoRenderFlags_WhenCalled_ShouldReturnNonZeroRawByteArray(Input type, string filePath, string password, int pageIndex)
+        public void WriteImageToBufferWithResultFromArrayPoolNoRenderFlags_WhenCalled_ShouldReturnNonZeroRawByteArray(Input type, string filePath, string password, int pageIndex)
         {
             ExecuteForDocument(type, filePath, password, 1, pageIndex, pageReader =>
             {
@@ -397,7 +400,8 @@ namespace Docnet.Tests.Integration
                 var stride = 4 * pageReader.GetPageWidth(); //4 is for B-G-R-A format
                 var arrayPool = ArrayPool<byte>.Shared;
                 var bytes = arrayPool.Rent(stride * height);
-                pageReader.GetImage(0, bytes);
+
+                pageReader.WriteImageToBuffer(0, bytes);
 
                 Assert.True(bytes.Length > 0);
                 Assert.NotEmpty(bytes.Where(x => x != 0));

@@ -6,6 +6,6 @@
         /// Input is in B-G-R-A format.
         /// </summary>
         /// <param name="bytes">Image bytes.</param>
-        byte[] Convert(byte[] bytes);
+        void Convert(byte[] bytes);
     }
 }

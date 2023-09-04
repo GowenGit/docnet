@@ -23,7 +23,7 @@
         /// </summary>
         /// <param name="bytes">Image bytes.</param>
         /// <returns>Same B-G-R-A array with alpha filled with white color.</returns>
-        public byte[] Convert(byte[] bytes)
+        public void Convert(byte[] bytes)
         {
             for (var i = 0; i < bytes.Length / 4; i++)
             {
@@ -39,8 +39,6 @@
                 bytes[j + 2] = (byte)((red * alpha + _backgroundRed * (255 - alpha)) >> 8);
                 bytes[j + 3] = byte.MaxValue;
             }
-
-            return bytes;
         }
     }
 }

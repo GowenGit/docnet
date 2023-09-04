@@ -177,13 +177,39 @@ namespace Docnet.Core.Readers
         }
 
         /// <inheritdoc />
-        public byte[] GetImage() => GetImage(0, result: null);
+        public byte[] GetImage() => WriteImageToBufferInternal(0);
 
         /// <inheritdoc />
-        public byte[] GetImage(RenderFlags flags) => GetImage(flags, result: null);
+        public byte[] GetImage(RenderFlags flags) => WriteImageToBufferInternal(flags);
 
         /// <inheritdoc />
-        public byte[] GetImage(RenderFlags flags, byte[] result)
+        public byte[] GetImage(IImageBytesConverter converter) => GetImage(converter, 0);
+
+        /// <inheritdoc />
+        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags)
+        {
+            var bytes = WriteImageToBufferInternal(flags);
+
+            converter.Convert(bytes);
+
+            return bytes;
+        }
+
+        /// <inheritdoc />
+        public void WriteImageToBuffer(RenderFlags flags, byte[] result)
+        {
+            WriteImageToBufferInternal(flags, result: result);
+        }
+
+        /// <inheritdoc />
+        public void WriteImageToBuffer(IImageBytesConverter converter, RenderFlags flags, byte[] result)
+        {
+            WriteImageToBufferInternal(flags, result: result);
+
+            converter.Convert(result);
+        }
+
+        private byte[] WriteImageToBufferInternal(RenderFlags flags, byte[] result = null)
         {
             lock (DocLib.Lock)
             {
@@ -200,7 +226,7 @@ namespace Docnet.Core.Readers
                 var stride = fpdf_view.FPDFBitmapGetStride(bitmap);
                 var length = stride * height;
 
-                result = result is null ? new byte[length] : result;
+                result = result ?? new byte[length];
 
                 if (result.Length < length)
                 {
@@ -238,7 +264,8 @@ namespace Docnet.Core.Readers
 
                         if (flags.HasFlag(RenderFlags.RenderAnnotations) && formHandle != null)
                         {
-                            fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, PageRotate.Normal, flags);
+                            fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, PageRotate.Normal,
+                                flags);
                         }
 
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
@@ -254,28 +281,9 @@ namespace Docnet.Core.Readers
                 {
                     fpdf_view.FPDFBitmapDestroy(bitmap);
                 }
-
-                return result;
             }
-        }
 
-        /// <inheritdoc />
-        public byte[] GetImage(IImageBytesConverter converter) => GetImage(converter, 0);
-
-        /// <inheritdoc />
-        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags)
-        {
-            var bytes = GetImage(flags, result: null);
-
-            return converter.Convert(bytes);
-        }
-
-        /// <inheritdoc />
-        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags, byte[] result)
-        {
-            var bytes = GetImage(flags, result: result);
-
-            return converter.Convert(bytes);
+            return result;
         }
 
         public void RenderDeviceContext(IntPtr deviceContext, Rectangle bounds) =>
@@ -290,7 +298,8 @@ namespace Docnet.Core.Readers
 
             lock (DocLib.Lock)
             {
-                fpdf_view.FDPF_RenderPage(deviceContext, _page, bounds.Left, bounds.Top, bounds.Width, bounds.Height, 0, flags);
+                fpdf_view.FDPF_RenderPage(deviceContext, _page, bounds.Left, bounds.Top, bounds.Width, bounds.Height, 0,
+                    flags);
             }
         }
 
