@@ -177,10 +177,39 @@ namespace Docnet.Core.Readers
         }
 
         /// <inheritdoc />
-        public byte[] GetImage() => GetImage(0);
+        public byte[] GetImage() => WriteImageToBufferInternal(0);
 
         /// <inheritdoc />
-        public byte[] GetImage(RenderFlags flags)
+        public byte[] GetImage(RenderFlags flags) => WriteImageToBufferInternal(flags);
+
+        /// <inheritdoc />
+        public byte[] GetImage(IImageBytesConverter converter) => GetImage(converter, 0);
+
+        /// <inheritdoc />
+        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags)
+        {
+            var bytes = WriteImageToBufferInternal(flags);
+
+            converter.Convert(bytes);
+
+            return bytes;
+        }
+
+        /// <inheritdoc />
+        public void WriteImageToBuffer(RenderFlags flags, byte[] result)
+        {
+            WriteImageToBufferInternal(flags, result: result);
+        }
+
+        /// <inheritdoc />
+        public void WriteImageToBuffer(IImageBytesConverter converter, RenderFlags flags, byte[] result)
+        {
+            WriteImageToBufferInternal(flags, result: result);
+
+            converter.Convert(result);
+        }
+
+        private byte[] WriteImageToBufferInternal(RenderFlags flags, byte[] result = null)
         {
             lock (DocLib.Lock)
             {
@@ -195,8 +224,14 @@ namespace Docnet.Core.Readers
                 }
 
                 var stride = fpdf_view.FPDFBitmapGetStride(bitmap);
+                var length = stride * height;
 
-                var result = new byte[stride * height];
+                result = result ?? new byte[length];
+
+                if (result.Length < length)
+                {
+                    throw new DocnetException($"result array length should be greater or equal than {length}");
+                }
 
                 try
                 {
@@ -234,7 +269,7 @@ namespace Docnet.Core.Readers
 
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
 
-                        Marshal.Copy(buffer, result, 0, result.Length);
+                        Marshal.Copy(buffer, result, 0, length);
                     }
                 }
                 catch (Exception ex)
@@ -245,20 +280,9 @@ namespace Docnet.Core.Readers
                 {
                     fpdf_view.FPDFBitmapDestroy(bitmap);
                 }
-
-                return result;
             }
-        }
 
-        /// <inheritdoc />
-        public byte[] GetImage(IImageBytesConverter converter) => GetImage(converter, 0);
-
-        /// <inheritdoc />
-        public byte[] GetImage(IImageBytesConverter converter, RenderFlags flags)
-        {
-            var bytes = GetImage(flags);
-
-            return converter.Convert(bytes);
+            return result;
         }
 
         public void RenderDeviceContext(IntPtr deviceContext, Rectangle bounds) =>
