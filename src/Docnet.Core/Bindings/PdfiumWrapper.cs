@@ -1833,7 +1833,7 @@ namespace Docnet.Core.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "FPDFDOC_InitFormFillEnvironment")]
-            internal static extern IntPtr FPDFDOC_InitFormFillEnvironment(IntPtr document, FPDF_FORMFILLINFO formInfo);
+            internal static extern IntPtr FPDFDOC_InitFormFillEnvironment(IntPtr document, IntPtr formInfo);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("pdfium", CallingConvention = CallingConvention.Cdecl,
@@ -2325,7 +2325,7 @@ namespace Docnet.Core.Bindings
             return __result0;
         }
 
-        public static FpdfFormHandleT FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, FPDF_FORMFILLINFO formInfo)
+        public static FpdfFormHandleT FPDFDOCInitFormFillEnvironment(FpdfDocumentT document, IntPtr formInfo)
         {
             var __arg0 = ReferenceEquals(document, null) ? IntPtr.Zero : document.__Instance;
 

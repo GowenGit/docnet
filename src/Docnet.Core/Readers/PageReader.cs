@@ -233,6 +233,8 @@ namespace Docnet.Core.Readers
                     throw new DocnetException($"result array length should be greater or equal than {length}");
                 }
 
+                FormWrapper formWrapper = null;
+
                 try
                 {
                     // |          | a b 0 |
@@ -253,18 +255,16 @@ namespace Docnet.Core.Readers
                         clipping.Bottom = 0;
                         clipping.Top = height;
 
-                        FpdfFormHandleT formHandle = null;
-
                         if (flags.HasFlag(RenderFlags.RenderAnnotations))
                         {
-                            formHandle = _docWrapper.GetFormHandle();
+                            formWrapper = new FormWrapper(_docWrapper);
                         }
 
                         fpdf_view.FPDF_RenderPageBitmapWithMatrix(bitmap, _page, matrix, clipping, (int)flags);
 
-                        if (flags.HasFlag(RenderFlags.RenderAnnotations) && formHandle != null)
+                        if (flags.HasFlag(RenderFlags.RenderAnnotations) && formWrapper?.Instance != null)
                         {
-                            fpdf_view.FPDFFFLDraw(formHandle, bitmap, _page, 0, 0, width, height, PageRotate.Normal, flags);
+                            fpdf_view.FPDFFFLDraw(formWrapper.Instance, bitmap, _page, 0, 0, width, height, PageRotate.Normal, flags);
                         }
 
                         var buffer = fpdf_view.FPDFBitmapGetBuffer(bitmap);
@@ -278,6 +278,8 @@ namespace Docnet.Core.Readers
                 }
                 finally
                 {
+                    formWrapper?.Dispose();
+
                     fpdf_view.FPDFBitmapDestroy(bitmap);
                 }
             }

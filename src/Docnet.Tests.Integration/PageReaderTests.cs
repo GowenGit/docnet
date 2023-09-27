@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Docnet.Core.Converters;
@@ -110,6 +111,11 @@ namespace Docnet.Tests.Integration
 
             ExecuteForDocument(type, "Docs/simple_0.pdf", null, 10, 10, index, pageReader =>
             {
+                if (pageReader == null)
+                {
+                    throw new ArgumentNullException(nameof(pageReader));
+                }
+
                 Assert.Equal(index, pageReader.PageIndex);
             });
         }
@@ -407,6 +413,63 @@ namespace Docnet.Tests.Integration
                 Assert.NotEmpty(bytes.Where(x => x != 0));
                 arrayPool.Return(bytes);
             });
+        }
+
+        [Theory]
+        [InlineData(RenderFlags.RenderAnnotations, "Docs/annotation_1.pdf", null, 0, 0)]
+        [InlineData(RenderFlags.RenderAnnotations, "Docs/annotation_1.pdf", null, 0, 1)]
+        [InlineData(RenderFlags.RenderAnnotations, "Docs/annotation_1.pdf", null, 0, 2)]
+        [InlineData(RenderFlags.RenderAnnotations, "Docs/annotation_1.pdf", null, 0, 3)]
+        [InlineData(RenderFlags.RenderAnnotations, "Docs/annotation_1.pdf", null, 0, 4)]
+        [InlineData(RenderFlags.RenderAnnotations, "Docs/annotation_1.pdf", null, 0, 5)]
+        public void Parallel_GetImage_WhenCalledWithFlags_ShouldWork(RenderFlags flags, string filePath, string password, int pageIndex, int run)
+        {
+            var numbers = Enumerable.Range(1, 1000);
+
+            Parallel.ForEach(numbers, i =>
+            {
+                ExecuteForDocument(Input.FromFile, filePath, password, 1, pageIndex, pageReader =>
+                {
+                    var bytes = pageReader.GetImage(flags).ToArray();
+
+                    Assert.NotEmpty(bytes);
+
+                    // WriteToPPM($"{run}_{i}_image", bytes, pageReader.GetPageHeight(), pageReader.GetPageWidth());
+                });
+            });
+        }
+
+        /// <summary>
+        /// BGRA data to PPM file
+        /// Alpha channel discarded
+        /// https://netpbm.sourceforge.net/doc/ppm.html
+        /// </summary>
+        private static void WriteToPPM(string fileName, byte[] data, int height, int width)
+        {
+            fileName = $"{fileName}.ppm";
+
+            using (var writer = new StreamWriter(fileName))
+            {
+                writer.WriteLine("P6");
+                writer.WriteLine($"{width} {height}");
+                writer.WriteLine("255");
+            }
+
+            using var writerB = new BinaryWriter(new FileStream(fileName, FileMode.Append));
+
+            for (var i = 0; i < data.Length / 4; i++)
+            {
+                var j = i * 4;
+
+                var blue = data[j];
+                var green = data[j + 1];
+                var red = data[j + 2];
+                var alpha = data[j + 3];
+
+                writerB.Write((byte)((green * alpha + byte.MaxValue * (255 - alpha)) >> 8)); // G
+                writerB.Write((byte)((blue * alpha + byte.MaxValue * (255 - alpha)) >> 8)); // B
+                writerB.Write((byte)((red * alpha + byte.MaxValue * (255 - alpha)) >> 8)); // R
+            }
         }
 
         private static int GetNonZeroByteCount(Input type, string filePath, LibFixture fixture)

@@ -5,6 +5,7 @@ namespace Docnet.Core.Models
     [Flags]
     public enum RenderFlags
     {
+        None = 0x00, // None
         RenderAnnotations = 0x01, // FPDF_ANNOT: Set if annotations are to be rendered.
         OptimizeTextForLcd = 0x02, // FPDF_LCD_TEXT: Set if using text rendering optimized for LCD display. This flag will only take effect if anti-aliasing is enabled for text.
         NoNativeText = 0x04, // FPDF_NO_NATIVETEXT: Don't use the native text output available on some platforms
